@@ -1,0 +1,82 @@
+#
+# gitconfig
+#
+# ini for git
+#
+
+[user]
+    name   = Mitch Joa
+    email  = mitchjoa@gmail.com
+
+[color]
+    diff        = auto
+    status      = auto
+    branch      = auto
+    interactive = auto
+    ui          = true
+    pager       = true
+
+[core]
+    excludesfile = ~/.gitignore
+
+[alias]
+
+    # basic command shortcuts
+    st  = status
+    co  = checkout
+    br  = branch
+    fp  = format-patch
+    rmt = remote
+
+    # add shortcuts
+    a  = add
+    ap = add --patch
+    ai = add --interactive
+
+    # commit shortcuts
+    ci = commit
+    ca = commit --amend
+
+    # diff shortcuts
+    d   = diff --patience
+    dw  = diff --patience --ignore-all-space
+    dc  = diff --patience --cached
+    dcw = diff --patience --cached --ignore-all-space
+    d1  = diff --patience HEAD~1
+    d2  = diff --patience HEAD~2
+    d3  = diff --patience HEAD~3
+
+    # reset shortcuts
+    rss = reset --soft
+    rsm = reset --mixed
+    rsh = reset --hard
+
+    # rebase shortcuts
+    rb  = rebase
+    rba = rebase --abort
+    rbi = rebase --interactive
+    rbc = rebase --continue
+
+    # log shortcuts
+    lgo = log --graph --oneline --decorate
+    lgp = log --patch
+    lgs = log --stat
+    tree = log --oneline --decorate --graph --all
+
+    # analytics
+    who    = shortlog -s --
+    whois  = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author =\"$1\"' -"
+    whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+
+    # misc
+    spsp = "!sh -c 'git stash; git pull $@; git stash pop'"
+    tidy = "!f() { \
+        local branch="${1-develop}"; \
+        echo "Pruning branches that are already merged into $branch..."; \
+        git remote prune origin && git branch --merged "$branch" | grep --color=auto --exclude-dir={.bzr,.cvs,.git,.hg,.svn} -v " $branch" | xargs -n 1 git branch -d; \
+    }; f"
+
+
+# Local Variables:
+# mode: conf-unix
+# End:

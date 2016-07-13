@@ -1,0 +1,7 @@
+[
+	{ "keys": ["super+\\"], "command": "toggle_side_bar" },
+	{ "keys": ["super+alt+r"], "command": "goto_definition" },
+
+	{ "keys": ["super+shift+j"], "command": "focus_neighboring_group" },
+  { "keys": ["super+shift+k"], "command": "move_to_neighboring_group" }
+]

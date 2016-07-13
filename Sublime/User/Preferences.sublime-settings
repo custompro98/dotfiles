@@ -1,0 +1,24 @@
+{
+	"auto_complete_commit_on_tab": true,
+	"bold_folder_labels": true,
+	"caret_style": "wide",
+	"color_scheme": "Packages/Theme - Brogrammer/brogrammer.tmTheme",
+	"ensure_newline_at_eof_on_save": true,
+	"font_size": 12,
+	"highlight_line": true,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"line_padding_bottom": 1,
+	"line_padding_top": 1,
+	"rulers":
+	[
+		120
+	],
+	"show_full_path": true,
+	"tab_size": 2,
+	"translate_tabs_to_spaces": true,
+	"trim_trailing_white_space_on_save": true,
+	"word_wrap": false
+}

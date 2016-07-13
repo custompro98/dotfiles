@@ -1,0 +1,27 @@
+### Ask for Code Review
+## Use this format in merge request body, check next to name when finished && approved
+[Pivotal](<link to story>)
+
+Code Review:
+- [ ] @<team member>
+- [ ] @<team member>
+
+### GIT
+## Amend
+# Amend a previous commits message
+git --amend
+
+# Modify files/contents of files after commit
+git add <files>
+git rm <files>
+git commit --amend
+
+## Rebase
+# Reapply commits from current branch onto another
+git remote add upstream https://github.com/<original fork>>.git
+git fetch upstream
+git checkout <feature branch>
+git rebase upstream/master
+git push --force origin <feature branch>
+git rebase --continue
+<repeat last two unitl done>
