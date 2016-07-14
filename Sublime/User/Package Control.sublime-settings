@@ -7,8 +7,16 @@
 	[
 		"AdvancedNewFile",
 		"All Autocomplete",
+		"BracketHighlighter",
+		"DashDoc",
+		"GitGutter",
 		"Package Control",
 		"Ruby Slim",
+		"SublimeLinter",
+		"SublimeLinter-rubocop",
+		"SublimeLinter-ruby",
+		"SublimeLinter-slim-lint",
+		"TestRSpec",
 		"Theme - Brogrammer"
 	]
 }

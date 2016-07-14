@@ -2,7 +2,7 @@
 	"auto_complete_commit_on_tab": true,
 	"bold_folder_labels": true,
 	"caret_style": "wide",
-	"color_scheme": "Packages/Theme - Brogrammer/brogrammer.tmTheme",
+	"color_scheme": "Packages/User/SublimeLinter/brogrammer (SL).tmTheme",
 	"ensure_newline_at_eof_on_save": true,
 	"font_size": 12,
 	"highlight_line": true,
