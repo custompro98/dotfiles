@@ -1,10 +1,12 @@
 [
 	{ "keys": ["super+\\"], "command": "toggle_side_bar" },
 	{ "keys": ["super+alt+r"], "command": "goto_definition" },
-  { "keys": ["super+alt+r"], "command": "jump_back" },
+  { "keys": ["super+shift+alt+r"], "command": "jump_back" },
 
 	{ "keys": ["super+shift+j"], "command": "focus_neighboring_group" },
   { "keys": ["super+shift+k"], "command": "move_to_neighboring_group" },
+
+//// Bracket Highlighter
   // Go to left bracket
   {
       "keys": ["super+alt+9"],
@@ -54,4 +56,9 @@
           }
       }
   },
+
+//// Test RSpec
+  {
+    "keys": ["super+shift+period"], "command": "create_spec_file"
+  }
 ]

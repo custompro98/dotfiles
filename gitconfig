@@ -80,3 +80,5 @@
 # Local Variables:
 # mode: conf-unix
 # End:
+[push]
+	default = matching
