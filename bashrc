@@ -22,6 +22,5 @@ source ~/.git-completion.bash
 # git branch mapping
 alias gitg='git log --graph --decorate --oneline'
 
-# git status
-alias gits='git status'
-
+# bundle exec as brake
+alias brake='bundle exec rake'
