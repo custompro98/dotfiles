@@ -24,3 +24,4 @@ alias gitg='git log --graph --decorate --oneline'
 
 # bundle exec as brake
 alias brake='bundle exec rake'
+alias be='bundle exec'
