@@ -56,6 +56,15 @@
     rba = rebase --abort
     rbi = rebase --interactive
     rbc = rebase --continue
+    prb = pull --rebase
+
+    # stash shortcuts
+    sh  = stash
+    shp = stash pop
+
+    # checkout shortcuts
+    ours   = checkout --ours
+    theirs = checkout --theirs
 
     # log shortcuts
     lgo = log --graph --oneline --decorate
@@ -69,7 +78,7 @@
     whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
 
     # misc
-    spsp = "!sh -c 'git stash; git pull $@; git stash pop'"
+    spsp = "!sh -c 'git stash; git pull --rebase $@; git stash pop'"
     tidy = "!f() { \
         local branch="${1-develop}"; \
         echo "Pruning branches that are already merged into $branch..."; \
