@@ -5,6 +5,7 @@
 	"color_scheme": "Packages/User/SublimeLinter/brogrammer (SL).tmTheme",
 	"convert_tabs_to_spaces": true,
 	"ensure_newline_at_eof_on_save": true,
+	"find_selected_text": true,
 	"font_size": 12,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
@@ -23,6 +24,5 @@
 	"theme": "Brogrammer.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
-	"word_wrap": false,
-	"find_selected_text": true
+	"word_wrap": false
 }
