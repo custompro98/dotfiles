@@ -35,6 +35,7 @@
 
     # commit shortcuts
     ci = commit
+    cm = commit -m
     ca = commit --amend
 
     # diff shortcuts

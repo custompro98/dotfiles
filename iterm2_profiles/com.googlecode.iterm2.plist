@@ -30,6 +30,8 @@
 	<false/>
 	<key>CopySelection</key>
 	<true/>
+	<key>Custom Color Presets</key>
+	<dict/>
 	<key>Default Bookmark Guid</key>
 	<string>7E63A175-9389-40C6-9A3C-0329E4B53B03</string>
 	<key>DimBackgroundWindows</key>
@@ -184,9 +186,11 @@
 	<key>MaxVertically</key>
 	<false/>
 	<key>NSNavLastRootDirectory</key>
-	<string>~</string>
+	<string>~/Documents/iTerm Themes</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
 	<string>{712, 448}</string>
+	<key>NSNavPanelExpandedSizeForSaveMode</key>
+	<string>{712, 521}</string>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
 	<key>NSRepeatCountBinding</key>
@@ -222,15 +226,15 @@
 	<key>NSWindow Frame Preferences</key>
 	<string>812 508 606 456 0 0 1680 1027 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>1092 405 588 622 0 0 1680 1027 </string>
+	<string>548 1646 588 622 -438 1050 2560 1417 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
-	<string>511 1609 606 456 -426 1050 2560 1417 </string>
+	<string>1370 1869 599 505 -438 1050 2560 1417 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>425 1546 796 473 -426 1050 2560 1417 </string>
+	<string>413 1638 770 381 -438 1050 2560 1417 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>127 443 592 584 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1233 1077 907 503 -426 1050 2560 1417 </string>
+	<string>-478 1063 2559 1404 -478 1050 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>1543 2015 570 452 -426 1050 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -1548,7 +1552,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-09-02T13:42:21Z</date>
+	<date>2016-12-06T19:04:11Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>ShowBookmarkName</key>
@@ -1602,7 +1606,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.7</string>
+	<string>3.0.10</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>

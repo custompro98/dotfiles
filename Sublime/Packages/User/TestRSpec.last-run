@@ -6,7 +6,7 @@
 		{
 		},
 		"file_regex": "([^ ]*\\.rb):?(\\d*)",
-		"shell_cmd": "( cd /apps/project_ouroboros && /usr/bin/env ruby -S bundle exec spring rspec lib/fields/repository.rb:1025)",
+		"shell_cmd": "( cd /apps/project_ouroboros && /usr/bin/env ruby -S bundle exec spring rspec app/controllers/users_index_controller.rb)",
 		"syntax": "Packages/TestRSpec/themes/TestConsole.tmLanguage",
 		"working_dir": "/apps/project_ouroboros"
 	}

@@ -25,3 +25,8 @@ alias gitg='git log --graph --decorate --oneline'
 # bundle exec as brake
 alias brake='bundle exec rake'
 alias be='bundle exec'
+alias railss="(cd ~/rc2-vagrant/; vagrant ssh -c 'cd /var/www/current/; rails s')"
+alias psql="(cd ~/rc2-vagrant/; vagrant ssh -c 'cd /var/www/current/; psql -U postgres -d rc_microsoft -x')"
+
+# vagrant
+alias vssh="(cd ~/rc2-vagrant; vagrant up; vagrant ssh)"

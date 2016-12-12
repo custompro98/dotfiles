@@ -7,10 +7,21 @@
 	[
 		"AdvancedNewFile",
 		"All Autocomplete",
+		"AutoFileName",
+		"ayu",
+		"Babel",
+		"Boxy Theme",
 		"BracketHighlighter",
 		"Case Conversion",
+		"Color Highlighter",
+		"CursorRuler",
 		"DashDoc",
+		"Dracula Color Scheme",
+		"FileBrowser",
 		"Git",
+		"Handlebars",
+		"JSHint",
+		"JSHint Gutter",
 		"Package Control",
 		"Ruby Slim",
 		"SideBarEnhancements",
@@ -18,7 +29,9 @@
 		"SublimeLinter-rubocop",
 		"SublimeLinter-ruby",
 		"SublimeLinter-slim-lint",
+		"Syntax Highlighting for Sass",
 		"TestRSpec",
-		"Theme - Brogrammer"
+		"Theme - Brogrammer",
+		"zz File Icons"
 	]
 }
