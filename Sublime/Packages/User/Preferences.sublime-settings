@@ -12,7 +12,7 @@
 		"/apps/project_ouroboros/log",
 		"/apps/project_ouroboros/.git"
 	],
-	"font_size": 13,
+	"font_size": 15,
 	"ha_style": "filled",
 	"highlight_line": true,
 	"highlight_modified_tabs": true,

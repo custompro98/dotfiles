@@ -29,4 +29,6 @@ alias railss="(cd ~/rc2-vagrant/; vagrant ssh -c 'cd /var/www/current/; rails s'
 alias psql="(cd ~/rc2-vagrant/; vagrant ssh -c 'cd /var/www/current/; psql -U postgres -d rc_microsoft -x')"
 
 # vagrant
-alias vssh="(cd ~/rc2-vagrant; vagrant up; vagrant ssh)"
+alias vs="(cd ~/rc2-vagrant; vagrant up; vagrant ssh)"
+alias vu="(cd ~/rc2-vagrant; vagrant up)"
+alias vd="(cd ~/rc2-vagrant; vagrant halt)"
