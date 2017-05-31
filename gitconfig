@@ -6,7 +6,7 @@
 
 [user]
     name   = Mitch Joa
-    email  = mitchjoa@gmail.com
+    email  = mitch.joa@yello.co
 
 [color]
     diff        = auto
@@ -46,6 +46,7 @@
     d1  = diff --patience HEAD~1
     d2  = diff --patience HEAD~2
     d3  = diff --patience HEAD~3
+    ds  = diff --ignore-all-space
 
     # reset shortcuts
     rss = reset --soft
@@ -91,4 +92,4 @@
 # mode: conf-unix
 # End:
 [push]
-	default = matching
+	default = current

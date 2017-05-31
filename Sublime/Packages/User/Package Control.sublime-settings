@@ -5,24 +5,26 @@
 	],
 	"installed_packages":
 	[
+		"A File Icon",
 		"AdvancedNewFile",
 		"All Autocomplete",
 		"AutoFileName",
 		"ayu",
 		"Babel",
+		"BeautifyRuby",
 		"Boxy Theme",
 		"BracketHighlighter",
 		"Case Conversion",
 		"Color Highlighter",
 		"CursorRuler",
-		"DashDoc",
-		"Dracula Color Scheme",
-		"FileBrowser",
+		"ElasticsearchClient",
 		"Git",
 		"Handlebars",
 		"JSHint",
 		"JSHint Gutter",
+		"Material Theme",
 		"Package Control",
+		"Pretty JSON",
 		"Ruby Slim",
 		"SideBarEnhancements",
 		"SublimeLinter",
@@ -30,8 +32,6 @@
 		"SublimeLinter-ruby",
 		"SublimeLinter-slim-lint",
 		"Syntax Highlighting for Sass",
-		"TestRSpec",
-		"Theme - Brogrammer",
-		"zz File Icons"
+		"Theme - Brogrammer"
 	]
 }

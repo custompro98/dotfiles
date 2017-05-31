@@ -210,7 +210,7 @@
 		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
 		hAErATGG
 		</data>
-		<string>322</string>
+		<string>307</string>
 	</array>
 	<key>NSTableView Hidden Columns KeyBingingTable</key>
 	<array/>
@@ -226,17 +226,17 @@
 	<key>NSWindow Frame Preferences</key>
 	<string>812 508 606 456 0 0 1680 1027 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>548 1646 588 622 -438 1050 2560 1417 </string>
+	<string>986 607 588 622 0 0 2560 1417 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
-	<string>1370 1869 599 505 -438 1050 2560 1417 </string>
+	<string>1330 1869 606 456 -478 1050 2560 1417 </string>
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>413 1638 770 381 -438 1050 2560 1417 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>127 443 592 584 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-478 1063 2559 1404 -478 1050 2560 1417 </string>
+	<string>0 48 1662 979 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>1543 2015 570 452 -426 1050 2560 1417 </string>
+	<string>0 48 1676 979 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>3104 -527 892 1404 1440 -540 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
@@ -1472,6 +1472,8 @@
 	</array>
 	<key>NoSyncConfirmBeta</key>
 	<true/>
+	<key>NoSyncHaveWarnedAboutPasteConfirmationChange</key>
+	<true/>
 	<key>NoSyncInstallationId</key>
 	<string>4542690B-A281-45A6-9BCC-746612A8969D</string>
 	<key>NoSyncPermissionToShowTip</key>
@@ -1552,13 +1554,13 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-12-06T19:04:11Z</date>
+	<date>2017-04-07T21:00:33Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>ShowBookmarkName</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<true/>
+	<false/>
 	<key>ShowPaneTitles</key>
 	<true/>
 	<key>SmartPlacement</key>
@@ -1606,7 +1608,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.10</string>
+	<string>3.0.13</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
