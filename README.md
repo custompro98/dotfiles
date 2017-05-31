@@ -1,5 +1,10 @@
 # dotfiles
 
+## Easy Installation
+git clone https://github.com/custompro98/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+sh install.sh
+
 ## Installation
 - `brew install ag`
 - `brew install ctags`
