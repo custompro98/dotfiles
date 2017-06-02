@@ -1,10 +1,11 @@
 cd /apps/project_ouroboros
 
-# Set up prompt to <branch>:<path> $ 
-export PS1='\[$txtgrn\]$git_branch \[$txtcyn\]\w\[$txtrst\] 
+# Set up prompt to <branch>:<path> $
+export PS1='\[$txtgrn\]$git_branch \[$txtcyn\]\w\[$txtrst\]
 $ '
 
 # Set up Ruby environment
+source /usr/local/opt/chruby/share/chruby/chruby.sh
 source /usr/local/share/chruby/chruby.sh
 chruby 2.3.1
 
@@ -76,5 +77,5 @@ alias dc=docker-compose
 alias de=docker_compose_exec
 alias da=docker_compose_attach
 
-# alias railss="dc restart web; da web" 
+# alias railss="dc restart web; da web"
 # alias psql="dc run -e PGPASSWORD=password postgres psql -x -d rc_jpmcstaging -U postgres -h postgres"
