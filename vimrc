@@ -5,15 +5,24 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
-
+" Vundle
 Plugin 'VundleVim/Vundle.vim'
+
+" General Plugins
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'vim-ruby/vim-ruby'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'mileszs/ack.vim'
-Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-fugitive'
+Plugin 'vim-airline/vim-airline'
+
+" Syntax Specific Plugins
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-rails'
+
+" Asctetic Plugins
+Plugin 'ayu-theme/ayu-vim'
+Plugin 'vim-airline/vim-airline-themes'
 
 call vundle#end()            " required
 
@@ -34,6 +43,7 @@ set number
 set tabstop=2
 set shiftwidth=2
 set expandtab
+set splitright
 
 syntax on
 
@@ -57,7 +67,6 @@ nnoremap <C-H> <C-W><C-H>
 if executable('ag')
   let g:ackprg = 'ag --nogroup --nocolor --column'
 endif
-
 cnoreabbrev ack Ack!
 imap jk <Esc>
 
@@ -68,3 +77,17 @@ autocmd BufWritePre * %s/\s\+$//e
 cnoreabbrev gbl Gblame
 cnoreabbrev gst Gstatus
 cnoreabbrev gdf Gdiff
+cnoreabbrev gco Gread                    "git checkout --<current file>, use u to undo checkout
+
+" Tcomment
+nnoremap <C-/> :TComment
+
+" Statusline
+set laststatus=2
+let g:airline_powerline_fonts = 1
+set t_Co=256
+
+" Theme
+let ayucolor="mirage"
+colorscheme ayu
+let g:airline_theme='understated'
