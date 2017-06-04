@@ -22,7 +22,9 @@ imap jk <Esc>
 autocmd BufWritePre *.[^.md] %s/\s\+$//e
 
 """ Theme
-let ayucolor="mirage"
-colorscheme ayu
+if exists(':ayu-vim')
+  let ayucolor="mirage"
+  colorscheme ayu
+endif
 
 let g:airline_theme='understated'
