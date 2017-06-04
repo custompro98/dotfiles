@@ -1,14 +1,18 @@
 #!/bin/bash
-mkdir ~/.bash
-git clone git://github.com/jimeh/git-aware-prompt.git ~/.bash
-
 brew install ag
 brew install ctags
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-brew tap thoughtbot/formulae
-brew install rcm
-rcup -x Control.cache -x README.md -x Sublime -x install.sh -x iterm2_profiles -x ayu-mirage.itermcolors
-cp ~/.dotfiles/iterm2_profiles/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
+(cd ~/.dotfiles/vim; git submodule update --init)
+
+ln -s ~/.dotfiles/bash ~/.bash
+ln -sf ~/.dotfiles/iterm2_profiles/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
+ln -s ~/.dotfiles/vim ~/.vim
+ln -s ~/.dotfiles/vim/vimrc ~/.vimrc
+ln -s ~/.dotfiles/bash_profile ~/.bash_profile
+ln -s ~/.dotfiles/bashrc ~/.bashrc
+ln -s ~/.dotfiles/gitconfig ~/.gitconfig
+ln -s ~/.dotfiles/profile ~/.profile
+ln -s ~/.dotfiles/psqlrc ~/.psqlrc
+ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
 
 vim +PluginInstall +qall

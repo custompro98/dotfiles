@@ -39,55 +39,8 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-set number
-set tabstop=2
-set shiftwidth=2
-set expandtab
-set splitright
-
 syntax on
+filetype plugin indent on
 
-" NerdTree
-map <C-\> :NERDTreeToggle<CR>
+runtime! init/**.vim
 
-" Start NerdTree when no files specified in vim
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-" Close NerdTree if last window open
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" Split navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
-" ag in ack.vim
-if executable('ag')
-  let g:ackprg = 'ag --nogroup --nocolor --column'
-endif
-cnoreabbrev ack Ack!
-imap jk <Esc>
-
-" Remove trailing whitespace on save
-autocmd BufWritePre * %s/\s\+$//e
-
-" Git
-cnoreabbrev gbl Gblame
-cnoreabbrev gst Gstatus
-cnoreabbrev gdf Gdiff
-cnoreabbrev gco Gread                    "git checkout --<current file>, use u to undo checkout
-
-" Tcomment
-nnoremap <C-/> :TComment
-
-" Statusline
-set laststatus=2
-let g:airline_powerline_fonts = 1
-set t_Co=256
-
-" Theme
-let ayucolor="mirage"
-colorscheme ayu
-let g:airline_theme='understated'

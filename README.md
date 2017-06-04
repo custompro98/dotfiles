@@ -1,9 +1,9 @@
 # dotfiles
 
 ## Easy Installation
-git clone https://github.com/custompro98/dotfiles.git ~/.dotfiles
-cp ~/.dotfiles/iterm2_profiles/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
-sh ~/.dotfiles/install.sh
+git clone https://github.com/custompro98/dotfiles.git ~/.dotfiles  
+`cp ~/.dotfiles/iterm2_profiles/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist`  
+`sh ~/.dotfiles/install.sh`  
 
 ## Installation
 - `brew install ag`
