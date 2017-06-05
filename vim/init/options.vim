@@ -19,7 +19,7 @@ imap jk <Esc>
 """ Auto cmds
 
 " Remove trailing whitespace on save
-autocmd BufWritePre *.[^.md] %s/\s\+$//e
+autocmd BufWritePre *[^.md] %s/\s\+$//e
 
 """ Theme
 if exists(':ayu-vim')
