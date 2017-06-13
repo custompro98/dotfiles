@@ -15,6 +15,7 @@ Plugin 'tomtom/tcomment_vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-airline/vim-airline'
+Plugin 'tpope/vim-eunuch'
 
 " Syntax Specific Plugins
 Plugin 'vim-ruby/vim-ruby'
