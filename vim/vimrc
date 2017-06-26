@@ -8,18 +8,24 @@ call vundle#begin()
 " Vundle
 Plugin 'VundleVim/Vundle.vim'
 
-" General Plugins
+" System Plugins
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'tomtom/tcomment_vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-airline/vim-airline'
 Plugin 'tpope/vim-eunuch'
 
+" Coding plugins
+Plugin 'tomtom/tcomment_vim'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'tpope/vim-endwise'
+
 " Syntax Specific Plugins
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
 
 " Asctetic Plugins
 Plugin 'ayu-theme/ayu-vim'

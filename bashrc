@@ -32,6 +32,10 @@ alias railss="(cd ~/rc2-vagrant/; vagrant ssh -c 'cd /var/www/current/; rails s'
 alias railsc="(cd ~/rc2-vagrant/; vagrant ssh -c 'cd /var/www/current/; rails c')"
 alias psql="(cd ~/rc2-vagrant/; vagrant ssh -c 'cd /var/www/current/; psql -U postgres -d rc_jpmcstaging -x')"
 
+# React
+alias react="(cd ~/rc2-vagrant/; vagrant ssh -c 'cd /var/www/current/client; npm run build:development')"
+alias lint="(cd ~/rc2-vagrant/; vagrant ssh -c 'cd /var/www/current/client; npm run lint')"
+
 # vagrant
 alias vs="(cd ~/rc2-vagrant; vagrant up; vagrant ssh)"
 alias vu="(cd ~/rc2-vagrant; vagrant up)"
