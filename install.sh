@@ -17,5 +17,6 @@ ln -s ~/.dotfiles/gitconfig ~/.gitconfig
 ln -s ~/.dotfiles/profile ~/.profile
 ln -s ~/.dotfiles/psqlrc ~/.psqlrc
 ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
+ln -s ~/.dotfiles/git/contrib/completion/git-completion.bash ~/.git-completion.bash
 
 vim +PluginInstall +qall
