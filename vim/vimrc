@@ -9,23 +9,26 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 " System Plugins
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'mileszs/ack.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'vim-airline/vim-airline'
-Plugin 'tpope/vim-eunuch'
+Plugin 'mileszs/ack.vim'         "ack (search, tries to use ag by default)
+Plugin 'vim-airline/vim-airline' "airline
+Plugin 'ctrlpvim/ctrlp.vim'      "ctrlp
+Plugin 'tpope/vim-eunuch'        "eunuch (filesystem commands)
+Plugin 'tpope/vim-fugitive'      "fugitive (git)
+Plugin 'scrooloose/nerdtree'     "NERDTree
+Plugin 'tpope/vim-repeat'        "Repeat (enables . for plugins)
 
 " Coding plugins
-Plugin 'tomtom/tcomment_vim'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'tpope/vim-endwise'
+Plugin 'jiangmiao/auto-pairs'    "AutoPairs
+Plugin 'tpope/vim-commentary'    "Commentary (quick commenting)
+Plugin 'tpope/vim-endwise'       "Endwise
+Plugin 'tpope/vim-surround'      "Surround (quotes and brackets)
 
 " Syntax Specific Plugins
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-rails'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
+Plugin 'tpope/vim-rails'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'slim-template/vim-slim'
 
 " Asctetic Plugins
 Plugin 'ayu-theme/ayu-vim'

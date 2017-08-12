@@ -5,7 +5,7 @@ set number
 set shiftwidth=2
 set splitright
 set tabstop=2
-set timeout timeoutlen=100 ttimeoutlen=1000
+set timeout timeoutlen=1000 ttimeoutlen=1000
 
 """ Key bindings
 
