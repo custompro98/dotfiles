@@ -30,7 +30,7 @@ alias brake='bundle exec rake'
 alias be='bundle exec'
 alias railss="(cd ~/rc2-vagrant/; vagrant ssh -c 'cd /var/www/current/; rails s')"
 alias railsc="(cd ~/rc2-vagrant/; vagrant ssh -c 'cd /var/www/current/; rails c')"
-alias psql="(cd ~/rc2-vagrant/; vagrant ssh -c 'cd /var/www/current/; psql -U postgres -d rc_jpmcstaging -x')"
+alias db="(cd ~/rc2-vagrant/; vagrant ssh -c 'cd /var/www/current/; psql -U postgres -d rc_jpmcstaging -x')"
 
 # React
 alias react="(cd ~/rc2-vagrant/; vagrant ssh -c 'cd /var/www/current/client; npm run build:development')"
@@ -42,6 +42,7 @@ alias vu="(cd ~/rc2-vagrant; vagrant up)"
 alias vd="(cd ~/rc2-vagrant; vagrant halt)"
 
 alias vb="(cd ~/rc2-vagrant; vagrant ssh -c 'cd /var/www/current; bundle install')"
+alias vk="(cd ~/rc2-vagrant; vagrant ssh -c 'cd /var/www/current; kill -9 `cat tmp/pids/server.pid`')"
 
 function vrake {
   echo -e "\n Executing \033[1m\033[36mrake $1 \033[0mon \033[33mvagrant\033\0m\n"
