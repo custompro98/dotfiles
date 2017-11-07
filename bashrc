@@ -7,7 +7,7 @@ $ '
 # Set up Ruby environment
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 source /usr/local/share/chruby/chruby.sh
-chruby 2.3.1
+chruby 2.3.4
 
 # Add PostgreSQL server commands to path
 # Add any other scripts here into path
@@ -28,59 +28,12 @@ alias gitg='git log --graph --decorate --oneline'
 # bundle exec as brake
 alias brake='bundle exec rake'
 alias be='bundle exec'
-alias railss="(cd ~/rc2-vagrant/; vagrant ssh -c 'cd /var/www/current/; rails s')"
-alias railsc="(cd ~/rc2-vagrant/; vagrant ssh -c 'cd /var/www/current/; rails c')"
-alias db="(cd ~/rc2-vagrant/; vagrant ssh -c 'cd /var/www/current/; psql -U postgres -d rc_jpmcstaging -x')"
 
-# React
-alias react="(cd ~/rc2-vagrant/; vagrant ssh -c 'cd /var/www/current/client; npm run build:development')"
-alias lint="(cd ~/rc2-vagrant/; vagrant ssh -c 'cd /var/www/current/client; npm run lint')"
+# start scheduler
+alias scheduler='bundle exec rake resque:scheduler'
 
-# vagrant
-alias vs="(cd ~/rc2-vagrant; vagrant up; vagrant ssh)"
-alias vu="(cd ~/rc2-vagrant; vagrant up)"
-alias vd="(cd ~/rc2-vagrant; vagrant halt)"
+# start worker
+alias work='QUEUE=* bundle exec rake resque:work'
 
-alias vb="(cd ~/rc2-vagrant; vagrant ssh -c 'cd /var/www/current; bundle install')"
-alias vk="(cd ~/rc2-vagrant; vagrant ssh -c 'cd /var/www/current; kill -9 `cat tmp/pids/server.pid`')"
 
-function vrake {
-  echo -e "\n Executing \033[1m\033[36mrake $1 \033[0mon \033[33mvagrant\033\0m\n"
-  (cd ~/rc2-vagrant; vagrant up; vagrant ssh -c "cd /var/www/current; bundle exec rake $1")
-}
-
-function vspec {
-  echo -e "\n Executing \033[1m\033[36mrspec $1 \033[0mon \033[33mvagrant\033\0m\n"
-  (cd ~/rc2-vagrant; vagrant up; vagrant ssh -c "cd /var/www/current; bundle exec rspec $1")
-}
-
-# docker
-function docker_compose_container {
-  dirname=${PWD##*/}
-  basename="${dirname//[ _-]/}"
-  container="${COMPOSE_PROJECT_NAME:-$basename}_$1_1"
-  echo $container
-}
-
-function docker_compose_exec {
-  container=$(docker_compose_container $1)
-  shift
-  echo -e "\nExecuting the provided command within a running container:"
-  echo -e "\n\033[1m\033[36mdocker exec -it \033[92m$container \033[33m$@\033[0m\n"
-  docker exec -it $container $@
-}
-
-function docker_compose_attach {
-  container=$(docker_compose_container $1)
-  shift
-  echo -e "\nAttaching to a running service:"
-  echo -e "\n\033[1m\033[36mdocker attach \033[92m$container \033[0m\n"
-  docker attach --sig-proxy=false $container
-}
-
-alias dc=docker-compose
-alias de=docker_compose_exec
-alias da=docker_compose_attach
-
-# alias railss="dc restart web; da web"
-# alias psql="dc run -e PGPASSWORD=password postgres psql -x -d rc_jpmcstaging -U postgres -h postgres"
+alias add_git_ssh="ssh-add ~/.ssh/id_rsa"

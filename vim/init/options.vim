@@ -23,6 +23,9 @@ let hlstate=0
 nnoremap <C-f> :if (hlstate%2 == 0) \| nohlsearch \| else \| set hlsearch \| endif \| let hlstate=hlstate+1<CR>:echo "toggled visibility for hlsearch"<CR>
 inoremap <C-f> <ESC>:if (hlstate%2 == 0) \| nohlsearch \| else \| set hlsearch \| endif \| let hlstate=hlstate+1<CR>:echo "toggled visibility for hlsearch"<CR>
 
+" Abbreviate tabnew
+cabbrev tn tabnew
+
 """ Auto cmds
 
 " Remove trailing whitespace on save
