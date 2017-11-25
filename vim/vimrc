@@ -28,6 +28,8 @@ Plugin 'tpope/vim-surround'      "Surround (quotes and brackets)
 Plugin 'tpope/vim-rails'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'slim-template/vim-slim'
+Plugin 'elixir-editors/vim-elixir'
+Plugin 'ElmCast/elm-vim'
 
 "" JavaScript
 Plugin 'pangloss/vim-javascript'
