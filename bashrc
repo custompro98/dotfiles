@@ -1,13 +1,21 @@
 cd /apps/project_ouroboros
 
+platform='osx'
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux'  ]]; then
+   platform='linux'
+fi
+
 # Set up prompt to <branch>:<path> $
 export PS1='\[$txtgrn\]$git_branch \[$txtcyn\]\w\[$txtrst\]
 $ '
 
 # Set up Ruby environment
-source /usr/local/opt/chruby/share/chruby/chruby.sh
-source /usr/local/share/chruby/chruby.sh
-chruby 2.3.4
+if [[ "$platform" == 'osx' ]]; then
+  source /usr/local/opt/chruby/share/chruby/chruby.sh
+  source /usr/local/share/chruby/chruby.sh
+  chruby 2.3.4
+fi
 
 # Add PostgreSQL server commands to path
 # Add any other scripts here into path
@@ -33,7 +41,9 @@ alias be='bundle exec'
 alias scheduler='bundle exec rake resque:scheduler'
 
 # start worker
-alias work='QUEUE=* bundle exec rake resque:work'
+alias worker='QUEUE=* bundle exec rake resque:work'
 
 
 alias add_git_ssh="ssh-add ~/.ssh/id_rsa"
+source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh

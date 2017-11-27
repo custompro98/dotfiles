@@ -1,6 +1,5 @@
-# Set up Ruby environment
-source /usr/local/share/chruby/chruby.sh
-chruby 2.3.1
+source ~/.bash_profile
+source ~/.bashrc
 
 # Add PostgreSQL server commands to path
 export PATH="~/.scripts:$PATH"
