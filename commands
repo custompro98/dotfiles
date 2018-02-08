@@ -1,11 +1,3 @@
-### Ask for Code Review
-## Use this format in merge request body, check next to name when finished && approved
-[Pivotal](<link to story>)
-
-Code Review:
-- [ ] @<team member>
-- [ ] @<team member>
-
 ### GIT
 ## Amend
 # Amend a previous commits message
@@ -24,4 +16,6 @@ git checkout <feature branch>
 git rebase upstream/master
 git push --force origin <feature branch>
 git rebase --continue
-<repeat last two unitl done>
+<repeat last two until done>
+
+pg_restore -Ft -C -d postgres -h localhost -U postgres ~/Downloads/microsoft_for_mitch.tar

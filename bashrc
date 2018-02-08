@@ -43,7 +43,15 @@ alias scheduler='bundle exec rake resque:scheduler'
 # start worker
 alias worker='QUEUE=* bundle exec rake resque:work'
 
+# start resque web
+alias watcher='bundle exec resque-web -p 8555 -L -f config/resque-web.rb'
 
 alias add_git_ssh="ssh-add ~/.ssh/id_rsa"
+source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh

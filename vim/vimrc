@@ -16,6 +16,7 @@ Plugin 'tpope/vim-eunuch'        "eunuch (filesystem commands)
 Plugin 'tpope/vim-fugitive'      "fugitive (git)
 Plugin 'scrooloose/nerdtree'     "NERDTree
 Plugin 'tpope/vim-repeat'        "Repeat (enables . for plugins)
+Plugin 'kshenoy/vim-signature'   "Display marks in the gutter
 
 " Coding plugins
 Plugin 'jiangmiao/auto-pairs'    "AutoPairs
@@ -30,6 +31,9 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'slim-template/vim-slim'
 Plugin 'elixir-editors/vim-elixir'
 Plugin 'ElmCast/elm-vim'
+
+"" SQL
+Plugin 'aliou/sql-heredoc.vim'   "SQL highlighting via heredoc (<<SQL)
 
 "" JavaScript
 Plugin 'pangloss/vim-javascript'
