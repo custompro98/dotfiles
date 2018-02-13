@@ -26,6 +26,7 @@ fi
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 ln -s ~/.dotfiles/vim/vimrc ~/.vimrc
+ln -s ~/.dotfiles/reveal.js ~/reveal.js
 ln -s ~/.dotfiles/bash_profile ~/.bash_profile
 ln -s ~/.dotfiles/bashrc ~/.bashrc
 ln -s ~/.dotfiles/gitconfig ~/.gitconfig
