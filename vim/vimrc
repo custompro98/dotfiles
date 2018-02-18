@@ -24,6 +24,9 @@ Plugin 'tpope/vim-commentary'    "Commentary (quick commenting)
 Plugin 'tpope/vim-endwise'       "Endwise
 Plugin 'tpope/vim-surround'      "Surround (quotes and brackets)
 
+"Snippets
+Plugin 'SirVer/UltiSnips'        "Snippet support
+
 " Syntax Specific Plugins
 "" Ruby/Rails
 Plugin 'tpope/vim-rails'
