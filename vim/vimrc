@@ -48,7 +48,7 @@ Plugin 'ayu-theme/ayu-vim'
 Plugin 'vim-airline/vim-airline-themes'
 
 " Presentation Plugins
-Plugin 'blindFS/vim-reveal'
+Plugin 'custompro98/vim-reveal'
 
 call vundle#end()            " required
 
