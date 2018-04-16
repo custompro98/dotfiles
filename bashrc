@@ -47,6 +47,7 @@ alias worker='QUEUE=* bundle exec rake resque:work'
 alias watcher='bundle exec resque-web -p 8555 -L -f config/resque-web.rb'
 
 alias add_git_ssh="ssh-add ~/.ssh/id_rsa"
+alias clear_lonely_jobs="redis-cli KEYS *lonely_job:microsoft-refresh-*-elasticsearch-documents | xargs redis-cli DEL"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

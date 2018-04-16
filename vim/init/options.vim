@@ -38,4 +38,5 @@ autocmd BufWritePre *[^.md] %s/\s\+$//e
   colorscheme ayu
 " endif
 
+""" Syntax highlighting
 let g:jsx_ext_required=0

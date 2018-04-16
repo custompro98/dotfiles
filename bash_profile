@@ -22,4 +22,4 @@ else
   source /usr/local/opt/nvm/nvm.sh
 fi
 
-nvm use 6.9.1
+nvm use 6.13.0
