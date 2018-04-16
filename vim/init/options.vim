@@ -38,6 +38,4 @@ autocmd BufWritePre *[^.md] %s/\s\+$//e
   colorscheme ayu
 " endif
 
-let g:airline_theme='understated'
-
 let g:jsx_ext_required=0

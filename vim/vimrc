@@ -45,7 +45,6 @@ Plugin 'valloric/MatchTagAlways'
 
 " Asctetic Plugins
 Plugin 'ayu-theme/ayu-vim'
-Plugin 'vim-airline/vim-airline-themes'
 
 " Presentation Plugins
 Plugin 'custompro98/vim-reveal'
