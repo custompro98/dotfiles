@@ -32,9 +32,12 @@ cabbrev tn tabnew
 autocmd BufWritePre *[^.md] %s/\s\+$//e
 
 """ Theme
-if exists(':ayu-vim')
+" if exists(':ayu-vim')
+  set termguicolors
   let ayucolor="mirage"
   colorscheme ayu
-endif
+" endif
 
 let g:airline_theme='understated'
+
+let g:jsx_ext_required=0
