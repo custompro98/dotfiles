@@ -54,11 +54,16 @@ endif
 autocmd BufWritePre *[^.md] %s/\s\+$//e
 
 """ Theme
-" if exists(':ayu-vim')
+if s:uname == "Darwin"
   set termguicolors
-  let ayucolor="mirage"
-  colorscheme ayu
-" endif
+endif
+
+let ayucolor="mirage"
+colorscheme ayu
+
+if s:uname == "Linux"
+  let g:airline_theme='understated'
+endif
 
 """ Syntax highlighting
 let g:jsx_ext_required=0
