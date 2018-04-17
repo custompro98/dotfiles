@@ -35,4 +35,18 @@ ln -s ~/.dotfiles/psqlrc ~/.psqlrc
 ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
 ln -s ~/.dotfiles/git/contrib/completion/git-completion.bash ~/.git-completion.bash
 
+# Install NVM
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash
+if [[ "$platform" == 'linux' ]]; then
+  echo "Please restart the shell and run the following: "
+  echo "nvm install 6.13.0"
+  echo "nvm use 6.13.0"
+  echo "npm install -g prettier"
+  echo "vim +PluginInstall +qall"
+else
+  nvm install 6.13.0
+  nvm use 6.13.0
+  npm install -g prettier
+fi
+
 vim +PluginInstall +qall

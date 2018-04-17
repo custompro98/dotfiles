@@ -42,9 +42,11 @@ Plugin 'aliou/sql-heredoc.vim'   "SQL highlighting via heredoc (<<SQL)
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'valloric/MatchTagAlways'
+Plugin 'sbdchd/neoformat'
 
 " Asctetic Plugins
 Plugin 'ayu-theme/ayu-vim'
+Plugin 'vim-airline/vim-airline-themes'
 
 " Presentation Plugins
 Plugin 'custompro98/vim-reveal'
