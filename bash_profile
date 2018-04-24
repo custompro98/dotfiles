@@ -22,4 +22,5 @@ else
   source /usr/local/opt/nvm/nvm.sh
 fi
 
-nvm use 6.13.0
+nvm use 9.5.0
+export PATH="/home/mitchjoa/.linuxbrew/bin:$PATH"
