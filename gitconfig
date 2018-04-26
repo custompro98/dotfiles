@@ -68,6 +68,7 @@
     # checkout shortcuts
     ours   = checkout --ours
     theirs = checkout --theirs
+    clear  = checkout -- .
 
     # log shortcuts
     lgo = log --graph --oneline --decorate
