@@ -24,6 +24,10 @@ Plugin 'tpope/vim-commentary'    "Commentary (quick commenting)
 Plugin 'tpope/vim-endwise'       "Endwise
 Plugin 'tpope/vim-surround'      "Surround (quotes and brackets)
 
+" Formatting Plugins
+Plugin 'sbdchd/neoformat'
+Plugin 'w0rp/ale'
+
 "Snippets
 Plugin 'SirVer/UltiSnips'        "Snippet support
 
@@ -42,7 +46,6 @@ Plugin 'aliou/sql-heredoc.vim'   "SQL highlighting via heredoc (<<SQL)
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'valloric/MatchTagAlways'
-Plugin 'sbdchd/neoformat'
 
 " Asctetic Plugins
 Plugin 'ayu-theme/ayu-vim'
