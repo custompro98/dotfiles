@@ -28,6 +28,9 @@ source "${GITAWAREPROMPT}/main.sh"
 # Git autocomplete
 source ~/.git-completion.bash
 
+# Gogh for Gnome/Pantheon Terminal Colorschemes
+alias gogh='sudo apt-get install dconf-cli && wget -O gogh https://git.io/vQgMr && chmod +x gogh && ./gogh && rm gogh'
+
 ### Aliases
 
 # git branch mapping
@@ -83,4 +86,4 @@ function docker_compose_attach {
 alias dc=docker-compose
 alias de=docker_compose_exec
 alias da=docker_compose_attach
-alias rs=dc up -d web && da
+alias rs='dc up -d web && da web'
