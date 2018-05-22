@@ -14,7 +14,7 @@ $ '
 if [[ "$platform" == 'osx' ]]; then
   source /usr/local/opt/chruby/share/chruby/chruby.sh
   source /usr/local/share/chruby/chruby.sh
-  chruby 2.3.4
+  chruby 2.3.6
 fi
 
 # Add PostgreSQL server commands to path
@@ -55,3 +55,32 @@ export NVM_DIR="$HOME/.nvm"
 
 # added by travis gem
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
+
+### DOCKER
+function docker_compose_container {
+  dirname=${PWD##*/}
+  basename="${dirname//[ _-]/}"
+  container="${COMPOSE_PROJECT_NAME:-$basename}_$1_1"
+  echo $container
+}
+
+function docker_compose_exec {
+  container=$(docker_compose_container $1)
+  shift
+  echo -e "\nExecuting the provided command within a running container:"
+  echo -e "\n\033[1m\033[36mdocker exec -it \033[92m$container \033[33m$@\033[0m\n"
+  docker exec -it $container $@
+}
+
+function docker_compose_attach {
+  container=$(docker_compose_container $1)
+  shift
+  echo -e "\nAttaching to a running service:"
+  echo -e "\n\033[1m\033[36mdocker attach \033[92m$container \033[0m\n"
+  docker attach $container
+}
+
+alias dc=docker-compose
+alias de=docker_compose_exec
+alias da=docker_compose_attach
+alias rs=dc up -d web && da
