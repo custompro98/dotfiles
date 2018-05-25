@@ -14,7 +14,7 @@ $ '
 if [[ "$platform" == 'osx' ]]; then
   source /usr/local/opt/chruby/share/chruby/chruby.sh
   source /usr/local/share/chruby/chruby.sh
-  chruby 2.3.6
+  chruby 2.4.1
 fi
 
 # Add PostgreSQL server commands to path
