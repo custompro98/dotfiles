@@ -52,6 +52,12 @@ alias watcher='bundle exec resque-web -p 8555 -L -f config/resque-web.rb'
 alias add_git_ssh="ssh-add ~/.ssh/id_rsa"
 alias clear_lonely_jobs="redis-cli KEYS *lonely_job:microsoft-refresh-*-elasticsearch-documents | xargs redis-cli DEL"
 
+alias dc=docker-compose
+alias de=docker_compose_exec
+alias da=docker_compose_attach
+alias rs='dc up -d web && da web'
+
+### Tool settings
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -82,8 +88,3 @@ function docker_compose_attach {
   echo -e "\n\033[1m\033[36mdocker attach \033[92m$container \033[0m\n"
   docker attach $container
 }
-
-alias dc=docker-compose
-alias de=docker_compose_exec
-alias da=docker_compose_attach
-alias rs='dc up -d web && da web'
