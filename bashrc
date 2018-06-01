@@ -47,7 +47,7 @@ alias scheduler='bundle exec rake resque:scheduler'
 alias worker='QUEUE=* bundle exec rake resque:work'
 
 # start resque web
-alias watcher='bundle exec resque-web -p 8555 -L -f config/resque-web.rb'
+alias watcher='dc run web bundle exec resque-web -p 8555 -L -f config/resque-web.rb'
 
 alias add_git_ssh="ssh-add ~/.ssh/id_rsa"
 alias clear_lonely_jobs="redis-cli KEYS *lonely_job:microsoft-refresh-*-elasticsearch-documents | xargs redis-cli DEL"
@@ -88,3 +88,11 @@ function docker_compose_attach {
   echo -e "\n\033[1m\033[36mdocker attach \033[92m$container \033[0m\n"
   docker attach $container
 }
+
+alias dc=docker-compose
+alias de=docker_compose_exec
+alias da=docker_compose_attach
+alias rs='dc up -d web && da web'
+alias sql='psql -U postgres -h localhost -d rc_microsoft -x'
+alias drake='dc run web rake'
+alias rspec='dc run test rspec'
