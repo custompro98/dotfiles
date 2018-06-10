@@ -9,6 +9,9 @@ set timeout timeoutlen=1000 ttimeoutlen=1000
 set background=dark
 set t_Co=256
 
+" Delete text from previous insert mode
+set backspace=indent,eol,start
+
 let mapleader = ","
 
 """ Key bindings
