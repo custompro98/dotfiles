@@ -28,6 +28,9 @@ inoremap <C-f> <ESC>:if (hlstate%2 == 0) \| nohlsearch \| else \| set hlsearch \
 " Abbreviate tabnew
 cabbrev tn tabnew
 
+" Sudo save
+cabbrev sw w !sudo tee %
+
 " Move lines up/down with alt+j/alt+k
 " On a Mac: alt+j => ∆
 " On a Mac: alt+k => ˚
