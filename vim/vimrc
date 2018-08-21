@@ -23,6 +23,7 @@ Plugin 'jiangmiao/auto-pairs'    "AutoPairs
 Plugin 'tpope/vim-commentary'    "Commentary (quick commenting)
 Plugin 'tpope/vim-endwise'       "Endwise
 Plugin 'tpope/vim-surround'      "Surround (quotes and brackets)
+Plugin 'brooth/far.vim'          "Find and Replace
 
 " Formatting Plugins
 Plugin 'sbdchd/neoformat'
@@ -40,7 +41,7 @@ Plugin 'elixir-editors/vim-elixir'
 Plugin 'ElmCast/elm-vim'
 
 "" SQL
-Plugin 'aliou/sql-heredoc.vim'   "SQL highlighting via heredoc (<<SQL)
+" Plugin 'aliou/sql-heredoc.vim'   "SQL highlighting via heredoc (<<SQL)
 
 "" JavaScript
 Plugin 'pangloss/vim-javascript'
