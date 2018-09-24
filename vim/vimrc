@@ -41,7 +41,7 @@ Plugin 'elixir-editors/vim-elixir'
 Plugin 'ElmCast/elm-vim'
 
 "" SQL
-" Plugin 'aliou/sql-heredoc.vim'   "SQL highlighting via heredoc (<<SQL)
+Plugin 'aliou/sql-heredoc.vim'   "SQL highlighting via heredoc (<<SQL)
 
 "" JavaScript
 Plugin 'pangloss/vim-javascript'

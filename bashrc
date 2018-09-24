@@ -6,6 +6,11 @@ if [[ "$unamestr" == 'Linux'  ]]; then
    platform='linux'
 fi
 
+# Map xdg-open to open
+if [[ "$platform" == 'linux' ]]; then
+  alias open="xdg-open"
+fi
+
 # Set up prompt to <branch>:<path> $
 export PS1='\[$txtgrn\]$git_branch \[$txtcyn\]\w\[$txtrst\]
 $ '
@@ -14,7 +19,8 @@ $ '
 if [[ "$platform" == 'osx' ]]; then
   source /usr/local/opt/chruby/share/chruby/chruby.sh
   source /usr/local/share/chruby/chruby.sh
-  chruby 2.4.1
+else
+  source /usr/local/share/chruby/chruby.sh
 fi
 
 # Add PostgreSQL server commands to path
@@ -92,8 +98,20 @@ function docker_compose_attach {
 alias dc=docker-compose
 alias de=docker_compose_exec
 alias da=docker_compose_attach
-alias rs='dc up -d web && da web'
+alias rs='dc run --rm bundler && clear && dc up -d web && da web'
 alias sql='psql -U postgres -h localhost -d rc_microsoft -x'
 alias build='dc run npm install && dc run npm run build'
 alias drake='dc run web rake'
 alias rspec='dc run test rspec'
+
+### Script Functions
+function run_n_times {
+  end=$1
+  shift
+
+  echo -e "\nRunning: $@\n"
+
+  for run in $(seq 1 $end); do
+    $@
+  done
+}
