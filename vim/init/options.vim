@@ -61,10 +61,11 @@ autocmd BufWritePre *[^.md] %s/\s\+$//e
 """ Theme
 if s:uname == "Darwin"
   set termguicolors
+  let ayucolor="mirage"
+  colorscheme ayu
+else
+  colorscheme default
 endif
-
-let ayucolor="mirage"
-colorscheme ayu
 
 if s:uname == "Linux"
   let g:airline_theme='understated'
