@@ -47,7 +47,7 @@ alias brake='bundle exec rake'
 alias be='bundle exec'
 
 # start scheduler
-alias scheduler='bundle exec rake resque:scheduler'
+alias scheduler='dc run web bundle exec rake resque:scheduler'
 
 # start worker
 alias worker='QUEUE=* bundle exec rake resque:work'
