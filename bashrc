@@ -1,4 +1,5 @@
-# cd /apps/project_ouroboros
+cd /apps/project_ouroboros
+source ~/.bashrc_default
 
 platform='osx'
 unamestr=`uname`
@@ -74,8 +75,8 @@ export NVM_DIR="$HOME/.nvm"
 ### DOCKER
 function docker_compose_container {
   dirname=${PWD##*/}
-  basename="${dirname//[ _-]/}"
-  container="${COMPOSE_PROJECT_NAME:-$basename}_$1_1"
+  # basename="${dirname//[ _-]/}"
+  container="${dirname}_$1_1"
   echo $container
 }
 
