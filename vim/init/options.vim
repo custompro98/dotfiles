@@ -6,6 +6,8 @@ set shiftwidth=2
 set splitright
 set tabstop=2
 set timeout timeoutlen=1000 ttimeoutlen=1000
+set background=dark
+set t_Co=256
 
 let mapleader = ","
 
@@ -59,13 +61,12 @@ endif
 autocmd BufWritePre *[^.md] %s/\s\+$//e
 
 """ Theme
-if s:uname == "Darwin"
-  set termguicolors
-  let ayucolor="mirage"
-  colorscheme ayu
-else
-  colorscheme default
-endif
+" if s:uname == "Darwin"
+" endif
+
+set termguicolors
+let ayucolor="mirage"
+colorscheme ayu
 
 if s:uname == "Linux"
   let g:airline_theme='understated'
