@@ -65,11 +65,12 @@ autocmd BufWritePre *[^.md] %s/\s\+$//e
 " endif
 
 set termguicolors
-let ayucolor="mirage"
-colorscheme ayu
+" let ayucolor="mirage"
+" colorscheme ayu
+colorscheme gruvbox
 
 if s:uname == "Linux"
-  let g:airline_theme='understated'
+  let g:airline_theme='gruvbox'
 endif
 
 """ Syntax highlighting
