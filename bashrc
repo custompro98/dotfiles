@@ -54,7 +54,7 @@ alias scheduler='dc run web bundle exec rake resque:scheduler'
 alias worker='QUEUE=* bundle exec rake resque:work'
 
 # start resque web
-alias watcher='dc run -p "localhost:8555:8555" web bundle exec resque-web -p 8555 -L -f config/resque-web.rb'
+alias watcher='dc run -p "127.0.0.1:8555:8555" web bundle exec resque-web -p 8555 -L -f config/resque-web.rb'
 
 alias add_git_ssh="ssh-add ~/.ssh/id_rsa"
 alias clear_lonely_jobs="redis-cli KEYS *lonely_job:microsoft-refresh-*-elasticsearch-documents | xargs redis-cli DEL"
@@ -102,8 +102,9 @@ alias da=docker_compose_attach
 alias rs='dc run --rm bundler && clear && dc up -d web && da web'
 alias sql='psql -U postgres -h localhost -d rc_microsoft -x'
 alias build='dc run npm install && dc run npm run build'
-alias drake='dc run web rake'
-alias rspec='dc run test rspec'
+alias drake='dc run --rm web rake'
+alias rspec='dc run --rm test rspec'
+alias awsvpn='nmcli --ask connection up AWS'
 
 ### Script Functions
 function run_n_times {
