@@ -19,8 +19,9 @@ export NVM_DIR="$HOME/.nvm"
 if [[ "$platform" == 'linux' ]]; then
   [ -s "$NVM_DIR/nvm.sh"  ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 else
-  source /usr/local/opt/nvm/nvm.sh
+  echo "nah" > /dev/null
+  # source /usr/local/opt/nvm/nvm.sh
 fi
 
-nvm use 9.5.0
+nvm use 10.14.2
 export PATH="/home/mitchjoa/.linuxbrew/bin:$PATH"

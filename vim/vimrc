@@ -48,6 +48,9 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'valloric/MatchTagAlways'
 
+"" Go
+Plugin 'fatih/vim-go'
+
 " Asctetic Plugins
 Plugin 'ayu-theme/ayu-vim'
 Plugin 'vim-airline/vim-airline-themes'

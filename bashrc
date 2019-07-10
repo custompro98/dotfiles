@@ -1,5 +1,4 @@
-cd /apps/project_ouroboros
-source ~/.bashrc_default
+# source ~/.bashrc_default
 
 platform='osx'
 unamestr=`uname`
@@ -105,6 +104,10 @@ alias build='dc run npm install && dc run npm run build'
 alias drake='dc run --rm web rake'
 alias rspec='dc run --rm test rspec'
 alias awsvpn='nmcli --ask connection up AWS'
+alias uuid='uuidgen | tr "[:upper:]" "[:lower:]"'
+alias gup='(cd /var/www/grails-vagrant; ./up)'
+alias gdown='(cd /var/www/grails-vagrant; ./down)'
+alias glogs='tail -f /var/www/grails/magento/var/log/grails.log'
 
 ### Script Functions
 function run_n_times {

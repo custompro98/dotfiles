@@ -12,6 +12,8 @@ set t_Co=256
 " Delete text from previous insert mode
 set backspace=indent,eol,start
 
+filetype plugin on
+
 let mapleader = ","
 
 """ Key bindings

@@ -1,0 +1,4 @@
+tags
+**/*.sw*
+.env.local.*
+**/.DS_Store
