@@ -44,6 +44,7 @@ alias gogh='sudo apt-get install dconf-cli && wget -O gogh https://git.io/vQgMr 
 # git branch mapping
 alias gitg='git log --graph --decorate --oneline'
 alias add_git_ssh="ssh-add ~/.ssh/id_rsa"
+alias gitversion="git tag --sort=-version:refname | head -1"
 
 ## Ruby
 alias brake='bundle exec rake'
@@ -87,9 +88,7 @@ function docker_compose_attach {
 }
 
 ## Kube
-function kubels {
-  kubectl get pods -l app=$1
-}
+function kubels { kubectl get pods -l app=$1; }
 
 function kubehist {
   app=$1
@@ -101,6 +100,10 @@ function kubehist {
     kubectl rollout history deployment/$app --revision $rev
   fi
 }
+
+function kubename() { kubectl get pods -l app="$1" --field-selector=status.phase=Running --sort-by=".metadata.creationTimestamp" | tail -n +2 | tail -1 | awk '{print $1}'; }
+function kubesh()   { kubectl exec -it $(kubename "$1") -- sh; }
+function kubebash() { kubectl exec -it $(kubename "$1") -- bash; }
 
 ## Misc
 function run_n_times {
