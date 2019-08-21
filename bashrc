@@ -88,17 +88,13 @@ function docker_compose_attach {
 }
 
 ## Kube
-function kubels { kubectl get pods -l app=$1; }
+function kubels { kubectl get pods ${1:+-l app=$1}; }
 
 function kubehist {
   app=$1
   rev=$2
 
-  if [ -z "$rev" ]; then
-    kubectl rollout history deployment/$app
-  else
-    kubectl rollout history deployment/$app --revision $rev
-  fi
+  kubectl rollout history deployment/$app ${rev:+--revision $rev}
 }
 
 function kubename() { kubectl get pods -l app="$1" --field-selector=status.phase=Running --sort-by=".metadata.creationTimestamp" | tail -n +2 | tail -1 | awk '{print $1}'; }
