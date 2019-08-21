@@ -12,6 +12,7 @@ if [[ "$platform" == 'linux' ]]; then
 else
   brew install ag
   brew install ctags
+  brew install tree
 fi
 
 (cd ~/.dotfiles/vim; git submodule update --init)
@@ -42,13 +43,13 @@ ln -s ~/.dotfiles/git/contrib/completion/git-completion.bash ~/.git-completion.b
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash
 if [[ "$platform" == 'linux' ]]; then
   echo "Please restart the shell and run the following: "
-  echo "nvm install 6.13.0"
-  echo "nvm use 6.13.0"
+  echo "nvm install --lts"
+  echo "nvm use --lts"
   echo "npm install -g prettier"
   echo "vim +PluginInstall +qall"
 else
-  nvm install 6.13.0
-  nvm use 6.13.0
+  nvm install --lts
+  nvm use --lts
   npm install -g prettier
 fi
 
