@@ -6,8 +6,6 @@ set shiftwidth=2
 set splitright
 set tabstop=2
 set timeout timeoutlen=1000 ttimeoutlen=1000
-set background=dark
-set t_Co=256
 
 " Delete text from previous insert mode
 set backspace=indent,eol,start
@@ -38,6 +36,9 @@ cabbrev tn tabnew
 " Sudo save
 cabbrev sw w !sudo tee %
 
+" View current syntax
+cabbrev syn echo b:current_syntax
+
 " Move lines up/down with alt+j/alt+k
 " On a Mac: alt+j => ∆
 " On a Mac: alt+k => ˚
@@ -66,17 +67,11 @@ endif
 autocmd BufWritePre *[^.md] %s/\s\+$//e
 
 """ Theme
-" if s:uname == "Darwin"
-" endif
-
 set termguicolors
-" let ayucolor="mirage"
+" let ayucolor="light"
 " colorscheme ayu
+set background=dark
 colorscheme gruvbox
-
-if s:uname == "Linux"
-  let g:airline_theme='gruvbox'
-endif
 
 """ Syntax highlighting
 let g:jsx_ext_required=0

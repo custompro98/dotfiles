@@ -11,7 +11,8 @@ if [[ "$platform" == 'linux' ]]; then
   alias open="xdg-open"
 fi
 
-# Set up prompt to <branch>:<path> $
+# Set up prompt to (branch) current/working/directory
+# $
 export PS1='\[$txtgrn\]$git_branch \[$txtcyn\]\w\[$txtrst\]
 $ '
 
@@ -39,39 +40,29 @@ alias gogh='sudo apt-get install dconf-cli && wget -O gogh https://git.io/vQgMr 
 
 ### Aliases
 
+## Git
 # git branch mapping
 alias gitg='git log --graph --decorate --oneline'
+alias add_git_ssh="ssh-add ~/.ssh/id_rsa"
 
-# bundle exec as brake
+## Ruby
 alias brake='bundle exec rake'
 alias be='bundle exec'
 
-# start scheduler
-alias scheduler='dc run web bundle exec rake resque:scheduler'
-
-# start worker
-alias worker='QUEUE=* bundle exec rake resque:work'
-
-# start resque web
-alias watcher='dc run -p "127.0.0.1:8555:8555" web bundle exec resque-web -p 8555 -L -f config/resque-web.rb'
-
-alias add_git_ssh="ssh-add ~/.ssh/id_rsa"
-alias clear_lonely_jobs="redis-cli KEYS *lonely_job:microsoft-refresh-*-elasticsearch-documents | xargs redis-cli DEL"
-
+## Docker
 alias dc=docker-compose
 alias de=docker_compose_exec
 alias da=docker_compose_attach
-alias rs='dc up -d web && da web'
 
-### Tool settings
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+## Kube
+alias kubestaging='export KUBECONFIG=~/.kube/kubeconfig.kube-user-stage'
+alias kubeprod='export KUBECONFIG=~/.kube/kubeconfig.kube-user-prod'
 
-# added by travis gem
-[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
+## Misc
+alias uuid='uuidgen | tr "[:upper:]" "[:lower:]"'
 
-### DOCKER
+### Functions
+## Docker
 function docker_compose_container {
   dirname=${PWD##*/}
   # basename="${dirname//[ _-]/}"
@@ -95,21 +86,23 @@ function docker_compose_attach {
   docker attach $container
 }
 
-alias dc=docker-compose
-alias de=docker_compose_exec
-alias da=docker_compose_attach
-alias rs='dc run --rm bundler && clear && dc up -d web && da web'
-alias sql='psql -U postgres -h localhost -d rc_microsoft -x'
-alias build='dc run npm install && dc run npm run build'
-alias drake='dc run --rm web rake'
-alias rspec='dc run --rm test rspec'
-alias awsvpn='nmcli --ask connection up AWS'
-alias uuid='uuidgen | tr "[:upper:]" "[:lower:]"'
-alias gup='(cd /var/www/grails-vagrant; ./up)'
-alias gdown='(cd /var/www/grails-vagrant; ./down)'
-alias glogs='tail -f /var/www/grails/magento/var/log/grails.log'
+## Kube
+function kubels {
+  kubectl get pods -l app=$1
+}
 
-### Script Functions
+function kubehist {
+  app=$1
+  rev=$2
+
+  if [ -z "$rev" ]; then
+    kubectl rollout history deployment/$app
+  else
+    kubectl rollout history deployment/$app --revision $rev
+  fi
+}
+
+## Misc
 function run_n_times {
   end=$1
   shift
@@ -120,3 +113,17 @@ function run_n_times {
     $@
   done
 }
+
+### Tool settings
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# added by travis gem
+[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
+
+# Add company specific commands if they exist
+COMPANY_COMMANDS=~/.companyrc
+if [ -f "$COMPANY_COMMANDS" ]; then
+  source $COMPANY_COMMANDS
+fi

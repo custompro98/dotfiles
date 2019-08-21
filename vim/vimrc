@@ -24,6 +24,7 @@ Plugin 'tpope/vim-commentary'    "Commentary (quick commenting)
 Plugin 'tpope/vim-endwise'       "Endwise
 Plugin 'tpope/vim-surround'      "Surround (quotes and brackets)
 Plugin 'brooth/far.vim'          "Find and Replace
+Plugin 'ludovicchabant/vim-gutentags'
 
 " Formatting Plugins
 Plugin 'sbdchd/neoformat'
@@ -53,9 +54,9 @@ Plugin 'fatih/vim-go'
 
 " Asctetic Plugins
 Plugin 'ayu-theme/ayu-vim'
-Plugin 'vim-airline/vim-airline-themes'
+Plugin 'ayu-theme/ayu-vim-airline'
 Plugin 'morhetz/gruvbox'
-
+'
 " Presentation Plugins
 Plugin 'custompro98/vim-reveal'
 
