@@ -24,6 +24,7 @@ nnoremap <C-H> <C-W><C-H>
 
 " Easy escape
 imap jk <Esc>
+tmap jk <Esc>
 
 " Toggle highlight search
 let hlstate=0
@@ -38,6 +39,10 @@ cabbrev sw w !sudo tee %
 
 " View current syntax
 cabbrev syn echo b:current_syntax
+
+" Leave terminal mode
+tnoremap <Leader>t <C-\><C-n>
+tmap <Esc> <C-\><C-n>
 
 " Move lines up/down with alt+j/alt+k
 " On a Mac: alt+j => ∆
