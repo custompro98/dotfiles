@@ -10,6 +10,7 @@ if [[ "$platform" == 'linux' ]]; then
   sudo apt install silversearcher-ag
   sudo apt install exuberant-ctags
 else
+  brew install nvim
   brew install ag
   brew install ctags
   brew install tree
@@ -26,6 +27,9 @@ fi
 
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
+mkdir -p ~/.config/nvim
+
+ln -s ~/.dotfiles/config/nvim/init.vim ~/.config/nvim/init.vim
 ln -s ~/.dotfiles/vim/vimrc ~/.vimrc
 ln -s ~/.dotfiles/agignore ~/.agignore
 ln -s ~/.dotfiles/ctags ~/.ctags
