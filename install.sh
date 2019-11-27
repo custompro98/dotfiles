@@ -41,7 +41,7 @@ ln -s ~/.dotfiles/git/contrib/completion/git-completion.bash ~/.git-completion.b
 
 # Install NVM
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash
-if [[ "$platform" == 'linux' ]]; then
+if [[ "$platform" == 'Linux' ]]; then
   echo "Please restart the shell and run the following: "
   echo "nvm install --lts"
   echo "nvm use --lts"
@@ -51,6 +51,5 @@ else
   nvm install --lts
   nvm use --lts
   npm install -g prettier
+  vim +PluginInstall +qall
 fi
-
-vim +PluginInstall +qall
