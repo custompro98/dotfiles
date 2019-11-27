@@ -56,6 +56,7 @@ alias de=docker_compose_exec
 alias da=docker_compose_attach
 
 ## Kube
+alias kc='kubectl'
 alias kubestaging='export KUBECONFIG=~/.kube/kubeconfig.kube-user-stage'
 alias kubeprod='export KUBECONFIG=~/.kube/kubeconfig.kube-user-prod'
 
