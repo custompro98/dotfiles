@@ -1,9 +1,0 @@
-<snippet>
-  <content><![CDATA[
-expect(${1:test_item}).to receive(:${2:method_name}).with(${3:arguments})
-]]></content>
-  <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
-  <tabTrigger>ex</tabTrigger>
-  <!-- Optional: Set a scope to limit where the snippet will trigger -->
-  <!-- <scope>source.python</scope> -->
-</snippet>
