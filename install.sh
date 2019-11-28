@@ -48,9 +48,11 @@ if [[ "$platform" == 'Linux' ]]; then
   echo "nvm use --lts"
   echo "npm install -g prettier"
   echo "vim +PlugInstall +qall"
+  echo "(cd ~/.config/coc/extensions; npm install;"
 else
   nvm install --lts
   nvm use --lts
   npm install -g prettier
   vim +PlugInstall +qall
+  (cd ~/.config/coc/extensions; npm install;)
 fi
