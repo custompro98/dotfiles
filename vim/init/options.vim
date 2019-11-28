@@ -5,7 +5,7 @@ set number
 set shiftwidth=2
 set splitright
 set tabstop=2
-set timeout timeoutlen=100 ttimeoutlen=100
+set timeout timeoutlen=1000 ttimeoutlen=100
 
 " Delete text from previous insert mode
 set backspace=indent,eol,start
