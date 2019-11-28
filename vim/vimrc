@@ -6,6 +6,8 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " System Plugins
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 Plug 'mileszs/ack.vim'         "ack (search, tries to use ag by default)
 Plug 'vim-airline/vim-airline' "airline
 Plug 'ctrlpvim/ctrlp.vim'      "ctrlp
@@ -29,21 +31,18 @@ Plug 'ludovicchabant/vim-gutentags'
 " Syntax Specific Plugins
 "" Ruby/Rails
 Plug 'tpope/vim-rails'
-Plug 'vim-ruby/vim-ruby'
-Plug 'slim-template/vim-slim'
-Plug 'elixir-editors/vim-elixir'
-Plug 'ElmCast/elm-vim'
+" Plug 'vim-ruby/vim-ruby'
 
 "" SQL
 Plug 'aliou/sql-heredoc.vim'   "SQL highlighting via heredoc (<<SQL)
 
 "" JavaScript
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
+" Plug 'pangloss/vim-javascript'
+" Plug 'mxw/vim-jsx'
 Plug 'valloric/MatchTagAlways'
 
 "" Go
-Plug 'fatih/vim-go'
+" Plug 'fatih/vim-go'
 
 " Asctetic Plugins
 Plug 'morhetz/gruvbox'
