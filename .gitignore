@@ -1,11 +1,6 @@
 .DS_Store
-Sublime/Package Control.last-run
-Sublime/Package Control.ca-list
-Sublime/Package Control.ca-bundle
-Sublime/Package Control.system-ca-bundle
-Sublime/Package Control.cache/
-Sublime/Package Control.ca-certs/
-Sublime/User/TestRSpec.last-run
+tags
 vim/bundle
+vim/plugged
 vim/.netrwhist
 **/*.sw*
