@@ -25,8 +25,6 @@ if [[ "$platform" == 'osx' ]]; then
   ln -sf ~/.dotfiles/iterm2_profiles/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
 fi
 
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-
 mkdir -p ~/.config/nvim
 
 ln -s ~/.dotfiles/config/nvim/init.vim ~/.config/nvim/init.vim
@@ -50,10 +48,10 @@ if [[ "$platform" == 'Linux' ]]; then
   echo "nvm install --lts"
   echo "nvm use --lts"
   echo "npm install -g prettier"
-  echo "vim +PluginInstall +qall"
+  echo "vim +PlugInstall +qall"
 else
   nvm install --lts
   nvm use --lts
   npm install -g prettier
-  vim +PluginInstall +qall
+  vim +PlugInstall +qall
 fi

@@ -1,81 +1,67 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
+" Load vim-plug
+if empty(glob("~/.vim/autoload/plug.vim"))
+    execute '!curl -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+endif
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-
-call vundle#begin()
-" Vundle
-Plugin 'VundleVim/Vundle.vim'
+call plug#begin('~/.vim/plugged')
 
 " System Plugins
-Plugin 'mileszs/ack.vim'         "ack (search, tries to use ag by default)
-Plugin 'vim-airline/vim-airline' "airline
-Plugin 'ctrlpvim/ctrlp.vim'      "ctrlp
-Plugin 'tpope/vim-eunuch'        "eunuch (filesystem commands)
-Plugin 'tpope/vim-fugitive'      "fugitive (git)
-Plugin 'scrooloose/nerdtree'     "NERDTree
-Plugin 'tpope/vim-repeat'        "Repeat (enables . for plugins)
-Plugin 'kshenoy/vim-signature'   "Display marks in the gutter
+Plug 'mileszs/ack.vim'         "ack (search, tries to use ag by default)
+Plug 'vim-airline/vim-airline' "airline
+Plug 'ctrlpvim/ctrlp.vim'      "ctrlp
+Plug 'tpope/vim-eunuch'        "eunuch (filesystem commands)
+Plug 'tpope/vim-fugitive'      "fugitive (git)
+Plug 'scrooloose/nerdtree'     "NERDTree
+Plug 'tpope/vim-repeat'        "Repeat (enables . for plugins)
+Plug 'kshenoy/vim-signature'   "Display marks in the gutter
 
 " Coding plugins
-Plugin 'jiangmiao/auto-pairs'    "AutoPairs
-Plugin 'tpope/vim-commentary'    "Commentary (quick commenting)
-Plugin 'tpope/vim-endwise'       "Endwise
-Plugin 'tpope/vim-surround'      "Surround (quotes and brackets)
-Plugin 'brooth/far.vim'          "Find and Replace
-Plugin 'ludovicchabant/vim-gutentags'
-
-" Formatting Plugins
-Plugin 'sbdchd/neoformat'
-Plugin 'w0rp/ale'
+Plug 'jiangmiao/auto-pairs'    "AutoPairs
+Plug 'tpope/vim-commentary'    "Commentary (quick commenting)
+Plug 'tpope/vim-endwise'       "Endwise
+Plug 'tpope/vim-surround'      "Surround (quotes and brackets)
+Plug 'brooth/far.vim'          "Find and Replace
+Plug 'ludovicchabant/vim-gutentags'
 
 "Snippets
-Plugin 'SirVer/UltiSnips'        "Snippet support
+"Plug 'SirVer/UltiSnips'        "Snippet support
 
 " Syntax Specific Plugins
 "" Ruby/Rails
-Plugin 'tpope/vim-rails'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'slim-template/vim-slim'
-Plugin 'elixir-editors/vim-elixir'
-Plugin 'ElmCast/elm-vim'
+Plug 'tpope/vim-rails'
+Plug 'vim-ruby/vim-ruby'
+Plug 'slim-template/vim-slim'
+Plug 'elixir-editors/vim-elixir'
+Plug 'ElmCast/elm-vim'
 
 "" SQL
-Plugin 'aliou/sql-heredoc.vim'   "SQL highlighting via heredoc (<<SQL)
+Plug 'aliou/sql-heredoc.vim'   "SQL highlighting via heredoc (<<SQL)
 
 "" JavaScript
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
-Plugin 'valloric/MatchTagAlways'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'valloric/MatchTagAlways'
 
 "" Go
-Plugin 'fatih/vim-go'
+Plug 'fatih/vim-go'
 
 " Asctetic Plugins
-Plugin 'ayu-theme/ayu-vim'
-Plugin 'ayu-theme/ayu-vim-airline'
-Plugin 'morhetz/gruvbox'
+Plug 'morhetz/gruvbox'
 '
 " Presentation Plugins
-Plugin 'custompro98/vim-reveal'
+Plug 'custompro98/vim-reveal'
 
-call vundle#end()            " required
+call plug#end()            " required
 
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
+" PlugInstall
+" PlugUpdate
+" PlugClean
+" PlugUpgrae
+" PlugStatus
+" PlugDif
+" PlugSnapshot[!] [output path]
+
 " Put your non-Plugin stuff after this line
 
 syntax on
-filetype plugin indent on
-
 runtime! init/**.vim
