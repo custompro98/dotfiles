@@ -31,18 +31,18 @@ Plug 'ludovicchabant/vim-gutentags'
 " Syntax Specific Plugins
 "" Ruby/Rails
 Plug 'tpope/vim-rails'
-" Plug 'vim-ruby/vim-ruby'
+Plug 'vim-ruby/vim-ruby'
 
 "" SQL
 Plug 'aliou/sql-heredoc.vim'   "SQL highlighting via heredoc (<<SQL)
 
 "" JavaScript
-" Plug 'pangloss/vim-javascript'
-" Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 Plug 'valloric/MatchTagAlways'
 
 "" Go
-" Plug 'fatih/vim-go'
+Plug 'fatih/vim-go'
 
 " Asctetic Plugins
 Plug 'morhetz/gruvbox'
@@ -61,6 +61,4 @@ call plug#end()            " required
 " PlugSnapshot[!] [output path]
 
 " Put your non-Plugin stuff after this line
-
-syntax on
 runtime! init/**.vim
