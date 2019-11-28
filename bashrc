@@ -40,6 +40,8 @@ alias gogh='sudo apt-get install dconf-cli && wget -O gogh https://git.io/vQgMr 
 
 ### Aliases
 
+alias vim=nvim
+
 ## Git
 # git branch mapping
 alias gitg='git log --graph --decorate --oneline'
