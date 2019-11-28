@@ -37,6 +37,7 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'aliou/sql-heredoc.vim'   "SQL highlighting via heredoc (<<SQL)
 
 "" JavaScript
+Plug 'heavenshell/vim-jsdoc'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'valloric/MatchTagAlways'
