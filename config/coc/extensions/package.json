@@ -2,6 +2,7 @@
   "dependencies": {
     "coc-eslint": ">=1.2.3",
     "coc-json": ">=1.2.4",
+    "coc-phpls": ">=2.1.2",
     "coc-tsserver": ">=1.4.8"
   }
 }

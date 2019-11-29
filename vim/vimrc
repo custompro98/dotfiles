@@ -45,7 +45,11 @@ Plug 'valloric/MatchTagAlways'
 "" Go
 Plug 'fatih/vim-go'
 
-" Asctetic Plugins
+"" PHP
+Plug 'tobyS/vmustache'
+Plug 'tobyS/pdv'
+
+"Asctetic Plugins
 Plug 'morhetz/gruvbox'
 '
 " Presentation Plugins
