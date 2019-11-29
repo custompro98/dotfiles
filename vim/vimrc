@@ -65,5 +65,7 @@ call plug#end()            " required
 " PlugDif
 " PlugSnapshot[!] [output path]
 
+let mapleader = ","
+
 " Put your non-Plugin stuff after this line
 runtime! init/**.vim
