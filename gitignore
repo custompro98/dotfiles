@@ -2,3 +2,7 @@ tags
 **/*.sw*
 .env.local.*
 **/.DS_Store
+**/newrelic_agent.log
+**/node_modules
+**/.terraform
+**/*.tfstate
