@@ -4,6 +4,7 @@ set is
 set number
 set shiftwidth=2
 set splitright
+set splitbelow
 set tabstop=2
 set timeout timeoutlen=1000 ttimeoutlen=100
 
@@ -39,6 +40,10 @@ cabbrev sw w !sudo tee %
 
 " View current syntax
 cabbrev syn echo b:current_syntax
+
+" Open terminal in splits
+cabbrev vterm vsplit \| terminal
+cabbrev sterm split \| terminal
 
 " Leave terminal mode
 tnoremap <Leader>t <C-\><C-n>
