@@ -5,3 +5,4 @@ vim/plugged
 vim/.netrwhist
 **/*.sw*
 **/node_modules
+config/coc/commands
