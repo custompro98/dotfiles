@@ -49,8 +49,6 @@ cabbrev sterm split \| terminal
 tnoremap <Leader>t <C-\><C-n>
 tmap <Esc> <C-\><C-n>
 
-nnoremap <Leader>j :JsDoc<CR>
-
 " Move lines up/down with alt+j/alt+k
 " On a Mac: alt+j => ∆
 " On a Mac: alt+k => ˚
