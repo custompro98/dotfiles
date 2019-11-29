@@ -13,8 +13,6 @@ set backspace=indent,eol,start
 
 filetype plugin on
 
-let mapleader = ","
-
 """ Key bindings
 
 " Split navigation
