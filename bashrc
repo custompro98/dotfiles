@@ -32,6 +32,11 @@ export PATH="~/.scripts:$PATH"
 export GITAWAREPROMPT=~/.bash/git-aware-prompt
 source "${GITAWAREPROMPT}/main.sh"
 
+# Set up go path
+export GOPATH=$HOME/go
+export GOBIN=$HOME/go/bin
+export PATH=$PATH:$GOBIN
+
 # Git autocomplete
 source ~/.git-completion.bash
 
