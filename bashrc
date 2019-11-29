@@ -92,6 +92,7 @@ function docker_compose_attach {
 
 ## Kube
 function kubels { kubectl get pods ${1:+-l app=$1}; }
+function kubegress() { kubectl get ingress ${1:+-l app=$1}; }
 
 function kubehist {
   app=$1
@@ -103,6 +104,13 @@ function kubehist {
 function kubename() { kubectl get pods -l app="$1" --field-selector=status.phase=Running --sort-by=".metadata.creationTimestamp" | tail -n +2 | tail -1 | awk '{print $1}'; }
 function kubesh()   { kubectl exec -it $(kubename "$1") -- sh; }
 function kubebash() { kubectl exec -it $(kubename "$1") -- bash; }
+function kubeforward() {
+  # Open a port forward socket to a remote Kubernetes deployment
+  # @param {string} $1 Deployment name
+  # @param {number} $2 Local port number
+  # @param {number=} $3 Remote port number
+  kubectl port-forward "deployment/$1" "$2${3:+:$3}"
+}
 
 ## Misc
 function run_n_times {
