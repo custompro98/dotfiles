@@ -8,11 +8,18 @@ call plug#begin('~/.vim/plugged')
 " System Plugins
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" Search
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'         "ack (search, tries to use ag by default)
+" Plug 'ctrlpvim/ctrlp.vim'      "ctrlp
+
+" System information
 Plug 'vim-airline/vim-airline' "airline
-Plug 'ctrlpvim/ctrlp.vim'      "ctrlp
 Plug 'tpope/vim-eunuch'        "eunuch (filesystem commands)
 Plug 'tpope/vim-fugitive'      "fugitive (git)
+
+" Vim improvements
 Plug 'scrooloose/nerdtree'     "NERDTree
 Plug 'tpope/vim-repeat'        "Repeat (enables . for plugins)
 Plug 'kshenoy/vim-signature'   "Display marks in the gutter
