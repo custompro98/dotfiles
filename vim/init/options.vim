@@ -51,7 +51,7 @@ tmap <Esc> <C-\><C-n>
 nnoremap <Leader>t :20split \| terminal<CR>
 
 " Re-source vimrc
-nnoremap <Leader>s :source ~/.vimrc<CR>
+nnoremap <Leader>v :source ~/.vimrc<CR>
 
 " Move lines up/down with alt+j/alt+k
 " On a Mac: alt+j => ∆
