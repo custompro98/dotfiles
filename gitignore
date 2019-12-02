@@ -8,3 +8,4 @@ tags
 **/*.tfstate
 config/coc/extensions/coc-phpls-data/**/*
 config/coc/history.json
+config/coc/**/*-mru
