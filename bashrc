@@ -46,6 +46,7 @@ alias gogh='sudo apt-get install dconf-cli && wget -O gogh https://git.io/vQgMr 
 ### Aliases
 
 alias vim=nvim
+alias cat=bat
 
 ## Git
 # git branch mapping
@@ -142,3 +143,5 @@ COMPANY_COMMANDS=~/.companyrc
 if [ -f "$COMPANY_COMMANDS" ]; then
   source $COMPANY_COMMANDS
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

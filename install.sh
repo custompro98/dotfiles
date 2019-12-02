@@ -7,13 +7,9 @@ if [[ "$unamestr" == 'Linux'  ]]; then
 fi
 
 if [[ "$platform" == 'linux' ]]; then
-  sudo apt install silversearcher-ag
-  sudo apt install exuberant-ctags
+  sudo apt install nvim silversearcher-ag exuberant-ctags tree bat
 else
-  brew install nvim
-  brew install ag
-  brew install ctags
-  brew install tree
+  brew install nvim ag ctags tree bat
 fi
 
 (cd ~/.dotfiles/vim; git submodule update --init)
