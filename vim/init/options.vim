@@ -13,6 +13,20 @@ set backspace=indent,eol,start
 
 filetype plugin on
 
+""" Command Abbreviations
+" Abbreviate tabnew
+cabbrev tn tabnew
+
+" Sudo save
+cabbrev sw w !sudo tee %
+
+" View current syntax
+cabbrev syn echo b:current_syntax
+
+" Open terminal in splits
+cabbrev vterm 100vsplit \| terminal
+cabbrev sterm 20split \| terminal
+
 """ Key bindings
 
 " Split navigation
@@ -26,26 +40,15 @@ imap jk <Esc>
 tmap jk <Esc>
 
 " Toggle highlight search
-let hlstate=0
-nnoremap <C-f> :if (hlstate%2 == 0) \| nohlsearch \| else \| set hlsearch \| endif \| let hlstate=hlstate+1<CR>:echo "toggled visibility for hlsearch"<CR>
-inoremap <C-f> <ESC>:if (hlstate%2 == 0) \| nohlsearch \| else \| set hlsearch \| endif \| let hlstate=hlstate+1<CR>:echo "toggled visibility for hlsearch"<CR>
-
-" Abbreviate tabnew
-cabbrev tn tabnew
-
-" Sudo save
-cabbrev sw w !sudo tee %
-
-" View current syntax
-cabbrev syn echo b:current_syntax
-
-" Open terminal in splits
-cabbrev vterm vsplit \| terminal
-cabbrev sterm split \| terminal
+nnoremap <Leader>h :set hlsearch<CR>
+nnoremap <Leader>H :set nnoohlsearch<CR>
 
 " Leave terminal mode
 tnoremap <Leader>t <C-\><C-n>
 tmap <Esc> <C-\><C-n>
+
+" Open terminal
+nnoremap <Leader>t :20split \| terminal<CR>
 
 " Re-source vimrc
 nnoremap <Leader>s :source ~/.vimrc<CR>
@@ -76,15 +79,8 @@ endif
 
 " Remove trailing whitespace on save
 autocmd BufWritePre *[^.md] %s/\s\+$//e
-" Syntax highlight comments in json
-autocmd FileType json syntax match Comment +\/\/.\+$+
 
 """ Theme
 set termguicolors
-" let ayucolor="light"
-" colorscheme ayu
 set background=dark
 colorscheme gruvbox
-
-""" Syntax highlighting
-let g:jsx_ext_required=0

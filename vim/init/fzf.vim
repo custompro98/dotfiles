@@ -11,7 +11,7 @@ cnoreabbrev gst GFiles?
 " Map ctrl-p to :Files for muscle memory's sake
 nnoremap <C-p> :Files<Cr>
 " Map ctrl-; to :Ag
-nnoremap <C-p> :Files<Cr>
+nnoremap <C-i> :Ag<Cr>
 
 " Commands
 " Give :Files a preview window
