@@ -47,6 +47,9 @@ cabbrev sterm split \| terminal
 tnoremap <Leader>t <C-\><C-n>
 tmap <Esc> <C-\><C-n>
 
+" Re-source vimrc
+nnoremap <Leader>s :source ~/.vimrc<CR>
+
 " Move lines up/down with alt+j/alt+k
 " On a Mac: alt+j => ∆
 " On a Mac: alt+k => ˚
