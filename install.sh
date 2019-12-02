@@ -12,6 +12,14 @@ else
   brew install nvim ag ctags tree bat
 fi
 
+if [[ -n "$(command -v pip3)" ]]; then
+  pip3 install pynvim
+fi
+
+if [[ -n "$(command -v pip2)" ]]; then
+  pip2 install pynvim
+fi
+
 (cd ~/.dotfiles/vim; git submodule update --init)
 
 ln -s ~/.dotfiles/bash ~/.bash
