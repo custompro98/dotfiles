@@ -6,3 +6,4 @@ tags
 **/node_modules
 **/.terraform
 **/*.tfstate
+config/coc/extensions/coc-phpls-data/**/*
