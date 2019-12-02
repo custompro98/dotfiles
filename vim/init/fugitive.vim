@@ -1,5 +1,5 @@
 """ Abbreviations
 cnoreabbrev gbl Gblame
 cnoreabbrev gdf Gdiff
-cnoreabbrev gco Gread " git checkout --<current file>, use u to undo checkout
+cnoreabbrev gcl Gread " git checkout --<current file>, use u to undo checkout
 

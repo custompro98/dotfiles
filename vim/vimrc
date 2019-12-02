@@ -31,9 +31,6 @@ Plug 'tpope/vim-surround'      "Surround (quotes and brackets)
 Plug 'brooth/far.vim'          "Find and Replace
 Plug 'ludovicchabant/vim-gutentags'
 
-"Snippets
-"Plug 'SirVer/UltiSnips'        "Snippet support
-
 " Syntax Specific Plugins
 "" Ruby/Rails
 Plug 'tpope/vim-rails'
@@ -71,7 +68,7 @@ call plug#end()            " required
 " PlugDif
 " PlugSnapshot[!] [output path]
 
-let mapleader = ","
+let mapleader = ";"
 
 " Put your non-Plugin stuff after this line
 runtime! init/**.vim
