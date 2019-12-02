@@ -41,7 +41,7 @@ tmap jk <Esc>
 
 " Toggle highlight search
 nnoremap <Leader>h :set hlsearch<CR>
-nnoremap <Leader>H :set nnoohlsearch<CR>
+nnoremap <Leader>H :set nohlsearch<CR>
 
 " Leave terminal mode
 tnoremap <Leader>t <C-\><C-n>
