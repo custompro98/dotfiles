@@ -21,11 +21,12 @@ cabbrev tn tabnew
 cabbrev sw w !sudo tee %
 
 " View current syntax
-cabbrev syn echo b:current_syntax
+command! Syn echo b:current_syntax
 
+" botright20split|view __Scratch__
 " Open terminal in splits
-cabbrev vterm 100vsplit \| terminal
-cabbrev sterm 20split \| terminal
+command! Vterm :call s:open_window('botright', winwidth(0)/3, 'vsplit|terminal')
+command! Sterm :call s:open_window('botright', winheight(0)/5, 'split|terminal')
 
 """ Key bindings
 
@@ -48,10 +49,14 @@ tnoremap <Leader>t <C-\><C-n>
 tmap <Esc> <C-\><C-n>
 
 " Open terminal
-nnoremap <Leader>t :20split \| terminal<CR>
+nnoremap <Leader>t :Sterm<CR>
 
 " Re-source vimrc
 nnoremap <Leader>v :source ~/.vimrc<CR>
+
+" Open a scratch editor
+nnoremap <Leader>vs :exec winwidth(0)/3.'vsplit' \| view scratch<CR>
+nnoremap <Leader>s :exec winheight(0)/5.'split' \| view scratch<CR>
 
 " Move lines up/down with alt+j/alt+k
 " On a Mac: alt+j => ∆
@@ -84,3 +89,8 @@ autocmd BufWritePre *[^.md] %s/\s\+$//e
 set termguicolors
 set background=dark
 colorscheme gruvbox
+
+""" Functions
+function! s:open_window(position, height, cmd)
+  execute a:position . a:height . a:cmd
+endfunction
