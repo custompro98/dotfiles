@@ -25,8 +25,10 @@ command! Syn echo b:current_syntax
 
 " botright20split|view __Scratch__
 " Open terminal in splits
-command! Vterm :call s:open_window('botright', winwidth(0)/3, 'vsplit|terminal')
-command! Sterm :call s:open_window('botright', winheight(0)/5, 'split|terminal')
+command! Vterm :call OpenWindow('botright', winwidth(0)/3, 'vsplit|terminal')
+command! Sterm :call OpenWindow('botright', winheight(0)/5, 'split|terminal')
+
+command! Paste :call SmartPaste()
 
 """ Key bindings
 
@@ -52,11 +54,15 @@ tmap <Esc> <C-\><C-n>
 nnoremap <Leader>t :Sterm<CR>
 
 " Re-source vimrc
-nnoremap <Leader>v :source ~/.vimrc<CR>
+nnoremap <Leader>r :source ~/.vimrc<CR>
 
 " Open a scratch editor
 nnoremap <Leader>vs :exec winwidth(0)/3.'vsplit' \| view scratch<CR>
 nnoremap <Leader>s :exec winheight(0)/5.'split' \| view scratch<CR>
+
+" Copy/Paste
+nnoremap <Leader>v :Paste<CR>
+vnoremap <Leader>c "+y
 
 " Move lines up/down with alt+j/alt+k
 " On a Mac: alt+j => ∆
@@ -91,6 +97,12 @@ set background=dark
 colorscheme gruvbox
 
 """ Functions
-function! s:open_window(position, height, cmd)
+function! OpenWindow(position, height, cmd)
   execute a:position . a:height . a:cmd
+endfunction
+
+function! SmartPaste()
+  setl paste
+  normal "+p
+  setl nopaste
 endfunction
