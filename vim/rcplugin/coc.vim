@@ -1,3 +1,7 @@
+" System wide plugin to make vim like VSCode, but better
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 """ Keybindings
 
 nmap <silent> gd <Plug>(coc-definition)
