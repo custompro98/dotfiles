@@ -1,3 +1,9 @@
+" Provide contextual information 
+
+Plug 'vim-airline/vim-airline'
+
+""" Settings
+
 "Show airline at all times
 set laststatus=2
 " Allow use of patched icons
