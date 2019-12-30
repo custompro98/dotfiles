@@ -17,8 +17,8 @@
     pager       = true
 
 [core]
-	excludesfile = /Users/mitchjoa/.gitignore
-	editor = /usr/bin/vim
+	excludesfile = ~/.gitignore
+	editor = nvim
 
 [alias]
 
