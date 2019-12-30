@@ -14,5 +14,6 @@ nnoremap <C-p> :Files<Cr>
 nnoremap <C-i> :Ag<Cr>
 
 " Commands
-" Give :Files a preview window
+" Give :Files and :Ag a preview window
 command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+command! -bang -nargs=? -complete=dir Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview(), <bang>0)
