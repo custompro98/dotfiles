@@ -1,6 +1,7 @@
 """ Settings
 set expandtab
 set is
+set relativenumber
 set number
 set shiftwidth=2
 set splitright
