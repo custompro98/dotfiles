@@ -37,6 +37,9 @@ export GOPATH=$HOME/go
 export GOBIN=$HOME/go/bin
 export PATH=$PATH:$GOBIN
 
+# Set nvim as EDITOR
+export EDITOR=nvim
+
 # Git autocomplete
 source ~/.git-completion.bash
 
@@ -70,6 +73,7 @@ alias kubeprod='export KUBECONFIG=~/.kube/kubeconfig.kube-user-prod'
 
 ## Misc
 alias uuid='uuidgen | tr "[:upper:]" "[:lower:]"'
+alias dt='ruby ~/.dotfiles/scripts/open_dev_tools.rb'
 
 ### Functions
 ## Docker
