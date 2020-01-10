@@ -10,6 +10,7 @@ if [[ "$platform" == 'linux' ]]; then
   sudo apt install nvim silversearcher-ag exuberant-ctags tree bat
 else
   brew install nvim ag ctags tree bat
+  brew install chrome-cli
 fi
 
 if [[ -n "$(command -v pip3)" ]]; then
