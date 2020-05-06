@@ -39,6 +39,9 @@
     cm = commit -m
     ca = commit --amend
 
+    # push shortcust
+    fp = push --force-with-lease
+
     # diff shortcuts
     d   = diff --patience
     dw  = diff --patience --ignore-all-space
