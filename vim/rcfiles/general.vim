@@ -5,8 +5,7 @@ set expandtab
 set shiftwidth=2
 set tabstop=2
 
-" Line numbers (show relative numbers except for current line)
-set relativenumber
+" Line numbers 
 set number
 
 " Misc
