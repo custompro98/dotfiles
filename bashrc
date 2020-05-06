@@ -68,8 +68,6 @@ alias da=docker_compose_attach
 
 ## Kube
 alias kc='kubectl'
-alias kubestaging='export KUBECONFIG=~/.kube/kubeconfig.kube-user-stage'
-alias kubeprod='export KUBECONFIG=~/.kube/kubeconfig.kube-user-prod'
 
 ## Misc
 alias uuid='uuidgen | tr "[:upper:]" "[:lower:]"'
@@ -114,6 +112,14 @@ function kubehist {
 function kubename() { kubectl get pods -l app="$1" --field-selector=status.phase=Running --sort-by=".metadata.creationTimestamp" | tail -n +2 | tail -1 | awk '{print $1}'; }
 function kubesh()   { kubectl exec -it $(kubename "$1") -- sh; }
 function kubebash() { kubectl exec -it $(kubename "$1") -- bash; }
+function kubecp() {
+  # Copy a file from local to a Kubernetes pod
+  # @param {string} $1 Local file path
+  # @param {string} $2 App name
+  # @param {string} $3 Remote file path
+  # @param {string=default} $4 Cluster name
+  kubectl cp $1 ${4:-default}/$(kubename "$2"):$3
+}
 function kubeforward() {
   # Open a port forward socket to a remote Kubernetes deployment
   # @param {string} $1 Deployment name
