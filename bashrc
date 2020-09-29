@@ -65,6 +65,7 @@ alias be='bundle exec'
 alias dc=docker-compose
 alias de=docker_compose_exec
 alias da=docker_compose_attach
+alias dk='docker stop $(docker ps -qa)'
 
 ## Kube
 alias kc='kubectl'
@@ -119,6 +120,14 @@ function kubecp() {
   # @param {string} $3 Remote file path
   # @param {string=default} $4 Cluster name
   kubectl cp $1 ${4:-default}/$(kubename "$2"):$3
+}
+function kubercp() {
+  # Copy a file from Kubernetes pod to local
+  # @param {string} $1 Local file path
+  # @param {string} $2 App name
+  # @param {string} $3 Remote file path
+  # @param {string=default} $4 Cluster name
+  kubectl cp ${4:-default}/$(kubename "$2"):$3 $1
 }
 function kubeforward() {
   # Open a port forward socket to a remote Kubernetes deployment
