@@ -9,7 +9,7 @@ fi
 if [[ "$platform" == 'linux' ]]; then
   sudo apt install nvim silversearcher-ag exuberant-ctags tree bat
 else
-  brew install neovim ag ctags tree bat chrome-cli
+  brew install neovim ag ctags tree bat chrome-cli autojump fzf
 fi
 
 if [[ -n "$(command -v pip3)" ]]; then
@@ -60,3 +60,5 @@ else
   vim +PlugInstall +qall
   (cd ~/.config/coc/extensions; npm install;)
 fi
+
+./install-fish.sh
