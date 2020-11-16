@@ -100,28 +100,28 @@ function docker_compose_attach {
 }
 
 ## Kube
-function kubels { kubectl get pods ${1:+-l app=$1}; }
-function kubegress() { kubectl get ingress ${1:+-l app=$1}; }
+function kls { kubectl get pods ${1:+-l app=$1}; }
+function kgress() { kubectl get ingress ${1:+-l app=$1}; }
 
-function kubehist {
+function khist {
   app=$1
   rev=$2
 
   kubectl rollout history deployment/$app ${rev:+--revision $rev}
 }
 
-function kubename() { kubectl get pods -l app="$1" --field-selector=status.phase=Running --sort-by=".metadata.creationTimestamp" | tail -n +2 | tail -1 | awk '{print $1}'; }
-function kubesh()   { kubectl exec -it $(kubename "$1") -- sh; }
-function kubebash() { kubectl exec -it $(kubename "$1") -- bash; }
-function kubecp() {
+function kname() { kubectl get pods -l app="$1" --field-selector=status.phase=Running --sort-by=".metadata.creationTimestamp" | tail -n +2 | tail -1 | awk '{print $1}'; }
+function ksh()   { kubectl exec -it $(kname "$1") -- sh; }
+function kbash() { kubectl exec -it $(kname "$1") -- bash; }
+function kcp() {
   # Copy a file from local to a Kubernetes pod
   # @param {string} $1 Local file path
   # @param {string} $2 App name
   # @param {string} $3 Remote file path
   # @param {string=default} $4 Cluster name
-  kubectl cp $1 ${4:-default}/$(kubename "$2"):$3
+  kubectl cp $1 ${4:-default}/$(kname "$2"):$3
 }
-function kubercp() {
+function krcp() {
   # Copy a file from Kubernetes pod to local
   # @param {string} $1 Local file path
   # @param {string} $2 App name
@@ -129,7 +129,7 @@ function kubercp() {
   # @param {string=default} $4 Cluster name
   kubectl cp ${4:-default}/$(kubename "$2"):$3 $1
 }
-function kubeforward() {
+function kforward() {
   # Open a port forward socket to a remote Kubernetes deployment
   # @param {string} $1 Deployment name
   # @param {number} $2 Local port number
