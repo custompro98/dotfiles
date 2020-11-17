@@ -127,7 +127,7 @@ function krcp() {
   # @param {string} $2 App name
   # @param {string} $3 Remote file path
   # @param {string=default} $4 Cluster name
-  kubectl cp ${4:-default}/$(kubename "$2"):$3 $1
+  kubectl cp ${4:-default}/$(kname "$2"):$3 $1
 }
 function kforward() {
   # Open a port forward socket to a remote Kubernetes deployment
