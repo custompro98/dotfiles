@@ -1,0 +1,24 @@
+#!/usr/local/bin/fish
+
+# grab the name from the current working directory
+set SESSION (basename (pwd))
+
+# check if session exists, pipe error output to /dev/null
+tmux has-session -t $SESSION 2>/dev/null
+
+if [ $status != 0 ]
+  # create a detached tmux session with name `$SESSION`
+  tmux new-session -d -s $SESSION
+  # rename first window nvim
+  tmux rename-window -t $SESSION:0 nvim
+  # create second pane for running tests
+  tmux split-window -h
+  # resize nvim pane 35 columns to the right
+  tmux select-pane -t 0
+  tmux resize-pane -R 35
+end
+
+# attach to the session on the nvim pane
+tmux select-window -t $SESSION:0
+tmux select-pane -t 0
+tmux attach -t $SESSION

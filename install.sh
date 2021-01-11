@@ -43,6 +43,7 @@ ln -s ~/.dotfiles/profile ~/.profile
 ln -s ~/.dotfiles/psqlrc ~/.psqlrc
 ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
 ln -s ~/.dotfiles/git/contrib/completion/git-completion.bash ~/.git-completion.bash
+ln -s ~/.dotfiles/scripts/templatemux /usr/local/bin/templatemux
 
 # Install NVM
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash
