@@ -14,6 +14,8 @@ function fish_prompt --description 'Write out the prompt'
         set suffix '#'
     end
 
+    set -l pwd (set_color $color_cwd)
+
     # If we're running via SSH, change the host color.
     set -l color_host $fish_color_host
     if set -q SSH_TTY
@@ -23,9 +25,12 @@ function fish_prompt --description 'Write out the prompt'
     # Write pipestatus
     set -l prompt_status (__fish_print_pipestatus " [" "]" "|" (set_color $fish_color_status) (set_color --bold $fish_color_status) $last_pipestatus)
 
+    # Current time
+    set -l clock (set_color red) \((date +%H:%M)\)
+
     # default
     # echo -n -s (set_color $fish_color_user) "$USER" $normal @ (set_color $color_host) (prompt_hostname) $normal ' ' (set_color $color_cwd) (prompt_pwd) $normal (fish_vcs_prompt) $normal $suffix " "
 
-    echo -n -s (set_color $color_cwd) (prompt_pwd) $normal (fish_vcs_prompt) $normal "
+    echo -n -s $clock ' ' $pwd (prompt_pwd) $normal (fish_vcs_prompt) $normal "
 " $suffix " "
 end
