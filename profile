@@ -6,3 +6,5 @@ export PATH="~/.scripts:$PATH"
 
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+[[ -s "/Users/mitchjoa/.gvm/scripts/gvm" ]] && source "/Users/mitchjoa/.gvm/scripts/gvm"

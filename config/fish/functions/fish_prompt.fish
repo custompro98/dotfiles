@@ -1,6 +1,8 @@
 function fish_prompt --description 'Write out the prompt'
     set -l last_pipestatus $pipestatus
     set -l normal (set_color normal)
+    set -l red (set_color red)
+    set -l blue (set_color blue)
 
     # Color the prompt differently when we're root
     set -l color_cwd $fish_color_cwd
@@ -26,11 +28,17 @@ function fish_prompt --description 'Write out the prompt'
     set -l prompt_status (__fish_print_pipestatus " [" "]" "|" (set_color $fish_color_status) (set_color --bold $fish_color_status) $last_pipestatus)
 
     # Current time
-    set -l clock (set_color red) \((date +%H:%M)\)
+    set -l clock \((date +%H:%M)\)
+
+    # AWS Profile
+    set -l aws \((echo $AWS_PROFILE)\)
+
+    # Kube Profile
+    set -l kube \((echo $KUBECONFIG)\)
 
     # default
     # echo -n -s (set_color $fish_color_user) "$USER" $normal @ (set_color $color_host) (prompt_hostname) $normal ' ' (set_color $color_cwd) (prompt_pwd) $normal (fish_vcs_prompt) $normal $suffix " "
 
-    echo -n -s $clock ' ' $pwd (prompt_pwd) $normal (fish_vcs_prompt) $normal "
+    echo -n -s $normal $clock ' ' $red $aws  ' ' $blue $kube ' ' $pwd (prompt_pwd) $normal (fish_vcs_prompt) $normal "
 " $suffix " "
 end

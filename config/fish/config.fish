@@ -9,7 +9,7 @@ set PATH $PATH $GOBIN
 
 # sourcing shell tools
 ## nvm
-nvm use --lts
+nvm use stable
 
 ## autojump
 [ -f /usr/local/share/autojump/autojump.fish ]; and source /usr/local/share/autojump/autojump.fish
