@@ -13,9 +13,13 @@ if [ $status != 0 ]
   tmux rename-window -t $SESSION:0 nvim
   # create second pane for running tests
   tmux split-window -h
-  # resize nvim pane 35 columns to the right
+  # resize nvim pane to the right
   tmux select-pane -t 0
   tmux resize-pane -R 35
+
+  # start default applications
+  # # start nvim
+  tmux send-keys -t 0 'nvim' Enter
 end
 
 # attach to the session on the nvim pane
