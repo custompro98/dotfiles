@@ -7,9 +7,9 @@ if [[ "$unamestr" == 'Linux'  ]]; then
 fi
 
 if [[ "$platform" == 'linux' ]]; then
-  sudo apt install nvim silversearcher-ag exuberant-ctags tree bat
+  sudo apt install nvim silversearcher-ag exuberant-ctags tree bat fd rg
 else
-  brew install neovim ag ctags tree bat chrome-cli autojump fzf
+  brew install neovim ag ctags tree bat chrome-cli autojump fzf fd ripgrep
 fi
 
 if [[ -n "$(command -v pip3)" ]]; then
@@ -33,6 +33,7 @@ ln -s ~/.dotfiles/config/nvim/ ~/.config/nvim
 ln -s ~/.dotfiles/config/coc ~/.config/coc
 ln -s ~/.dotfiles/vim/vimrc ~/.vimrc
 ln -s ~/.dotfiles/agignore ~/.agignore
+ln -s ~/.dotfiles/rgignore ~/.rgignore
 ln -s ~/.dotfiles/ctags ~/.ctags
 ln -s ~/.dotfiles/reveal.js ~/reveal.js
 ln -s ~/.dotfiles/bash_profile ~/.bash_profile
