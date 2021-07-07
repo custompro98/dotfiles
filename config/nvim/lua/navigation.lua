@@ -4,8 +4,13 @@ local api = vim.api
 
 -- ** Navigation ** --
 
--- file explorer
-api.nvim_set_keymap('n', '<C-\\>', ':NvimTreeToggle<CR>', { noremap = true })
+-- file explorer (just use netrw, everything else stinks)
+vim.cmd([[
+  let g:netrw_banner = 0
+  let g:netrw_liststyle = 3
+  let g:netrw_winsize = 25
+]])
+api.nvim_set_keymap('n', '<C-\\>', ':Explore<CR>', {})
 
 -- searching
 require('fzf').default_window_options = {
@@ -14,8 +19,8 @@ require('fzf').default_window_options = {
   end
 }
 
-api.nvim_set_keymap('n', '<C-p>', '<cmd>lua require"fzf-commands".files()<CR>', { noremap = true })
-api.nvim_set_keymap('n', '<Tab>', '<cmd>lua require"fzf-commands".rg()<CR>', { noremap = true })
+api.nvim_set_keymap('n', '<Leader>p', '<cmd>lua require"fzf-commands".files()<CR>', { noremap = true })
+api.nvim_set_keymap('n', '<Leader>o', '<cmd>lua require"fzf-commands".rg()<CR>', { noremap = true })
 
 -- split navigation
 api.nvim_set_keymap('n', '<C-J>', '<C-W><C-J>', { noremap = true })
