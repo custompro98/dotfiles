@@ -41,10 +41,7 @@ return packer.startup(function()
   -- development
   use 'b3nj5m1n/kommentary'
   use 'windwp/nvim-autopairs'
-  use {
-    'tanvirtin/vgit.nvim',
-    requires = 'nvim-lua/plenary.nvim'
-  }
+  use 'tpope/vim-fugitive'
 
   -- searching
   use 'vijaymarupudi/nvim-fzf'
