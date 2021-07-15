@@ -20,9 +20,7 @@ packer.init({
 })
 
 -- startup and configure plugins
-return packer.startup(function()
-  local use = use
-
+return packer.startup(function(use)
   -- let packer manage itself
   use 'wbthomason/packer.nvim'
 
@@ -46,6 +44,10 @@ return packer.startup(function()
   -- searching
   use 'vijaymarupudi/nvim-fzf'
   use 'vijaymarupudi/nvim-fzf-commands'
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+  }
 
   -- appearance
   use 'kyazdani42/nvim-web-devicons'

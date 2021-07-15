@@ -20,9 +20,7 @@ local function on_attach(client, bufnr)
   buf_set_keymap('n', 'gd', '<cmd>lua require"lspsaga.provider".preview_definition()<CR>', opts)
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  -- buf_set_keymap('n', 'gh', '<cmd>lua vim.lsp.buf.hover()<CR>', opts) -- superseded by Lspsaga
   buf_set_keymap('n', 'gh', '<cmd>lua require"lspsaga.hover".render_hover_doc()<CR>', opts)
-  buf_set_keymap('n', '<Leader>gh', '<cmd>lua require"lspsaga.provider".lsp_finder()<CR>', opts)
   buf_set_keymap('i', '<Leader>gh', '<cmd>lua require"lspsaga.signaturehelp".signature_help()<CR>', opts)
 
   -- linting
