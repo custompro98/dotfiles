@@ -1,6 +1,8 @@
 -- ** LSP Configuration ** --
 -- named with an _ to avoid name conflicts
 
+local vim = vim
+
 local nvim_lsp = require('lspconfig')
 
 -- use on_attach to only map keybindings for lsp attaches to current buffer
@@ -32,7 +34,7 @@ local function on_attach(client, bufnr)
   buf_set_keymap('n', '<Leader>ca', '<cmd>lua require"lspsaga.codeaction".code_action()<CR>', opts)
   buf_set_keymap('v', '<Leader>ca', ':<C-U>lua require("lspsaga.codeaction").range_code_action()<CR>', opts)
 
-  if client.resolved_capabilities.document_formatting then
+  if client.resolved_capabilities.document_formatting and client.name ~= 'php' then
     vim.api.nvim_command [[augroup Format]]
     vim.api.nvim_command [[autocmd! * <buffer>]]
     vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]]
