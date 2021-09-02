@@ -2,6 +2,7 @@
 -- named with an _ to avoid name conflicts
 
 local vim = vim
+local cmd = vim.cmd
 
 local nvim_lsp = require('lspconfig')
 
@@ -31,13 +32,6 @@ local function on_attach(client, bufnr)
   buf_set_keymap('n', '<Leader>rn', '<cmd>lua require"lspsaga.rename".rename()<CR>', opts)
   buf_set_keymap('n', '<Leader>ca', '<cmd>lua require"lspsaga.codeaction".code_action()<CR>', opts)
   buf_set_keymap('v', '<Leader>ca', ':<C-U>lua require("lspsaga.codeaction").range_code_action()<CR>', opts)
-
-  if client.resolved_capabilities.document_formatting and client.name ~= 'php' then
-    vim.api.nvim_command [[augroup Format]]
-    vim.api.nvim_command [[autocmd! * <buffer>]]
-    vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]]
-    vim.api.nvim_command [[augroup END]]
-  end
 end
 
 
@@ -57,64 +51,21 @@ for _, lsp in ipairs(lsps) do
   }
 end
 
--- set up linters and formatters
-nvim_lsp.diagnosticls.setup {
+-- terraform needs an extra filetype
+nvim_lsp['terraform'].setup {
   on_attach = on_attach,
-  filetypes = { 'javascript', 'javascriptreact', 'json', 'typescript', 'typescriptreact', 'css', 'scss', 'markdown' },
-  init_options = {
-    linters = {
-      eslint = {
-        command = 'eslint',
-        rootPatterns = { '.git' },
-        debounce = 100,
-        args = { '--stdin', '--stdin-filename', '%filepath', '--format', 'json' },
-        sourceName = 'eslint',
-        parseJson = {
-          errorsRoot = '[0].messages',
-          line = 'line',
-          column = 'column',
-          endLine = 'endLine',
-          endColumn = 'endColumn',
-          message = '[eslint] ${message} [${ruleId}]',
-          security = 'severity'
-        },
-        securities = {
-          [2] = 'error',
-          [1] = 'warning'
-        }
-      },
-    },
-    filetypes = {
-      javascript = 'eslint',
-      javascriptreact = 'eslint',
-      typescript = 'eslint',
-      typescriptreact = 'eslint',
-    },
-    formatters = {
-      eslint = {
-        command = 'eslint',
-        args = { '--stdin', '--stdin-filename', '%filename', '--fix-to-stdout' },
-        rootPatterns = { '.git' },
-      },
-      prettier = {
-        command = 'prettier',
-        args = { '--stdin-filepath', '%filename' }
-      },
-    },
-    formatFiletypes = {
-      css = 'prettier',
-      javascript = 'eslint',
-      javascriptreact = 'eslint',
-      json = 'prettier',
-      json = 'prettier',
-      less = 'prettier',
-      markdown = 'prettier',
-      scss = 'prettier',
-      typescript = 'eslint',
-      typescriptreact = 'eslint',
-    }
-  }
+  flags = {
+    debounce_text_changes = 150
+  },
+  filetypes = { "terraform", "tf" }
 }
+
+cmd [[augroup lsp]]
+cmd [[au!]]
+cmd [[au FileType scala,sbt lua require('metals').initialize_or_attach({})]]
+cmd [[augroup end]]
+
+-- set up linters and formatters
 
 -- ** LSP Saga ** --
 -- better UI for LSP functionality
@@ -135,3 +86,13 @@ saga.init_lsp_saga {
     quit = 'q',
   }
 }
+
+-- ** Diagnostics ** --
+-- print out all installed lsp servers
+function LspListInstalled()
+  for _, lsp in ipairs(require('lspinstall').installed_servers()) do
+    print(lsp)
+  end
+end
+
+cmd [[command! LspListInstalled lua LspListInstalled()]]

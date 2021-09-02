@@ -30,6 +30,8 @@ return packer.startup(function(use)
   use 'kabouzeid/nvim-lspinstall'
   use 'hrsh7th/nvim-compe'
 
+  use 'scalameta/nvim-metals'
+
   -- treesitter
   use {
     'nvim-treesitter/nvim-treesitter',
@@ -40,13 +42,14 @@ return packer.startup(function(use)
   use 'b3nj5m1n/kommentary'
   use 'windwp/nvim-autopairs'
   use 'tpope/vim-fugitive'
+  use 'tpope/vim-surround'
 
   -- searching
   use 'vijaymarupudi/nvim-fzf'
   use 'vijaymarupudi/nvim-fzf-commands'
   use {
     'nvim-telescope/telescope.nvim',
-    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+    requires = {{ 'nvim-lua/popup.nvim' }, { 'nvim-lua/plenary.nvim' }}
   }
 
   -- appearance
