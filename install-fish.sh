@@ -1,16 +1,6 @@
 #!/bin/bash
 
-platform='osx'
-unamestr=`uname`
-if [[ "$unamestr" == 'Linux'  ]]; then
-   platform='linux'
-fi
-
-if [[ "$platform" == 'linux' ]]; then
-  sudo apt install fish
-else
-  brew install fish
-fi
+brew install fish
 # initialize config
 ln -sfn ~/.dotfiles/config/fish/ ~/.config/fish
 
