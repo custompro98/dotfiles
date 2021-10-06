@@ -4,8 +4,9 @@ brew install fish
 # initialize config
 ln -sfn ~/.dotfiles/config/fish/ ~/.config/fish
 
-# install fisher for plugin support (comes for free in ~/.config/)
-# curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
+# install fisher for plugin support
+fish -c '[ ! -f ~/.dotfiles/config/fish/fish_plugins ]; and curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher'
+fish -c 'fisher update'
 
 # add fish to the allowed list of shells
 echo /usr/local/bin/fish | sudo tee -a /etc/shells
