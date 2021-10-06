@@ -7,9 +7,9 @@ if [[ "$unamestr" == 'Linux'  ]]; then
 fi
 
 if [[ "$platform" == 'linux' ]]; then
-  sudo apt install nvim silversearcher-ag exuberant-ctags tree bat fd rg
+  sudo apt install nvim tree bat fd rg
 else
-  brew install neovim ag ctags tree bat chrome-cli autojump fzf fd ripgrep
+  brew install neovim tree bat chrome-cli autojump fzf fd ripgrep
 fi
 
 if [[ -n "$(command -v pip3)" ]]; then
@@ -20,20 +20,14 @@ if [[ -n "$(command -v pip2)" ]]; then
   pip2 install pynvim
 fi
 
-(cd ~/.dotfiles/vim; git submodule update --init)
-
 ln -s ~/.dotfiles/bash ~/.bash
-ln -s ~/.dotfiles/vim ~/.vim
 
 if [[ "$platform" == 'osx' ]]; then
   ln -sf ~/.dotfiles/iterm2_profiles/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
 fi
 
 ln -s ~/.dotfiles/config/nvim/ ~/.config/nvim
-ln -s ~/.dotfiles/vim/vimrc ~/.vimrc
-ln -s ~/.dotfiles/agignore ~/.agignore
 ln -s ~/.dotfiles/rgignore ~/.rgignore
-ln -s ~/.dotfiles/ctags ~/.ctags
 ln -s ~/.dotfiles/reveal.js ~/reveal.js
 ln -s ~/.dotfiles/bash_profile ~/.bash_profile
 ln -s ~/.dotfiles/bashrc ~/.bashrc
