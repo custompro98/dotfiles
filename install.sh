@@ -30,7 +30,6 @@ if [[ "$platform" == 'osx' ]]; then
 fi
 
 ln -s ~/.dotfiles/config/nvim/ ~/.config/nvim
-ln -s ~/.dotfiles/config/coc ~/.config/coc
 ln -s ~/.dotfiles/vim/vimrc ~/.vimrc
 ln -s ~/.dotfiles/agignore ~/.agignore
 ln -s ~/.dotfiles/rgignore ~/.rgignore
@@ -55,13 +54,11 @@ if [[ "$platform" == 'linux' ]]; then
   echo "nvm use --lts"
   echo "npm install -g prettier"
   echo "nvim +PackerInstall +qall"
-  echo "(cd ~/.config/coc/extensions; npm install;"
 else
   nvm install --lts
   nvm use --lts
   npm install -g prettier
   nvim +PackerInstall +qall
-  (cd ~/.config/coc/extensions; npm install;)
 fi
 
 ./install-fish.sh
