@@ -1,12 +1,8 @@
-tags
 **/*.sw*
-.env.local.*
-**/.DS_Store
-**/newrelic_agent.log
-**/node_modules
-**/.terraform
 **/*.tfstate
-config/coc/extensions/coc-phpls-data/**/*
-config/coc/history.json
-config/coc/**/*-mru
+**/.DS_Store
+**/.terraform
+**/node_modules
+.env.local.*
 .idea/**/*
+tags
