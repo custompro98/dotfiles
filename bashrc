@@ -11,11 +11,6 @@ if [[ "$platform" == 'linux' ]]; then
   alias open="xdg-open"
 fi
 
-# Set up prompt to (branch) current/working/directory
-# $
-export PS1='\[$txtgrn\]$git_branch \[$txtcyn\]\w\[$txtrst\]
-$ '
-
 # Set up Ruby environment
 if [[ "$platform" == 'osx' ]]; then
   source /usr/local/opt/chruby/share/chruby/chruby.sh
@@ -28,10 +23,6 @@ fi
 # Add any other scripts here into path
 export PATH="~/.scripts:$PATH"
 
-# Git Aware Prompt
-export GITAWAREPROMPT=~/.bash/git-aware-prompt
-source "${GITAWAREPROMPT}/main.sh"
-
 # Set up go path
 export GOPATH=$HOME/go
 export GOBIN=$HOME/go/bin
@@ -39,9 +30,6 @@ export PATH=$PATH:$GOBIN
 
 # Set nvim as EDITOR
 export EDITOR=nvim
-
-# Git autocomplete
-source ~/.git-completion.bash
 
 # Gogh for Gnome/Pantheon Terminal Colorschemes
 alias gogh='sudo apt-get install dconf-cli && wget -O gogh https://git.io/vQgMr && chmod +x gogh && ./gogh && rm gogh'
@@ -152,7 +140,6 @@ function run_n_times {
 ### Tool settings
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # added by travis gem
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
@@ -162,5 +149,3 @@ COMPANY_COMMANDS=~/.companyrc
 if [ -f "$COMPANY_COMMANDS" ]; then
   source $COMPANY_COMMANDS
 fi
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash

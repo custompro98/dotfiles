@@ -20,23 +20,17 @@ if [[ -n "$(command -v pip2)" ]]; then
   pip2 install pynvim
 fi
 
-ln -s ~/.dotfiles/bash ~/.bash
-
 if [[ "$platform" == 'osx' ]]; then
   ln -sf ~/.dotfiles/iterm2_profiles/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
 fi
 
 ln -s ~/.dotfiles/config/nvim/ ~/.config/nvim
 ln -s ~/.dotfiles/rgignore ~/.rgignore
-ln -s ~/.dotfiles/reveal.js ~/reveal.js
 ln -s ~/.dotfiles/bash_profile ~/.bash_profile
 ln -s ~/.dotfiles/bashrc ~/.bashrc
 ln -s ~/.dotfiles/gitconfig ~/.gitconfig
 ln -s ~/.dotfiles/gitignore ~/.gitignore
-ln -s ~/.dotfiles/profile ~/.profile
-ln -s ~/.dotfiles/psqlrc ~/.psqlrc
 ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
-ln -s ~/.dotfiles/git/contrib/completion/git-completion.bash ~/.git-completion.bash
 ln -s ~/.dotfiles/scripts/templatemux /usr/local/bin/templatemux
 
 # Install NVM
