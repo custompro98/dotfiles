@@ -48,18 +48,19 @@ ln -s ~/.dotfiles/scripts/templatemux /usr/local/bin/templatemux
 
 # Install NVM
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash
+
 if [[ "$platform" == 'Linux' ]]; then
   echo "Please restart the shell and run the following: "
   echo "nvm install --lts"
   echo "nvm use --lts"
   echo "npm install -g prettier"
-  echo "vim +PlugInstall +qall"
+  echo "nvim +PackerInstall +qall"
   echo "(cd ~/.config/coc/extensions; npm install;"
 else
   nvm install --lts
   nvm use --lts
   npm install -g prettier
-  vim +PlugInstall +qall
+  nvim +PackerInstall +qall
   (cd ~/.config/coc/extensions; npm install;)
 fi
 
