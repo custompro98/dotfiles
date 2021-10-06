@@ -1,23 +1,8 @@
 # source ~/.bashrc_default
 
-platform='osx'
-unamestr=`uname`
-if [[ "$unamestr" == 'Linux'  ]]; then
-   platform='linux'
-fi
-
-# Map xdg-open to open
-if [[ "$platform" == 'linux' ]]; then
-  alias open="xdg-open"
-fi
-
 # Set up Ruby environment
-if [[ "$platform" == 'osx' ]]; then
-  source /usr/local/opt/chruby/share/chruby/chruby.sh
-  source /usr/local/share/chruby/chruby.sh
-else
-  source /usr/local/share/chruby/chruby.sh
-fi
+source /usr/local/opt/chruby/share/chruby/chruby.sh
+source /usr/local/share/chruby/chruby.sh
 
 # Add PostgreSQL server commands to path
 # Add any other scripts here into path
