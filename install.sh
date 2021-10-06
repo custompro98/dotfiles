@@ -49,7 +49,7 @@ ln -s ~/.dotfiles/scripts/templatemux /usr/local/bin/templatemux
 # Install NVM
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash
 
-if [[ "$platform" == 'Linux' ]]; then
+if [[ "$platform" == 'linux' ]]; then
   echo "Please restart the shell and run the following: "
   echo "nvm install --lts"
   echo "nvm use --lts"
