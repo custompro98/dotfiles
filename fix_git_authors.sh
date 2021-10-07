@@ -1,6 +1,6 @@
 #!/bin/sh
 
-git filter-branch --env-filter '
+git filter-branch -f --env-filter '
 OLD_EMAIL="mitchjoa@stockx.com"
 CORRECT_NAME="custompro98"
 CORRECT_EMAIL="mitchjoa@gmail.com"
