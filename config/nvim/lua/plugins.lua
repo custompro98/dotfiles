@@ -43,6 +43,7 @@ return packer.startup(function(use)
   use 'windwp/nvim-autopairs'
   use 'tpope/vim-fugitive'
   use 'tpope/vim-surround'
+  use 'aserowy/tmux.nvim'
 
   -- searching
   use 'vijaymarupudi/nvim-fzf'
