@@ -6,6 +6,21 @@ local cmd = vim.cmd
 
 local nvim_lsp = require('lspconfig')
 
+-- set appearances to reduce dependency on Lspsaga
+vim.cmd [[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]]
+vim.cmd [[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
+
+local border = {
+      {"🭽", "FloatBorder"},
+      {"▔", "FloatBorder"},
+      {"🭾", "FloatBorder"},
+      {"▕", "FloatBorder"},
+      {"🭿", "FloatBorder"},
+      {"▁", "FloatBorder"},
+      {"🭼", "FloatBorder"},
+      {"▏", "FloatBorder"},
+}
+
 -- use on_attach to only map keybindings for lsp attaches to current buffer
 local function on_attach(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -18,20 +33,24 @@ local function on_attach(client, bufnr)
   local opts = { noremap = true, silent = true }
 
   -- definitions
-  buf_set_keymap('n', 'gd', '<cmd>lua require"lspsaga.provider".preview_definition()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<cmd>Lspsaga preview_definition<CR>', opts)
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', 'gh', '<cmd>lua require"lspsaga.hover".render_hover_doc()<CR>', opts)
-  buf_set_keymap('i', '<Leader>gh', '<cmd>lua require"lspsaga.signaturehelp".signature_help()<CR>', opts)
+  buf_set_keymap('n', 'gh', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('i', '<Leader>gh', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
 
   -- linting
   buf_set_keymap('n', '<C-n>', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<C-p>', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
 
   -- refactoring
-  buf_set_keymap('n', '<Leader>rn', '<cmd>lua require"lspsaga.rename".rename()<CR>', opts)
-  buf_set_keymap('n', '<Leader>ca', '<cmd>lua require"lspsaga.codeaction".code_action()<CR>', opts)
-  buf_set_keymap('v', '<Leader>ca', ':<C-U>lua require("lspsaga.codeaction").range_code_action()<CR>', opts)
+  buf_set_keymap('n', '<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<Leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+
+
+  -- apperances
+  vim.lsp.handlers["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border})
+  vim.lsp.handlers["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border})
 end
 
 
@@ -65,27 +84,12 @@ cmd [[au!]]
 cmd [[au FileType scala,sbt lua require('metals').initialize_or_attach({})]]
 cmd [[augroup end]]
 
--- set up linters and formatters
+local signs = { Error = "❌", Warn = "⚠️", Hint = "⁉️", Info = "ℹ️" }
 
--- ** LSP Saga ** --
--- better UI for LSP functionality
-
-local saga = require 'lspsaga'
-
-saga.init_lsp_saga {
-  error_sign = '❌',
-  warn_sign = '⚠️',
-  hint_sign = '⁉️',
-  infor_sign = 'ℹ️',
-  border_style = 'round',
-
-  finder_action_keys = {
-    open = 'o',
-    vsplit = 'v',
-    split = 'x',
-    quit = 'q',
-  }
-}
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
 
 -- ** Diagnostics ** --
 -- print out all installed lsp servers
