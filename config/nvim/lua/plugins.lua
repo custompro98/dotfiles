@@ -46,12 +46,11 @@ return packer.startup(function(use)
   use 'aserowy/tmux.nvim'
 
   -- searching
-  use 'vijaymarupudi/nvim-fzf'
-  use 'vijaymarupudi/nvim-fzf-commands'
   use {
     'nvim-telescope/telescope.nvim',
     requires = {{ 'nvim-lua/popup.nvim' }, { 'nvim-lua/plenary.nvim' }}
   }
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
   -- appearance
   use 'kyazdani42/nvim-web-devicons'
