@@ -1,6 +1,16 @@
 #!/bin/bash
 
-brew install neovim tree bat chrome-cli autojump fzf fd ripgrep
+if ! command -v brew &> /dev/null
+then
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
+
+git clone https://github.com/powerline/fonts.git
+cd fonts
+./install.sh
+cd .. && rm -rf fonts
+
+brew install iterm2 neovim tree bat chrome-cli autojump fzf fd ripgrep
 
 if [[ -n "$(command -v pip3)" ]]; then
   pip3 install pynvim
