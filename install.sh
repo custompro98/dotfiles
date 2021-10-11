@@ -30,7 +30,7 @@ cd .. && rm -rf fonts
 print_installed "powerline fonts"
 
 print_installing "applications from brew"
-brew install iterm2 neovim tree bat chrome-cli autojump fzf fd ripgrep
+brew install iterm2 neovim tree bat chrome-cli autojump fzf fd ripgrep eqmac
 print_installed "applications from brew"
 
 print_checking "pynvim"
