@@ -22,15 +22,16 @@ fi
 print_installed "brew"
 
 
-print_installing "powerline fonts"
-git clone https://github.com/powerline/fonts.git
-cd fonts
-./install.sh
-cd .. && rm -rf fonts
-print_installed "powerline fonts"
+# print_installing "powerline fonts"
+# git clone https://github.com/powerline/fonts.git
+# cd fonts
+# ./install.sh
+# cd .. && rm -rf fonts
+# print_installed "powerline fonts"
 
 print_installing "applications from brew"
-brew install iterm2 neovim tmux tree bat chrome-cli autojump fzf fd ripgrep eqmac
+brew tap homebrew/cask-fonts
+brew install iterm2 neovim tmux tree bat chrome-cli autojump fzf fd ripgrep eqmac font-hack-nerd-font
 print_installed "applications from brew"
 
 print_checking "pynvim"

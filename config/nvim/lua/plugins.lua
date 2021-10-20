@@ -44,6 +44,10 @@ return packer.startup(function(use)
   use 'tpope/vim-fugitive'
   use 'tpope/vim-surround'
   use 'aserowy/tmux.nvim'
+  use {
+    'kyazdani42/nvim-tree.lua',
+    requires = 'kyazdani42/nvim-web-devicons',
+  }
 
   -- searching
   use {
