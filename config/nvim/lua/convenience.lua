@@ -24,3 +24,7 @@ vim.cmd('cabbrev sw w !sudo tee %')
 
 -- remove trailing whitespace on save
 vim.cmd('autocmd BufWritePre *[^.md] %s/\\s\\+$//e')
+
+require('kommentary.config').configure_language('lua', {
+    prefer_single_line_comments = true,
+})
