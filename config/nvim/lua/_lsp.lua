@@ -53,15 +53,25 @@ local function on_attach(client, bufnr)
   vim.lsp.handlers["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border})
 end
 
-
 -- ** LSP Install ** --
+local lsps = {
+  [1] = 'dockerfile',
+  [2] = 'go',
+  [3] = 'lua',
+  [4] = 'php',
+  [5] = 'terraform',
+  [6] = 'typescript',
+}
 
 local lspinstall = require('lspinstall')
 lspinstall.setup()
 
 -- loop through desired LSPs and set them up
-local lsps = lspinstall.installed_servers()
 for _, lsp in ipairs(lsps) do
+  if not nvim_lsp[lsp] then
+    lspinstall.install_server(lsp)
+  end
+
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
     flags = {
@@ -70,14 +80,16 @@ for _, lsp in ipairs(lsps) do
   }
 end
 
--- terraform needs an extra filetype
-nvim_lsp['terraform'].setup {
-  on_attach = on_attach,
-  flags = {
-    debounce_text_changes = 150
-  },
-  filetypes = { "terraform", "tf" }
-}
+if nvim_lsp['terraform'] then
+  -- terraform needs an extra filetype
+  nvim_lsp['terraform'].setup {
+    on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150
+    },
+    filetypes = { "terraform", "tf" }
+  }
+end
 
 cmd [[augroup lsp]]
 cmd [[au!]]
