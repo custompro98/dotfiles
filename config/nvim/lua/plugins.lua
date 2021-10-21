@@ -50,6 +50,7 @@ return packer.startup(function(use)
     requires = 'kyazdani42/nvim-web-devicons',
   }
   use 'custompro98/listify.nvim'
+  use 'chentau/marks.nvim'
 
   -- searching
   use {
