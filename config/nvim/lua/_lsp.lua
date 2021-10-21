@@ -91,6 +91,22 @@ if nvim_lsp['terraform'] then
   }
 end
 
+if nvim_lsp['lua'] then
+  nvim_lsp['lua'].setup {
+    on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150
+    },
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = { 'vim' }
+        }
+      }
+    }
+  }
+end
+
 cmd [[augroup lsp]]
 cmd [[au!]]
 cmd [[au FileType scala,sbt lua require('metals').initialize_or_attach({})]]
