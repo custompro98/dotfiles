@@ -97,6 +97,7 @@ api.nvim_set_keymap('n', '<Leader>ff', '<cmd>Telescope find_files<CR>', { norema
 api.nvim_set_keymap('n', '<Leader>fg', '<cmd>Telescope live_grep<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>fr', '<cmd>Telescope lsp_references<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>fs', '<cmd>Telescope lsp_document_symbols<CR>', { noremap = true })
+api.nvim_set_keymap('n', '<Leader>fh', '<cmd>Telescope help_tags<CR>', { noremap = true })
 
 -- split navigation
 --[[ api.nvim_set_keymap('n', '<C-J>', '<C-W><C-J>', { noremap = true })
