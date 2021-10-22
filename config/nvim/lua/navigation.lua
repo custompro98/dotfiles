@@ -157,3 +157,9 @@ require'marks'.setup {
   },
   mappings = {}
 }
+
+-- quickfix navigation
+api.nvim_set_keymap('n', '<Leader>co', '<cmd>copen<CR>', { noremap = true })
+api.nvim_set_keymap('n', '<Leader>cc', '<cmd>cclose<CR>', { noremap = true })
+api.nvim_set_keymap('n', '<Leader>cn', '<cmd>cnext<CR>', { noremap = true })
+api.nvim_set_keymap('n', '<Leader>cp', '<cmd>cprev<CR>', { noremap = true })
