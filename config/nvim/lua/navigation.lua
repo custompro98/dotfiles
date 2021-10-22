@@ -80,7 +80,8 @@ require'nvim-tree'.setup {
 api.nvim_set_keymap('n', '<C-\\>', '<cmd>NvimTreeToggle<CR>', { noremap = true })
 
 -- searching
-require('telescope').setup {
+local telescope = require('telescope')
+telescope.setup {
   extensions = {
     fzf = {
       fuzzy = true,                    -- false will only do exact matching
@@ -91,13 +92,20 @@ require('telescope').setup {
     }
   }
 }
-require('telescope').load_extension('fzf')
+telescope.load_extension('fzf')
 
-api.nvim_set_keymap('n', '<Leader>ff', '<cmd>Telescope find_files<CR>', { noremap = true })
+function TelescopeDotfiles()
+  require('telescope.builtin').git_files {
+    cwd = '~/.dotfiles/',
+  }
+end
+
+api.nvim_set_keymap('n', '<Leader>ff', '<cmd>Telescope git_files<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>fg', '<cmd>Telescope live_grep<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>fr', '<cmd>Telescope lsp_references<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>fs', '<cmd>Telescope lsp_document_symbols<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>fh', '<cmd>Telescope help_tags<CR>', { noremap = true })
+api.nvim_set_keymap('n', '<Leader>fd', '<cmd>lua TelescopeDotfiles()<CR>', { noremap = true })
 
 -- split navigation
 --[[ api.nvim_set_keymap('n', '<C-J>', '<C-W><C-J>', { noremap = true })
