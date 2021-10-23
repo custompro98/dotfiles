@@ -70,6 +70,18 @@ then
 fi
 print_installed "nvm"
 
+# Install G
+print_checking "g"
+if ! command -v g &> /dev/null
+then
+  print_installing "g"
+  curl -sSL https://git.io/g-install | sh -s
+  source ~/.bash_profile
+  g install latest
+  g set latest
+fi
+print_installed "g"
+
 print_checking "prettier"
 if ! command -v prettier &> /dev/null
 then
