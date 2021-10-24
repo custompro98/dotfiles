@@ -109,10 +109,10 @@ api.nvim_set_keymap('n', '<Leader>fd', '<cmd>lua TelescopeDotfiles()<CR>', { nor
 api.nvim_set_keymap('n', '<Leader>fm', '<cmd>Telescope man_pages<CR>', { noremap = true })
 
 -- split navigation
---[[ api.nvim_set_keymap('n', '<C-J>', '<C-W><C-J>', { noremap = true })
-api.nvim_set_keymap('n', '<C-K>', '<C-W><C-K>', { noremap = true })
-api.nvim_set_keymap('n', '<C-L>', '<C-W><C-L>', { noremap = true })
-api.nvim_set_keymap('n', '<C-H>', '<C-W><C-H>', { noremap = true }) ]]
+-- api.nvim_set_keymap('n', '<C-J>', '<C-W><C-J>', { noremap = true })
+-- api.nvim_set_keymap('n', '<C-K>', '<C-W><C-K>', { noremap = true })
+-- api.nvim_set_keymap('n', '<C-L>', '<C-W><C-L>', { noremap = true })
+-- api.nvim_set_keymap('n', '<C-H>', '<C-W><C-H>', { noremap = true })
 
 -- tmux integration
 require("tmux").setup({
