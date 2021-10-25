@@ -29,11 +29,11 @@ require('kommentary.config').configure_language('lua', {
     prefer_single_line_comments = true,
 })
 
--- local curfunc_section = require('curfunc-sidebar-nvim')
+local loc_section = require('curloc-sidebar-nvim')
 
 require("sidebar-nvim").setup({
   open = true,
-  sections = { "datetime", "git-status", "lsp-diagnostics" }, -- , curfunc_section },
+  sections = { "datetime", "git-status", "lsp-diagnostics", loc_section },
   datetime = {
     format = "%a %b %d, %l:%M %p",
     clocks = {

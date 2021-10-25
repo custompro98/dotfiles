@@ -53,7 +53,7 @@ return packer.startup(function(use)
   use 'chentau/marks.nvim'
   use 'sidebar-nvim/sidebar.nvim'
   -- use '~/Projects/vim/sidebar.nvim'
-  -- use '~/Projects/vim/curfunc-sidebar.nvim'
+  use 'custompro98/curloc-sidebar.nvim'
 
   -- searching
   use {
@@ -69,4 +69,7 @@ return packer.startup(function(use)
     requires = { 'rktjmp/lush.nvim' }
   }
   use 'hoob3rt/lualine.nvim'
+
+  -- hack
+  use 'antoinemadec/FixCursorHold.nvim' -- resolves https://github.com/neovim/neovim/issues/12587
 end)
