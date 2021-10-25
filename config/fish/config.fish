@@ -9,7 +9,7 @@ set PATH $PATH $GOBIN
 
 # sourcing shell tools
 ## nvm
-nvm use stable
+### nvm is acting funky and resourcing itself a bunch, just use it when you need it
 
 ## g
 set -gx GOPATH $HOME/go; set -gx GOROOT $HOME/.go; set -gx PATH $GOPATH/bin $PATH; # g-install: do NOT edit, see https://github.com/stefanmaric/g

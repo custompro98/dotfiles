@@ -10,7 +10,10 @@ SETUVAR __fish_initialized:3100
 SETUVAR _fisher_edc_2F_bass_files:/Users/mitchjoa/\x2econfig/fish/functions/__bass\x2epy\x1e/Users/mitchjoa/\x2econfig/fish/functions/bass\x2efish
 SETUVAR _fisher_jethrokuan_2F_fzf_files:/Users/mitchjoa/\x2econfig/fish/functions/__fzf_cd\x2efish\x1e/Users/mitchjoa/\x2econfig/fish/functions/__fzf_complete\x2efish\x1e/Users/mitchjoa/\x2econfig/fish/functions/__fzf_complete_preview\x2efish\x1e/Users/mitchjoa/\x2econfig/fish/functions/__fzf_find_file\x2efish\x1e/Users/mitchjoa/\x2econfig/fish/functions/__fzf_get_dir\x2efish\x1e/Users/mitchjoa/\x2econfig/fish/functions/__fzf_open\x2efish\x1e/Users/mitchjoa/\x2econfig/fish/functions/__fzf_parse_commandline\x2efish\x1e/Users/mitchjoa/\x2econfig/fish/functions/__fzf_reverse_isearch\x2efish\x1e/Users/mitchjoa/\x2econfig/fish/functions/__fzfcmd\x2efish\x1e/Users/mitchjoa/\x2econfig/fish/conf\x2ed/fzf\x2efish
 SETUVAR _fisher_jorgebucaran_2F_fisher_files:/Users/mitchjoa/\x2econfig/fish/functions/fisher\x2efish\x1e/Users/mitchjoa/\x2econfig/fish/completions/fisher\x2efish
-SETUVAR _fisher_plugins:jorgebucaran/fisher\x1eedc/bass\x1ejethrokuan/fzf
+SETUVAR _fisher_jorgebucaran_2F_hydro_files:/Users/mitchjoa/\x2econfig/fish/functions/fish_mode_prompt\x2efish\x1e/Users/mitchjoa/\x2econfig/fish/functions/fish_prompt\x2efish\x1e/Users/mitchjoa/\x2econfig/fish/functions/fish_title\x2efish\x1e/Users/mitchjoa/\x2econfig/fish/conf\x2ed/hydro\x2efish
+SETUVAR _fisher_jorgebucaran_2F_nvm_2E_fish_files:/Users/mitchjoa/\x2econfig/fish/functions/_nvm_index_update\x2efish\x1e/Users/mitchjoa/\x2econfig/fish/functions/_nvm_list\x2efish\x1e/Users/mitchjoa/\x2econfig/fish/functions/_nvm_version_activate\x2efish\x1e/Users/mitchjoa/\x2econfig/fish/functions/_nvm_version_deactivate\x2efish\x1e/Users/mitchjoa/\x2econfig/fish/functions/nvm\x2efish\x1e/Users/mitchjoa/\x2econfig/fish/conf\x2ed/nvm\x2efish\x1e/Users/mitchjoa/\x2econfig/fish/completions/nvm\x2efish
+SETUVAR _fisher_plugins:jorgebucaran/fisher\x1eedc/bass\x1ejethrokuan/fzf\x1ejorgebucaran/hydro\x1ejorgebucaran/nvm\x2efish
+SETUVAR _hydro_git_21735:master\x20\u21911\x20
 SETUVAR fish_color_autosuggestion:747369
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:99cc99
@@ -41,3 +44,5 @@ SETUVAR fish_pager_color_description:B3A06D\x1eyellow
 SETUVAR fish_pager_color_prefix:white\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_user_paths:/usr/local/opt/openjdk\x408/bin\x1e/Users/mitchjoa/\x2efzf/bin
+SETUVAR nvm_data:/Users/mitchjoa/\x2elocal/share/nvm
+SETUVAR nvm_mirror:https\x3a//nodejs\x2eorg/dist
