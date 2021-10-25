@@ -7,6 +7,10 @@ set GOPATH $HOME/go
 set GOBIN $GOPATH/bin
 set PATH $PATH $GOBIN
 
+## fzf
+set -x FZF_DISABLE_KEYBINDINGS 0
+set -x FZF_LEGACY_KEYBINDINGS 0
+
 # sourcing shell tools
 ## nvm
 ### nvm is acting funky and resourcing itself a bunch, just use it when you need it
