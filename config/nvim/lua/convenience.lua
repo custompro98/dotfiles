@@ -28,3 +28,22 @@ vim.cmd('autocmd BufWritePre *[^.md] %s/\\s\\+$//e')
 require('kommentary.config').configure_language('lua', {
     prefer_single_line_comments = true,
 })
+
+-- local curfunc_section = require('curfunc-sidebar-nvim')
+
+require("sidebar-nvim").setup({
+  open = true,
+  sections = { "datetime", "git-status", "lsp-diagnostics" }, -- , curfunc_section },
+  datetime = {
+    format = "%a %b %d, %l:%M %p",
+    clocks = {
+      { name = "eastern" },
+      { name = "pacific", offset = -3 },
+      { name = "ukraine", offset = 7 },
+      { name = "india", offset = 9.5 },
+    }
+  },
+  disable_closing_prompt = true
+})
+
+api.nvim_set_keymap('n', '<Leader>\\', '<cmd>SidebarNvimToggle<CR>', { noremap = true })

@@ -51,6 +51,9 @@ return packer.startup(function(use)
   }
   use 'custompro98/listify.nvim'
   use 'chentau/marks.nvim'
+  use 'sidebar-nvim/sidebar.nvim'
+  -- use '~/Projects/vim/sidebar.nvim'
+  -- use '~/Projects/vim/curfunc-sidebar.nvim'
 
   -- searching
   use {
