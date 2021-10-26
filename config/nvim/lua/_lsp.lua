@@ -66,6 +66,9 @@ local lsps = {
 local lspinstall = require('lspinstall')
 lspinstall.setup()
 
+-- add cmp capabilities
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
 -- loop through desired LSPs and set them up
 for _, lsp in ipairs(lsps) do
   if not nvim_lsp[lsp] then
@@ -76,7 +79,8 @@ for _, lsp in ipairs(lsps) do
     on_attach = on_attach,
     flags = {
       debounce_text_changes = 150
-    }
+    },
+    capabilities = capabilities,
   }
 end
 

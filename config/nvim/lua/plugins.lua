@@ -28,7 +28,16 @@ return packer.startup(function(use)
   use 'neovim/nvim-lspconfig'
   use 'glepnir/lspsaga.nvim'
   use 'kabouzeid/nvim-lspinstall'
-  use 'hrsh7th/nvim-compe'
+
+  -- autocomplete
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/nvim-cmp'
+  use 'hrsh7th/cmp-vsnip'
+  use 'hrsh7th/vim-vsnip'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-nvim-lua'
+  use 'hrsh7th/cmp-emoji'
 
   use 'scalameta/nvim-metals'
 
