@@ -12,6 +12,3 @@ opt.tabstop = 2
 -- line numbers
 opt.number = true
 opt.relativenumber = true
-
--- TODO: this is for using nvim-tree. sad. issue #549
-opt.shell = "/bin/bash"

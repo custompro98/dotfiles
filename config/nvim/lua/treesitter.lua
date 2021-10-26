@@ -3,7 +3,13 @@ local opt = vim.opt
 local api = vim.api
 
 -- ** Treesitter ** --
---
+api.nvim_exec([[
+  augroup treesitter_folds
+  autocmd!
+  autocmd BufEnter * norm! zx
+  augroup end
+]], false)
+
 require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
