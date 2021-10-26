@@ -30,7 +30,14 @@ cmp.setup({
       { name = 'vsnip' },
     },
     {
-      { name = 'buffer' },
+      {
+        name = 'buffer',
+        opts = {
+          get_bufnrs = function()
+            return vim.api.nvim_list_bufs()
+          end
+        }
+      },
       { name = 'path' },
       { name = 'emoji' },
     }
