@@ -51,6 +51,16 @@ local function on_attach(client, bufnr)
   -- apperances
   vim.lsp.handlers["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border})
   vim.lsp.handlers["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border})
+
+  -- autoformat
+  if client.resolved_capabilities.document_formatting and client.name ~= 'php' then
+    vim.api.nvim_exec([[
+      augroup Format
+      autocmd! * <buffer>
+      autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()
+      augroup end
+    ]], false)
+  end
 end
 
 -- ** LSP Install ** --
@@ -61,6 +71,7 @@ local lsps = {
   [4] = 'php',
   [5] = 'terraform',
   [6] = 'typescript',
+  [7] = 'diagnosticls',
 }
 
 local lspinstall = require('lspinstall')
@@ -106,6 +117,65 @@ if nvim_lsp['lua'] then
         diagnostics = {
           globals = { 'vim' }
         }
+      }
+    }
+  }
+end
+
+if nvim_lsp['diagnosticls'] then
+  nvim_lsp['diagnosticls'].setup {
+    on_attach = on_attach,
+    filetypes = { 'javascript', 'javascriptreact', 'json', 'typescript', 'typescriptreact', 'css', 'scss', 'markdown' },
+    init_options = {
+      linters = {
+        eslint = {
+          command = 'eslint',
+          rootPatterns = { '.git' },
+          debounce = 100,
+          args = { '--stdin', '--stdin-filename', '%filepath', '--format', 'json' },
+          sourceName = 'eslint',
+          parseJson = {
+            errorsRoot = '[0].messages',
+            line = 'line',
+            column = 'column',
+            endLine = 'endLine',
+            endColumn = 'endColumn',
+            message = '[eslint] ${message} [${ruleId}]',
+            security = 'severity'
+          },
+          securities = {
+            [2] = 'error',
+            [1] = 'warning'
+          }
+        },
+      },
+      filetypes = {
+        javascript = 'eslint',
+        javascriptreact = 'eslint',
+        typescript = 'eslint',
+        typescriptreact = 'eslint',
+      },
+      formatters = {
+        -- eslint = {
+        --   command = 'eslint',
+        --   args = { '--stdin', '--stdin-filename', '%filename', '--fix-to-stdout' },
+        --   rootPatterns = { '.git' },
+        -- },
+        prettier = {
+          command = 'prettier',
+          args = { '--stdin-filepath', '%filename' }
+        },
+      },
+      formatFiletypes = {
+        css = 'prettier',
+        javascript = 'prettier',
+        javascriptreact = 'prettier',
+        json = 'prettier',
+        less = 'prettier',
+        markdown = 'prettier',
+        scss = 'prettier',
+        typescript = 'prettier',
+        typescriptreact = 'prettier',
       }
     }
   }
