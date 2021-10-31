@@ -60,7 +60,10 @@ return packer.startup(function(use)
   }
   use 'custompro98/listify.nvim'
   use 'chentau/marks.nvim'
-  use 'sidebar-nvim/sidebar.nvim'
+  use {
+    'sidebar-nvim/sidebar.nvim',
+    branch = 'dev'
+  }
   -- use '~/Projects/vim/sidebar.nvim'
   use 'custompro98/curloc-sidebar.nvim'
 
