@@ -1,7 +1,7 @@
 #!/usr/local/bin/fish
 
 # grab the name from the current working directory
-string match -rq '\.?(?<SESSION>.*)' (basename (pwd))
+string match -rq '\.?(?<SESSION>[^.]*)' (basename (pwd))
 
 # check if session exists, pipe error output to /dev/null
 tmux has-session -t $SESSION 2>/dev/null
