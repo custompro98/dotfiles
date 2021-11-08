@@ -65,7 +65,8 @@
     prb = pull --rebase
 
     # stash shortcuts
-    sh  = stash
+    sh  = stash --keep-index
+    sha = stash
     shp = stash pop
 
     # checkout shortcuts
