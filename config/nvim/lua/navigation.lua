@@ -4,7 +4,7 @@ local api = vim.api
 
 -- ** Navigation ** --
 -- TODO: this is for using nvim-tree. sad. issue #549
-opt.shell = "/bin/bash"
+-- opt.shell = "/bin/bash"
 
 -- following options are the default
 require'nvim-tree'.setup {
