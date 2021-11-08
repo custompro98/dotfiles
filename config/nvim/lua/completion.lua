@@ -26,6 +26,7 @@ cmp.setup({
   sources = cmp.config.sources(
     {
       { name = 'nvim_lsp' },
+      { name = 'cmp_tabnine' },
       { name = 'nvim_lua' },
       { name = 'vsnip' },
     },
@@ -52,4 +53,14 @@ require('nvim-autopairs').setup({
     javascript = {'template_string'},
     java = false,-- don't check treesitter on java
   }
+})
+
+-- tabnine
+local tabnine = require('cmp_tabnine.config')
+tabnine:setup({
+  max_lines = 1000;
+  max_num_results = 20;
+  sort = true;
+  run_on_every_keystroke = true;
+  snippet_placeholder = '..';
 })

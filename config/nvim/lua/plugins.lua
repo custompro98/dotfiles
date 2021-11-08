@@ -38,6 +38,7 @@ return packer.startup(function(use)
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-nvim-lua'
   use 'hrsh7th/cmp-emoji'
+  use { 'tzachar/cmp-tabnine', run = './install.sh' }
 
   use 'scalameta/nvim-metals'
 
