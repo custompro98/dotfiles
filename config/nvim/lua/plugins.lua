@@ -45,9 +45,15 @@ return packer.startup(function(use)
   -- treesitter
   use {
     'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate'
+    run = ':TSUpdate',
+    branch = '0.5-compat'
   }
   use 'nvim-treesitter/playground'
+  use {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    branch = '0.5-compat'
+  }
+
 
   -- development
   use 'b3nj5m1n/kommentary'
