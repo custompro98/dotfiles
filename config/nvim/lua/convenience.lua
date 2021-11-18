@@ -29,6 +29,10 @@ require('kommentary.config').configure_language('lua', {
     prefer_single_line_comments = true,
 })
 
+require('kommentary.config').configure_language('php', {
+    prefer_single_line_comments = true,
+})
+
 local loc_section = require('curloc-sidebar-nvim')
 
 require("sidebar-nvim").setup({
