@@ -27,7 +27,7 @@ return packer.startup(function(use)
   -- lsp
   use 'neovim/nvim-lspconfig'
   use 'glepnir/lspsaga.nvim'
-  use 'kabouzeid/nvim-lspinstall'
+  use 'williamboman/nvim-lsp-installer'
 
   -- autocomplete
   use 'hrsh7th/cmp-nvim-lsp'

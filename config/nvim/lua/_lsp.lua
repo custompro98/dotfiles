@@ -4,8 +4,6 @@
 local vim = vim
 local cmd = vim.cmd
 
-local nvim_lsp = require('lspconfig')
-
 -- set appearances to reduce dependency on Lspsaga
 vim.cmd [[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]]
 vim.cmd [[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
@@ -67,68 +65,42 @@ end
 
 -- ** LSP Install ** --
 local lsps = {
-  [1] = 'dockerfile',
-  [2] = 'go',
-  [3] = 'lua',
-  [4] = 'php',
-  [5] = 'terraform',
-  [6] = 'typescript',
+  [1] = 'dockerls',
+  [2] = 'gopls',
+  [3] = 'sumneko_lua',
+  [4] = 'intelephense',
+  [5] = 'terraformls',
+  [6] = 'tsserver',
   [7] = 'diagnosticls',
 }
 
-local lspinstall = require('lspinstall')
-lspinstall.setup()
-
--- add cmp capabilities
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local lspinstall = require("nvim-lsp-installer")
+local servers = require'nvim-lsp-installer.servers'
 
--- loop through desired LSPs and set them up
-for _, lsp in ipairs(lsps) do
-  if not nvim_lsp[lsp] then
-    lspinstall.install_server(lsp)
-  end
-
-  nvim_lsp[lsp].setup {
+lspinstall.on_server_ready(function(server)
+  local opts = {
     on_attach = on_attach,
     flags = {
       debounce_text_changes = 150
     },
     capabilities = capabilities,
   }
-end
 
-if nvim_lsp['terraform'] then
-  -- terraform needs an extra filetype
-  nvim_lsp['terraform'].setup {
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150
-    },
-    filetypes = { "terraform", "tf" }
-  }
-end
-
-if nvim_lsp['lua'] then
-  nvim_lsp['lua'].setup {
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150
-    },
-    settings = {
+  if server.name == 'sumneko_lua' then
+    opts.settings = {
       Lua = {
         diagnostics = {
           globals = { 'vim' }
         }
       }
     }
-  }
-end
+  end
 
-if nvim_lsp['diagnosticls'] then
-  nvim_lsp['diagnosticls'].setup {
-    on_attach = on_attach,
-    filetypes = { 'javascript', 'javascriptreact', 'json', 'typescript', 'typescriptreact', 'css', 'scss', 'markdown' },
-    init_options = {
+  if server.name == 'diagnosticls' then
+    opts.filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }
+
+    opts.init_options = {
       linters = {
         eslint = {
           command = 'eslint',
@@ -150,37 +122,41 @@ if nvim_lsp['diagnosticls'] then
             [1] = 'warning'
           }
         },
-      },
-      filetypes = {
-        javascript = 'eslint',
-        javascriptreact = 'eslint',
-        typescript = 'eslint',
-        typescriptreact = 'eslint',
-      },
-      formatters = {
-        -- eslint = {
-        --   command = 'eslint',
-        --   args = { '--stdin', '--stdin-filename', '%filename', '--fix-to-stdout' },
-        --   rootPatterns = { '.git' },
-        -- },
-        prettier = {
-          command = 'prettier',
-          args = { '--stdin-filepath', '%filename' }
-        },
-      },
-      formatFiletypes = {
-        css = 'prettier',
-        javascript = 'prettier',
-        javascriptreact = 'prettier',
-        json = 'prettier',
-        less = 'prettier',
-        markdown = 'prettier',
-        scss = 'prettier',
-        typescript = 'prettier',
-        typescriptreact = 'prettier',
       }
     }
-  }
+
+    opts.formatters = {
+      prettier = {
+        command = 'prettier',
+        args = { '--stdin-filepath', '%filename' }
+      },
+    }
+
+    opts.formatFiletypes = {
+      css = 'prettier',
+      javascript = 'prettier',
+      javascriptreact = 'prettier',
+      json = 'prettier',
+      less = 'prettier',
+      markdown = 'prettier',
+      scss = 'prettier',
+      typescript = 'prettier',
+      typescriptreact = 'prettier',
+    }
+  end
+
+  server:setup(opts)
+end)
+
+-- ensure all servers are installed
+for _, lsp in ipairs(lsps) do
+  local server_available, requested_server = servers.get_server(lsp)
+
+  if server_available then
+    if not requested_server:is_installed() then
+      requested_server:install()
+    end
+  end
 end
 
 cmd [[augroup lsp]]
@@ -194,13 +170,3 @@ for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
-
--- ** Diagnostics ** --
--- print out all installed lsp servers
-function LspListInstalled()
-  for _, lsp in ipairs(require('lspinstall').installed_servers()) do
-    print(lsp)
-  end
-end
-
-cmd [[command! LspListInstalled lua LspListInstalled()]]
