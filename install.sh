@@ -31,7 +31,7 @@ print_installed "brew"
 
 print_installing "applications from brew"
 brew tap homebrew/cask-fonts
-brew install iterm2 neovim tmux tree bat chrome-cli autojump fzf fd ripgrep font-hack-nerd-font
+brew install node iterm2 neovim tmux tree bat chrome-cli autojump fzf fd ripgrep font-hack-nerd-font
 print_installed "applications from brew"
 
 print_checking "pynvim"
@@ -49,6 +49,7 @@ fi
 print_installed "pynvim"
 
 print_installing "dotfiles"
+mkdir -p ~/.config
 ln -sfn ~/.dotfiles/config/nvim/ ~/.config/nvim
 ln -sfn ~/.dotfiles/rgignore ~/.rgignore
 ln -sfn ~/.dotfiles/bash_profile ~/.bash_profile
