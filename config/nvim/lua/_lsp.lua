@@ -53,7 +53,7 @@ local function on_attach(client, bufnr)
   vim.lsp.handlers["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border})
 
   -- autoformat
-  if client.resolved_capabilities.document_formatting and client.name ~= 'php' then
+  if client.resolved_capabilities.document_formatting and client.name ~= 'intelephense' then
     vim.api.nvim_exec([[
       augroup Format
       autocmd! * <buffer>
