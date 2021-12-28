@@ -122,26 +122,25 @@ lspinstall.on_server_ready(function(server)
             [1] = 'warning'
           }
         },
-      }
-    }
-
-    opts.formatters = {
-      prettier = {
-        command = 'prettier',
-        args = { '--stdin-filepath', '%filename' }
       },
-    }
-
-    opts.formatFiletypes = {
-      css = 'prettier',
-      javascript = 'prettier',
-      javascriptreact = 'prettier',
-      json = 'prettier',
-      less = 'prettier',
-      markdown = 'prettier',
-      scss = 'prettier',
-      typescript = 'prettier',
-      typescriptreact = 'prettier',
+      formatters = {
+        prettier = {
+          command = 'prettier',
+          args = { '--stdin-filepath', '%filename' },
+          rootPatterns = { '.git' },
+        },
+      },
+      formatFiletypes = {
+        css = 'prettier',
+        javascript = 'prettier',
+        javascriptreact = 'prettier',
+        json = 'prettier',
+        less = 'prettier',
+        markdown = 'prettier',
+        scss = 'prettier',
+        typescript = 'prettier',
+        typescriptreact = 'prettier',
+      },
     }
   end
 
