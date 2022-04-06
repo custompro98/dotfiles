@@ -1,0 +1,52 @@
+{
+  "Package": {
+    "prefix": ["pkg"],
+    "body": [
+      "package $TM_DIRECTORY"
+    ]
+  },
+  "NewTest": {
+    "prefix": ["newtest"],
+    "body": [
+      "package $TM_DIRECTORY",
+      "",
+      "import \"testing\"",
+      "",
+      "func Test_$1(t *testing.T) {",
+        "\ttests := []struct {",
+          "\t\tscenario string",
+        "\t}{",
+          "\t\t{",
+            "\t\t\tscenario: \"$2\",",
+          "\t\t},",
+        "\t}",
+      "",
+        "\tfor _, v := range tests {",
+          "\t\tt.Run(v.scenario, func(t *testing.T) {",
+            "\t\t\t$0",
+          "\t\t})",
+        "\t}",
+      "}"
+    ]
+  },
+  "Test": {
+    "prefix": ["test"],
+    "body": [
+      "func Test_$1(t *testing.T) {",
+        "\ttests := []struct {",
+          "\t\tscenario string",
+        "\t}{",
+          "\t\t{",
+            "\t\t\tscenario: \"$2\",",
+          "\t\t},",
+        "\t}",
+      "",
+        "\tfor _, v := range tests {",
+          "\t\tt.Run(v.scenario, func(t *testing.T) {",
+            "\t\t\t$0",
+          "\t\t})",
+        "\t}",
+      "}"
+    ]
+  }
+}

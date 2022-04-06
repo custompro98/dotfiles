@@ -1,0 +1,32 @@
+{
+  "ConsoleLog": {
+    "prefix": ["cl", "con", "log"],
+    "body": [
+      "console.log(${1:$TM_SELECTED_TEXT});"
+    ]
+  },
+  "Describe": {
+    "prefix": ["desc"],
+    "body": [
+      "describe('$1', () => {",
+        "\t$0",
+      "});"
+    ]
+  },
+  "It": {
+    "prefix": ["it"],
+    "body": [
+      "it('$1', () => {",
+        "\t$0",
+      "});"
+    ]
+  },
+  "AsyncIt": {
+    "prefix": ["asit"],
+    "body": [
+      "it('$1', async () => {",
+        "\t$0",
+      "});"
+    ]
+  }
+}

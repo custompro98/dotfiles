@@ -64,3 +64,16 @@ tabnine:setup({
   run_on_every_keystroke = true;
   snippet_placeholder = '..';
 })
+
+-- vsnip
+vim.g['vsnip_snippet_dir'] = '~/.config/nvim/vsnip'
+
+vim.cmd([[
+  imap <expr> <C-n> vsnip#available(1)   ? '<Plug>(vsnip-expand-or-jump)' : '<C-n>'
+  smap <expr> <C-n> vsnip#available(1)   ? '<Plug>(vsnip-expand-or-jump)' : '<C-n>'
+  imap <expr> <C-p> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)' : '<C-p>'
+  smap <expr> <C-p> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)' : '<C-p>'
+]])
+
+api.nvim_set_keymap('v', '<Leader>vc', '<Plug>(vsnip-select-text)<Esc>', {})
+api.nvim_set_keymap('v', '<Leader>vx', '<Plug>(vsnip-cut-text)<Esc>', {})
