@@ -12,3 +12,6 @@ opt.tabstop = 2
 -- line numbers
 opt.number = true
 opt.relativenumber = true
+
+-- formatting hints
+vim.wo.colorcolumn = "80"
