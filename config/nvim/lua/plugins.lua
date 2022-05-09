@@ -87,6 +87,7 @@ return packer.startup(function(use)
     'npxbr/gruvbox.nvim',
     requires = { 'rktjmp/lush.nvim' }
   }
+  use "projekt0n/github-nvim-theme"
   use 'hoob3rt/lualine.nvim'
 
   -- hack

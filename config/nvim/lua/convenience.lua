@@ -37,7 +37,8 @@ local loc_section = require('curloc-sidebar-nvim')
 
 require("sidebar-nvim").setup({
   open = true,
-  sections = { "datetime", "git-status", "lsp-diagnostics", loc_section },
+  -- sections = { "datetime", "git-status", "lsp-diagnostics", loc_section },
+  sections = { "datetime", "git-status", loc_section },
   datetime = {
     format = "%a %b %d, %l:%M %p",
     clocks = {
@@ -45,6 +46,7 @@ require("sidebar-nvim").setup({
       { name = "pacific", offset = -3 },
       { name = "ukraine", offset = 7 },
       { name = "india", offset = 9.5 },
+      { name = "utc", offset = 5 },
     }
   },
   disable_closing_prompt = true

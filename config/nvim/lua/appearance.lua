@@ -11,14 +11,24 @@ opt.splitbelow = true
 -- Theme
 
 opt.termguicolors = true
-opt.background = 'dark'
-vim.cmd([[colorscheme gruvbox]])
+-- opt.background = 'dark'
+-- vim.cmd([[colorscheme gruvbox]])
+require('github-theme').setup({
+  dark_float = true,
+  dark_sidebar = true,
+  theme_style = 'dimmed',
+  sidebars = {
+    "NvimTree",
+    "qf",
+    "SidebarNvim",
+  },
+})
 
 -- Statusline
 require'lualine'.setup {
   options = {
     icons_enabled = true,
-    theme = 'gruvbox',
+    theme = 'auto',
     component_separators = {'', ''},
     section_separators = {'', ''},
     disabled_filetypes = {}
