@@ -38,7 +38,9 @@ return packer.startup(function(use)
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-nvim-lua'
   use 'hrsh7th/cmp-emoji'
-  use { 'tzachar/cmp-tabnine', run = './install.sh' }
+  use { 'tzachar/cmp-tabnine',
+    run = './install.sh'
+  }
 
   use 'scalameta/nvim-metals'
 
@@ -61,6 +63,9 @@ return packer.startup(function(use)
   use 'tpope/vim-fugitive'
   use 'tpope/vim-surround'
   use 'aserowy/tmux.nvim'
+  use { 'knubie/vim-kitty-navigator',
+    run = 'cp ./*.py ~/.config/kitty',
+  }
   use {
     'kyazdani42/nvim-tree.lua',
     requires = 'kyazdani42/nvim-web-devicons',
@@ -73,6 +78,7 @@ return packer.startup(function(use)
   }
   -- use '~/Projects/vim/sidebar.nvim'
   use 'custompro98/curloc-sidebar.nvim'
+  use 'fladson/vim-kitty'
 
   -- searching
   use {
