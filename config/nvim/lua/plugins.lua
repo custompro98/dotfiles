@@ -38,6 +38,8 @@ return packer.startup(function(use)
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-nvim-lua'
   use 'hrsh7th/cmp-emoji'
+  -- use '~/Projects/vim/cmp-kitty'
+  use 'custompro98/cmp-kitty'
   use { 'tzachar/cmp-tabnine',
     run = './install.sh'
   }

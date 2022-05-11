@@ -25,6 +25,7 @@ cmp.setup({
   },
   sources = cmp.config.sources(
     {
+      { name = 'kitty'},
       { name = 'nvim_lsp' },
       { name = 'cmp_tabnine' },
       { name = 'nvim_lua' },
