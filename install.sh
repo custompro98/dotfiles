@@ -50,15 +50,15 @@ print_installed "pynvim"
 
 print_installing "dotfiles"
 mkdir -p ~/.config
-ln -sfn ~/.dotfiles/config/nvim/ ~/.config/nvim
-ln -sfn ~/.dotfiles/config/kitty/ ~/.config/kitty
-ln -sfn ~/.dotfiles/rgignore ~/.rgignore
-ln -sfn ~/.dotfiles/bash_profile ~/.bash_profile
-ln -sfn ~/.dotfiles/bashrc ~/.bashrc
-ln -sfn ~/.dotfiles/gitconfig ~/.gitconfig
-ln -sfn ~/.dotfiles/gitignore ~/.gitignore
-ln -sfn ~/.dotfiles/tmux.conf ~/.tmux.conf
-ln -sfn ~/.dotfiles/scripts/templatemux /usr/local/bin/templatemux
+ln -sFfn ~/.dotfiles/config/nvim/ ~/.config/nvim
+ln -sFfn ~/.dotfiles/config/kitty/ ~/.config/kitty
+ln -sFfn ~/.dotfiles/rgignore ~/.rgignore
+ln -sFfn ~/.dotfiles/bash_profile ~/.bash_profile
+ln -sFfn ~/.dotfiles/bashrc ~/.bashrc
+ln -sFfn ~/.dotfiles/gitconfig ~/.gitconfig
+ln -sFfn ~/.dotfiles/gitignore ~/.gitignore
+ln -sFfn ~/.dotfiles/tmux.conf ~/.tmux.conf
+ln -sFfn ~/.dotfiles/scripts/templatemux /usr/local/bin/templatemux
 print_installed "dotfiles"
 
 # Install NVM
