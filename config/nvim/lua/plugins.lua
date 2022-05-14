@@ -73,7 +73,7 @@ return packer.startup(function(use)
     requires = 'kyazdani42/nvim-web-devicons',
   }
   use 'custompro98/listify.nvim'
-  use 'chentau/marks.nvim'
+  use 'chentoast/marks.nvim'
   use {
     'sidebar-nvim/sidebar.nvim',
     branch = 'dev'
