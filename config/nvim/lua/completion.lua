@@ -15,14 +15,14 @@ cmp.setup({
       vim.fn["vsnip#anonymous"](args.body)
     end,
   },
-  mapping = {
+  mapping = cmp.mapping.preset.insert({
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
     ['<C-y>'] = cmp.config.disable, -- If you want to remove the default `<C-y>` mapping, You can specify `cmp.config.disable` value.
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- disabled in favor of nvim-autopairs
-  },
+    ['<CR>'] = cmp.mapping.confirm({ select = false }), -- disabled in favor of nvim-autopairs
+  }),
   sources = cmp.config.sources(
     {
       { name = 'kitty'},
@@ -44,6 +44,10 @@ cmp.setup({
       { name = 'emoji' },
     }
   )
+})
+
+cmp.setup.cmdline ({
+  mapping = cmp.mapping.preset.cmdline({})
 })
 
 -- autopairs
