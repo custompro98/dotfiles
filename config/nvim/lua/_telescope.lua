@@ -1,6 +1,7 @@
 local vim = vim
 local api = vim.api
 
+local actions = require "telescope.actions"
 local telescope = require('telescope')
 telescope.setup {
   extensions = {
@@ -11,7 +12,17 @@ telescope.setup {
       case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
                                        -- the default case_mode is "smart_case"
     }
-  }
+  },
+  defaults = {
+    mappings = {
+      i = {
+        ["<Leader>q"] = actions.send_selected_to_qflist + actions.open_qflist,
+      },
+      n = {
+        ["<Leader>q"] = actions.send_selected_to_qflist + actions.open_qflist,
+      },
+    },
+  },
 }
 telescope.load_extension('fzf')
 
