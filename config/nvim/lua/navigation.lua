@@ -129,3 +129,52 @@ api.nvim_set_keymap('n', '<Leader>cc', '<cmd>cclose<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>cn', '<cmd>cnext<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>cp', '<cmd>cprev<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>cx', '<cmd>cexpr[]<CR>', { noremap = true })
+
+vim.g.projectionist_heuristics = {
+  ['app/*'] = {
+    -- Typescript
+    ['*.ts'] = {
+      alternate = {
+        '{dirname}/{basename}.test.ts',
+        '{dirname}/__tests__/{basename}.test.ts',
+      },
+      type = 'source',
+    },
+    ['*.tsx'] = {
+      alternate = {
+        '{dirname}/{basename}.test.ts',
+        '{dirname}/{basename}.test.tsx',
+        '{dirname}/__tests__/{basename}.test.ts',
+        '{dirname}/__tests__/{basename}.test.tsx',
+      },
+      type = 'source',
+    },
+    ['*.test.ts'] = {
+      alternate = {
+        '{dirname}/{basename}.ts',
+        '{dirname}/../{basename}.ts',
+      },
+      type = 'test',
+    },
+    ['*.test.tsx'] = {
+      alternate = {
+        '{dirname}/{basename}.tsx',
+        '{dirname}/../{basename}.tsx',
+      },
+      type = 'test',
+    },
+  },
+  ['*'] = {
+    -- Golang
+    ['*.go'] = {
+      alternate = {
+        '{}_test.go',
+      },
+    },
+    ['*_test.go'] = {
+      alternate = {
+        '{}.go',
+      },
+    },
+  }
+}

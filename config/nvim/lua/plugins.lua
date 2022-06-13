@@ -81,6 +81,7 @@ return packer.startup(function(use)
   -- use '~/Projects/vim/sidebar.nvim'
   use 'custompro98/curloc-sidebar.nvim'
   use 'fladson/vim-kitty'
+  use 'tpope/vim-projectionist'
 
   -- searching
   use {
