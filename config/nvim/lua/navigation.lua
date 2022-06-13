@@ -179,3 +179,8 @@ vim.g.projectionist_heuristics = {
     },
   }
 }
+
+api.nvim_set_keymap('n', '<Leader>ae', '<cmd>A<CR>', { silent = true, noremap = true })
+api.nvim_set_keymap('n', '<Leader>av', '<cmd>AV<CR>', { silent = true, noremap = true })
+api.nvim_set_keymap('n', '<Leader>as', '<cmd>AS<CR>', { silent = true, noremap = true })
+api.nvim_set_keymap('n', '<Leader>at', '<cmd>AT<CR>', { silent = true, noremap = true })
