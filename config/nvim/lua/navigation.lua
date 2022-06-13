@@ -130,6 +130,7 @@ api.nvim_set_keymap('n', '<Leader>cn', '<cmd>cnext<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>cp', '<cmd>cprev<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>cx', '<cmd>cexpr[]<CR>', { noremap = true })
 
+-- vim-projectionist
 vim.g.projectionist_heuristics = {
   ['app/*'] = {
     -- Typescript
