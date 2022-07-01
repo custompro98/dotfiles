@@ -31,7 +31,7 @@ print_installed "brew"
 
 print_installing "applications from brew"
 brew tap homebrew/cask-fonts
-brew install node kitty iterm2 neovim tmux tree bat chrome-cli autojump fzf fd ripgrep font-hack-nerd-font devutils
+brew install deno node kitty neovim tree bat chrome-cli autojump fzf fd ripgrep font-hack-nerd-font devutils
 print_installed "applications from brew"
 
 print_checking "pynvim"
