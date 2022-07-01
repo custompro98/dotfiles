@@ -64,6 +64,11 @@ local function on_attach(client, bufnr)
 end
 
 -- ** LSP Install ** --
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local lspinstall = require("nvim-lsp-installer")
+local lspconfig = require("lspconfig")
+local servers = require('nvim-lsp-installer.servers')
+
 local lsps = {
   [1] = 'dockerls',
   [2] = 'gopls',
@@ -72,22 +77,30 @@ local lsps = {
   [5] = 'terraformls',
   [6] = 'tsserver',
   [7] = 'diagnosticls',
+  [8] = 'denols',
 }
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-local lspinstall = require("nvim-lsp-installer")
-local servers = require'nvim-lsp-installer.servers'
+lspinstall.setup({
+  -- automatic_installation = true, -- debug this, causing an error but 🤷
+  ui = {
+    icons = {
+      server_installed = "✓",
+      server_pending = "➜",
+      server_uninstalled = "✗"
+    }
+  },
+})
 
-lspinstall.on_server_ready(function(server)
+for _, lsp in ipairs(lsps) do
   local opts = {
     on_attach = on_attach,
     flags = {
-      debounce_text_changes = 150
+      debounce_text_changes = 150,
     },
     capabilities = capabilities,
   }
 
-  if server.name == 'sumneko_lua' then
+  if lsp == 'sumneko_lua' then
     opts.settings = {
       Lua = {
         diagnostics = {
@@ -97,7 +110,15 @@ lspinstall.on_server_ready(function(server)
     }
   end
 
-  if server.name == 'diagnosticls' then
+  if lsp == 'tsserver' then
+    opts.root_dir = lspconfig.util.root_pattern("package.json")
+  end
+
+  if lsp == 'denols' then
+    opts.root_dir = lspconfig.util.root_pattern("deno.json")
+  end
+
+  if lsp == 'diagnosticls' then
     opts.filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }
 
     opts.init_options = {
@@ -144,18 +165,7 @@ lspinstall.on_server_ready(function(server)
     }
   end
 
-  server:setup(opts)
-end)
-
--- ensure all servers are installed
-for _, lsp in ipairs(lsps) do
-  local server_available, requested_server = servers.get_server(lsp)
-
-  if server_available then
-    if not requested_server:is_installed() then
-      requested_server:install()
-    end
-  end
+  lspconfig[lsp].setup{opts}
 end
 
 cmd [[augroup lsp]]
