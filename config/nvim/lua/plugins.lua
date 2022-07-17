@@ -3,17 +3,17 @@ local execute = vim.api.nvim_command
 local fn = vim.fn
 
 -- ensure that packer is installed
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
-  fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
+  fn.system({ 'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path })
   execute 'packadd packer.nvim'
 end
 
 vim.cmd('packadd packer.nvim')
 
-local packer = require'packer'
-local util = require'packer.util'
+local packer = require 'packer'
+local util = require 'packer.util'
 
 packer.init({
   package_root = util.join_paths(fn.stdpath('data'), 'site', 'pack')
@@ -26,7 +26,6 @@ return packer.startup(function(use)
 
   -- lsp
   use 'neovim/nvim-lspconfig'
-  use 'glepnir/lspsaga.nvim'
   use 'williamboman/nvim-lsp-installer'
 
   -- autocomplete
@@ -44,8 +43,6 @@ return packer.startup(function(use)
     run = './install.sh'
   }
 
-  use 'scalameta/nvim-metals'
-
   -- treesitter
   use {
     'nvim-treesitter/nvim-treesitter',
@@ -58,21 +55,26 @@ return packer.startup(function(use)
     branch = '0.5-compat'
   }
 
-
   -- development
+  -- formatting
   use 'b3nj5m1n/kommentary'
   use 'windwp/nvim-autopairs'
-  use 'tpope/vim-fugitive'
   use 'tpope/vim-surround'
-  use 'aserowy/tmux.nvim'
-  use { 'knubie/vim-kitty-navigator',
-    run = 'cp ./*.py ~/.config/kitty',
-  }
+  use 'custompro98/listify.nvim'
+
+  -- tooling
+  use 'tpope/vim-fugitive'
+  use 'tpope/vim-projectionist'
+  use 'jose-elias-alvarez/null-ls.nvim'
+
+  -- language
+  use 'fladson/vim-kitty'
+
+  -- navigation
   use {
     'kyazdani42/nvim-tree.lua',
     requires = 'kyazdani42/nvim-web-devicons',
   }
-  use 'custompro98/listify.nvim'
   use 'chentoast/marks.nvim'
   use {
     'sidebar-nvim/sidebar.nvim',
@@ -80,22 +82,19 @@ return packer.startup(function(use)
   }
   -- use '~/Projects/vim/sidebar.nvim'
   use 'custompro98/curloc-sidebar.nvim'
-  use 'fladson/vim-kitty'
-  use 'tpope/vim-projectionist'
+  use { 'knubie/vim-kitty-navigator',
+    run = 'cp ./*.py ~/.config/kitty',
+  }
 
   -- searching
   use {
     'nvim-telescope/telescope.nvim',
-    requires = {{ 'nvim-lua/popup.nvim' }, { 'nvim-lua/plenary.nvim' }}
+    requires = { { 'nvim-lua/popup.nvim' }, { 'nvim-lua/plenary.nvim' } }
   }
-  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
   -- appearance
   use 'kyazdani42/nvim-web-devicons'
-  use {
-    'npxbr/gruvbox.nvim',
-    requires = { 'rktjmp/lush.nvim' }
-  }
   use "projekt0n/github-nvim-theme"
   use 'hoob3rt/lualine.nvim'
 

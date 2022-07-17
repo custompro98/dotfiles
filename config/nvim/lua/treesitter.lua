@@ -10,7 +10,7 @@ api.nvim_exec([[
   augroup end
 ]], false)
 
-require'nvim-treesitter.configs'.setup {
+require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
     disable = {},
@@ -31,7 +31,7 @@ require'nvim-treesitter.configs'.setup {
 local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
 parser_config.tsx.used_by = { 'javascript', 'typescript.tsx' }
 
-require'nvim-treesitter.configs'.setup {
+require('nvim-treesitter.configs').setup {
   textobjects = {
     select = {
       enable = true,
