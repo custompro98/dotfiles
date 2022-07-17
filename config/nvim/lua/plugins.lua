@@ -65,7 +65,12 @@ return packer.startup(function(use)
   -- tooling
   use 'tpope/vim-fugitive'
   use 'tpope/vim-projectionist'
-  use 'jose-elias-alvarez/null-ls.nvim'
+  use {
+    'jose-elias-alvarez/null-ls.nvim',
+    requires = {
+      "nvim-lua/plenary.nvim",
+    },
+  }
 
   -- language
   use 'fladson/vim-kitty'

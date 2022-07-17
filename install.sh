@@ -84,14 +84,6 @@ then
 fi
 print_installed "g"
 
-print_checking "prettier"
-if ! command -v prettier &> /dev/null
-then
-  print_installing "prettier"
-  npm install -g prettier
-fi
-print_installed "prettier"
-
 print_installing "nvim plugins"
 nvim +PackerInstall +qall
 print_installed "nvim plugins"
