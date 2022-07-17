@@ -25,7 +25,7 @@ require("nvim-lsp-installer").setup({
   }
 })
 
--- -- set appearances to reduce dependency on Lspsaga
+-- set appearances to reduce dependency on Lspsaga
 local signs = { Error = "❌", Warn = "⚠️", Hint = "⁉️", Info = "ℹ️" }
 
 for type, icon in pairs(signs) do
@@ -47,7 +47,28 @@ local border = {
   { "▏", "FloatBorder" },
 }
 
+-- auto-format and lint
+local null_ls = require('null-ls')
+local null_sources = require('null-ls.sources')
+
+null_ls.setup({
+  sources = {
+    -- diagnostics
+    null_ls.builtins.diagnostics.eslint,
+    null_ls.builtins.diagnostics.hadolint,
+    -- code_actions
+    null_ls.builtins.code_actions.eslint,
+    -- formatting
+    null_ls.builtins.formatting.prettier,
+    null_ls.builtins.formatting.rustywind,
+    null_ls.builtins.formatting.gofmt,
+    null_ls.builtins.formatting.goimports,
+    null_ls.builtins.formatting.terraform_fmt
+  }
+})
+
 local on_attach = function(client, bufnr)
+  local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
   -- mapping
@@ -70,6 +91,12 @@ local on_attach = function(client, bufnr)
 
   -- capabilities overrides
   if client.resolved_capabilities.document_formatting and client.name ~= 'intelephense' then
+    -- if null-ls is available,e use it
+    if null_sources.get_available(filetype) then
+      client.resolved_capabilities.document_formatting = false
+      client.resolved_capabilities.document_range_formatting = false
+    end
+
     vim.api.nvim_exec([[
       augroup Format
       autocmd! * <buffer>
@@ -133,21 +160,3 @@ for _, lsp in pairs(lsps) do
 
   nvim_lsp[lsp].setup(opts)
 end
-
-local null_ls = require('null-ls')
-
-null_ls.setup({
-  sources = {
-    -- diagnostics
-    null_ls.builtins.diagnostics.eslint,
-    null_ls.builtins.diagnostics.hadolint,
-    -- code_actions
-    null_ls.builtins.code_actions.eslint,
-    -- formatting
-    null_ls.builtins.formatting.prettier,
-    null_ls.builtins.formatting.rustywind,
-    null_ls.builtins.formatting.gofmt,
-    null_ls.builtins.formatting.goimports,
-    null_ls.builtins.formatting.terraform_fmt
-  }
-})
