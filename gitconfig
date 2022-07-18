@@ -38,6 +38,7 @@
     ci = commit
     cm = commit -m
     ca = commit --amend
+    ce = commit --allow-empty -m "Empty-Commit"
 
     # push shortcust
     fp = push --force-with-lease
