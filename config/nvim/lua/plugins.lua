@@ -71,6 +71,7 @@ return packer.startup(function(use)
       "nvim-lua/plenary.nvim",
     },
   }
+  use 'github/copilot.vim'
 
   -- language
   use 'fladson/vim-kitty'
