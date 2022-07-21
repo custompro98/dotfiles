@@ -130,33 +130,5 @@ for _, lsp in pairs(lsps) do
     }
   end
 
-  if lsp == 'diagnosticls' then
-    opts.filetypes = {
-      'javascript',
-      'javascriptreact',
-      'typescript',
-      'typescriptreact',
-    }
-
-    opts.init_options = {
-      linters = {
-        eslint = {
-          command = 'eslint',
-          rootPatterns = { '.git' },
-          debounce = 100,
-          args = {
-            '--stdin',
-            '--stdin-filename',
-            '%filepath',
-            '--format',
-            'json',
-          },
-          sourceName = 'eslint',
-
-        },
-      },
-    }
-  end
-
   nvim_lsp[lsp].setup(opts)
 end
