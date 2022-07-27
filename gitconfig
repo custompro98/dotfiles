@@ -8,6 +8,9 @@
     name   = custompro98
     email  = mitchjoa@gmail.com
 
+[includeIf "gitdir:~/apps/company/"]
+  path = ~/.gitconfig-company
+
 [color]
     diff        = auto
     status      = auto
