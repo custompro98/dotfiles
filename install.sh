@@ -12,13 +12,22 @@ function print_installed() {
   echo -e "\033[0;32m... $1 installed"
 }
 
+function set_brew_path() {
+  BREW_PATH=$(brew --prefix)
+}
+
 print_checking "brew"
+set_brew_path
 if ! command -v brew &> /dev/null
 then
   print_installing "brew"
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  /bin/bash -c "echo 'eval \"$(/opt/homebrew/bin/brew shellenv)\"' >> ~/.profile"
-  /bin/bash -c "$(/opt/homebrew/bin/brew shellenv)"
+  set_brew_path
+
+  /bin/bash -c "echo 'eval \"$($BREW_PATH/bin/brew shellenv)\"' >> ~/.profile"
+  /bin/bash -c "$($BREW_PATH/bin/brew shellenv)"
+else
+  set_brew_path
 fi
 
 print_installed "brew"
