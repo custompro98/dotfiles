@@ -8,7 +8,7 @@ set_brew_path
 
 $BREW_PATH/bin/brew install fish
 # initialize config
-ln -sfn ~/.dotfiles/config/fish/ ~/.config/fish
+ln -sFfn ~/.dotfiles/config/fish/ ~/.config/fish
 
 # install fisher for plugin support
 $BREW_PATH/bin/fish -c '[ ! -f ~/.dotfiles/config/fish/fish_plugins ]; and curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher'
