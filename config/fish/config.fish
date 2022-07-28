@@ -1,4 +1,6 @@
 if status --is-interactive
+  set BREW_PATH (brew --prefix)
+
   echo "configuring fish"
   # env variables
   ## general
@@ -26,7 +28,7 @@ if status --is-interactive
   set -gx GOPATH $HOME/go; set -gx GOROOT $HOME/.go; set -gx PATH $GOPATH/bin $PATH; # g-install: do NOT edit, see https://github.com/stefanmaric/g
 
   ## autojump
-  [ -f /opt/homebrew/share/autojump/autojump.fish ]; and source /opt/homebrew/share/autojump/autojump.fish
+  [ -f $BREW_PATH/share/autojump/autojump.fish ]; and source $BREW_PATH/share/autojump/autojump.fish
 
   # source company-specific aliases
   [ -f ~/.company.fish ]; and source ~/.company.fish
