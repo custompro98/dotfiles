@@ -17,7 +17,7 @@ if status --is-interactive
 
   # sourcing shell tools
   ## nvm
-  set NODE_VERSION "lts/fermium"
+  set NODE_VERSION "lts/gallium"
   set NVM_INSTALLED (nvm list $NODE_VERSION)
   [ -z "$NVM_INSTALLED" ]; and nvm install $NODE_VERSION
 
