@@ -15,3 +15,6 @@ opt.relativenumber = true
 
 -- formatting hints
 vim.wo.colorcolumn = "80"
+
+-- nowrap
+vim.wo.wrap = false
