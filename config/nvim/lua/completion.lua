@@ -59,6 +59,7 @@ require('nvim-autopairs').setup({
     java = false,-- don't check treesitter on java
   }
 })
+require('nvim-ts-autotag').setup()
 
 -- tabnine
 local tabnine = require('cmp_tabnine.config')
