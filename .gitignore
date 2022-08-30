@@ -1,3 +1,4 @@
 fish_variables
 config/kitty/*.py
 config/nvim/plugin/packer_compiled.lua
+config/nvim/override/
