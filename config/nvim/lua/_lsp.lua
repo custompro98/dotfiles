@@ -56,6 +56,7 @@ null_ls.setup({
     -- diagnostics
     null_ls.builtins.diagnostics.eslint,
     null_ls.builtins.diagnostics.hadolint,
+    null_ls.builtins.diagnostics.protolint,
     -- code_actions
     null_ls.builtins.code_actions.eslint,
     -- formatting
@@ -63,7 +64,8 @@ null_ls.setup({
     null_ls.builtins.formatting.rustywind,
     null_ls.builtins.formatting.gofmt,
     null_ls.builtins.formatting.goimports,
-    null_ls.builtins.formatting.terraform_fmt
+    null_ls.builtins.formatting.terraform_fmt,
+    null_ls.builtins.formatting.protolint,
   }
 })
 
