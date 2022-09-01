@@ -25,8 +25,11 @@ return packer.startup(function(use)
   use 'wbthomason/packer.nvim'
 
   -- lsp
-  use 'neovim/nvim-lspconfig'
-  use 'williamboman/nvim-lsp-installer'
+  use {
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    "neovim/nvim-lspconfig",
+  }
 
   -- autocomplete
   use 'hrsh7th/cmp-nvim-lsp'

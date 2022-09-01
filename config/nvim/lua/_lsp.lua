@@ -8,21 +8,15 @@ local lsps = {
   'dockerls',
   'gopls',
   'sumneko_lua',
-  'intelephense',
   'terraformls',
   'tailwindcss',
   'tsserver',
+  'graphql',
 }
 
-require("nvim-lsp-installer").setup({
-  ensure_installed = lsps,
-  ui = {
-    icons = {
-      server_installed = "✓",
-      server_pending = "➜",
-      server_uninstalled = "✗"
-    }
-  }
+require("mason").setup()
+require("mason-lspconfig").setup({
+  ensure_installed = lsps
 })
 
 -- set appearances to reduce dependency on Lspsaga
