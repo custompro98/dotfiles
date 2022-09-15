@@ -43,7 +43,8 @@ print_installed "brew"
 print_installing "applications from brew"
 brew tap homebrew/cask-fonts
 brew tap yoheimuta/protolint
-brew install node kitty neovim tree bat chrome-cli autojump fzf fd ripgrep font-hack-nerd-font devutils yarn protolint tfenv
+brew tap heroku/brew
+brew install node kitty neovim tree bat chrome-cli autojump fzf fd ripgrep font-hack-nerd-font devutils yarn protolint tfenv heroku hadolint
 print_installed "applications from brew"
 
 print_checking "pynvim"
@@ -93,6 +94,9 @@ then
   source ~/.bash_profile
   g install latest
   g set latest
+
+  # Install bufls for lsp
+  go install github.com/bufbuild/buf-language-server/cmd/bufls@latest
 fi
 print_installed "g"
 

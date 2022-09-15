@@ -12,6 +12,7 @@ local lsps = {
   'tailwindcss',
   'tsserver',
   'graphql',
+  'bufls',
 }
 
 require("mason").setup()
@@ -67,6 +68,8 @@ local on_attach = function(client, bufnr)
   local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
+  vim.diagnostic.config({ virtual_text = false })
+
   -- mapping
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
@@ -76,7 +79,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<Leader>f', vim.lsp.buf.formatting, bufopts)
+  vim.keymap.set('n', '<Leader>;', ':lua vim.diagnostic.open_float(nil, { focus = false })<CR>', bufopts)
 
   vim.keymap.set('n', '<C-p>', vim.diagnostic.goto_prev, bufopts)
   vim.keymap.set('n', '<C-n>', vim.diagnostic.goto_next, bufopts)
