@@ -39,7 +39,9 @@
     # commit shortcuts
     ci = commit
     cm = commit -m
+    cmn = commit -m --no-verify
     ca = commit --amend
+    can = commit --amend --no-verify
     ce = commit --allow-empty -m "Empty-Commit"
 
     # push shortcust
