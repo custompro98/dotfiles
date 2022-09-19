@@ -20,6 +20,20 @@ require("mason-lspconfig").setup({
   ensure_installed = lsps
 })
 
+-- Aerial
+require("aerial").setup({
+  on_attach = function(bufnr)
+    -- Toggle the aerial window with <leader>a
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>a', '<cmd>AerialToggle!<CR>', {})
+    -- Jump forwards/backwards with '{' and '}'
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '{', '<cmd>AerialPrev<CR>', {})
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '}', '<cmd>AerialNext<CR>', {})
+    -- Jump up the tree with '[[' or ']]'
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '[[', '<cmd>AerialPrevUp<CR>', {})
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', ']]', '<cmd>AerialNextUp<CR>', {})
+  end
+})
+
 -- set appearances to reduce dependency on Lspsaga
 local signs = { Error = "❌", Warn = "⚠️", Hint = "⁉️", Info = "ℹ️" }
 
@@ -88,6 +102,8 @@ local on_attach = function(client, bufnr)
   -- apperance
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
+
+  require("aerial").on_attach(client, bufnr)
 
   -- capabilities overrides
   if client.resolved_capabilities.document_formatting and client.name ~= 'intelephense' then

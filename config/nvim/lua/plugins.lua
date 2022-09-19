@@ -49,13 +49,11 @@ return packer.startup(function(use)
   -- treesitter
   use {
     'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate',
-    branch = '0.5-compat'
+    run = ':TSUpdate'
   }
   use 'nvim-treesitter/playground'
   use {
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    branch = '0.5-compat'
+    'nvim-treesitter/nvim-treesitter-textobjects'
   }
 
   -- development
@@ -90,9 +88,12 @@ return packer.startup(function(use)
     branch = 'dev'
   }
   -- use '~/Projects/vim/sidebar.nvim'
-  use 'custompro98/curloc-sidebar.nvim'
   use { 'knubie/vim-kitty-navigator',
     run = 'cp ./*.py ~/.config/kitty',
+  }
+  use {
+    'stevearc/aerial.nvim',
+    requires = 'nvim-treesitter/nvim-treesitter'
   }
 
   -- searching
