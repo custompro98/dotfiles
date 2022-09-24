@@ -32,7 +32,7 @@ function TelescopeDotfiles()
   }
 end
 
-api.nvim_set_keymap('n', '<Leader>ff', '<cmd>Telescope git_files<CR>', { noremap = true })
+api.nvim_set_keymap('n', '<Leader>ff', '<cmd>Telescope find_files<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>fg', '<cmd>Telescope live_grep<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>fr', '<cmd>Telescope lsp_references<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>fs', '<cmd>Telescope lsp_document_symbols<CR>', { noremap = true })
@@ -40,3 +40,4 @@ api.nvim_set_keymap('n', '<Leader>fh', '<cmd>Telescope help_tags<CR>', { noremap
 api.nvim_set_keymap('n', '<Leader>fd', '<cmd>lua TelescopeDotfiles()<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>fm', '<cmd>Telescope man_pages<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>fb', '<cmd>Telescope buffers<CR>', { noremap = true })
+
