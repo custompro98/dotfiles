@@ -25,7 +25,7 @@ require('nvim-treesitter.configs').setup {
     lint_events = { "BufWrite", "CursorHold" }
   },
   ensure_installed =  'all',
-  ignore_install = { 'phpdoc' },
+  ignore_install = { 'phpdoc', 'haskell' },
   autopairs = { enable = true }
 }
 
