@@ -61,8 +61,6 @@ require'nvim-tree'.setup {
   view = {
     -- width of the window, can be either a number (columns) or a string in `%`, for left or right side placement
     width = 30,
-    -- height of the window, can be either a number (columns) or a string in `%`, for top or bottom side placement
-    height = 30,
     -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
     side = 'left',
     mappings = {
@@ -120,58 +118,3 @@ api.nvim_set_keymap('n', '<Leader>cc', '<cmd>cclose<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>cn', '<cmd>cnext<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>cp', '<cmd>cprev<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>cx', '<cmd>cexpr[]<CR>', { noremap = true })
-
--- vim-projectionist
-vim.g.projectionist_heuristics = {
-  ['app/*'] = {
-    -- Typescript
-    ['*.ts'] = {
-      alternate = {
-        '{dirname}/{basename}.test.ts',
-        '{dirname}/__tests__/{basename}.test.ts',
-      },
-      type = 'source',
-    },
-    ['*.tsx'] = {
-      alternate = {
-        '{dirname}/{basename}.test.ts',
-        '{dirname}/{basename}.test.tsx',
-        '{dirname}/__tests__/{basename}.test.ts',
-        '{dirname}/__tests__/{basename}.test.tsx',
-      },
-      type = 'source',
-    },
-    ['*.test.ts'] = {
-      alternate = {
-        '{dirname}/{basename}.ts',
-        '{dirname}/../{basename}.ts',
-      },
-      type = 'test',
-    },
-    ['*.test.tsx'] = {
-      alternate = {
-        '{dirname}/{basename}.tsx',
-        '{dirname}/../{basename}.tsx',
-      },
-      type = 'test',
-    },
-  },
-  ['*'] = {
-    -- Golang
-    ['*.go'] = {
-      alternate = {
-        '{}_test.go',
-      },
-    },
-    ['*_test.go'] = {
-      alternate = {
-        '{}.go',
-      },
-    },
-  }
-}
-
-api.nvim_set_keymap('n', '<Leader>ae', '<cmd>A<CR>', { silent = true, noremap = true })
-api.nvim_set_keymap('n', '<Leader>av', '<cmd>AV<CR>', { silent = true, noremap = true })
-api.nvim_set_keymap('n', '<Leader>as', '<cmd>AS<CR>', { silent = true, noremap = true })
-api.nvim_set_keymap('n', '<Leader>at', '<cmd>AT<CR>', { silent = true, noremap = true })

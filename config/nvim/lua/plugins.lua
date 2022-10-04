@@ -39,12 +39,7 @@ return packer.startup(function(use)
   use 'hrsh7th/vim-vsnip'
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-nvim-lua'
-  use 'hrsh7th/cmp-emoji'
-  -- use '~/Projects/vim/cmp-kitty'
   use 'custompro98/cmp-kitty'
-  use { 'tzachar/cmp-tabnine',
-    run = './install.sh'
-  }
 
   -- treesitter
   use {
@@ -52,9 +47,6 @@ return packer.startup(function(use)
     run = ':TSUpdate'
   }
   use 'nvim-treesitter/playground'
-  use {
-    'nvim-treesitter/nvim-treesitter-textobjects'
-  }
 
   -- development
   -- formatting
@@ -66,7 +58,6 @@ return packer.startup(function(use)
 
   -- tooling
   use 'tpope/vim-fugitive'
-  use 'tpope/vim-projectionist'
   use {
     'jose-elias-alvarez/null-ls.nvim',
     requires = {
@@ -83,17 +74,8 @@ return packer.startup(function(use)
     requires = 'kyazdani42/nvim-web-devicons',
   }
   use 'chentoast/marks.nvim'
-  use {
-    'sidebar-nvim/sidebar.nvim',
-    branch = 'dev'
-  }
-  -- use '~/Projects/vim/sidebar.nvim'
   use { 'knubie/vim-kitty-navigator',
     run = 'cp ./*.py ~/.config/kitty',
-  }
-  use {
-    'stevearc/aerial.nvim',
-    requires = 'nvim-treesitter/nvim-treesitter'
   }
 
   -- searching

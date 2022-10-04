@@ -2,7 +2,6 @@
 -- named with an _ to avoid name conflicts
 
 local vim = vim
-local cmd = vim.cmd
 
 local lsps = {
   'dockerls',
@@ -20,41 +19,8 @@ require("mason-lspconfig").setup({
   ensure_installed = lsps
 })
 
--- Aerial
-require("aerial").setup({
-  on_attach = function(bufnr)
-    -- Toggle the aerial window with <leader>a
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>a', '<cmd>AerialToggle!<CR>', {})
-    -- Jump forwards/backwards with '{' and '}'
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '{', '<cmd>AerialPrev<CR>', {})
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '}', '<cmd>AerialNext<CR>', {})
-    -- Jump up the tree with '[[' or ']]'
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '[[', '<cmd>AerialPrevUp<CR>', {})
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ']]', '<cmd>AerialNextUp<CR>', {})
-  end
-})
-
--- set appearances to reduce dependency on Lspsaga
-local signs = { Error = "❌", Warn = "⚠️", Hint = "⁉️", Info = "ℹ️" }
-
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-end
-
 vim.cmd [[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]]
 vim.cmd [[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
-
-local border = {
-  { "▛", "FloatBorder" },
-  { "▔", "FloatBorder" },
-  { "▜", "FloatBorder" },
-  { "▕", "FloatBorder" },
-  { "▟", "FloatBorder" },
-  { "▁", "FloatBorder" },
-  { "▙", "FloatBorder" },
-  { "▏", "FloatBorder" },
-}
 
 -- auto-format and lint
 local null_ls = require('null-ls')
@@ -99,15 +65,9 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<C-p>', vim.diagnostic.goto_prev, bufopts)
   vim.keymap.set('n', '<C-n>', vim.diagnostic.goto_next, bufopts)
 
-  -- apperance
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
-  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
-
-  require("aerial").on_attach(client, bufnr)
-
   -- capabilities overrides
-  if client.resolved_capabilities.document_formatting and client.name ~= 'intelephense' then
-    -- if null-ls is available,e use it
+  if client.resolved_capabilities.document_formatting then
+    -- if null-ls is available, use it
     if null_sources.get_available(filetype) then
       client.resolved_capabilities.document_formatting = false
       client.resolved_capabilities.document_range_formatting = false

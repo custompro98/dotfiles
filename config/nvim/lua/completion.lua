@@ -27,7 +27,6 @@ cmp.setup({
     {
       { name = 'kitty'},
       { name = 'nvim_lsp' },
-      { name = 'cmp_tabnine' },
       { name = 'nvim_lua' },
       { name = 'vsnip' },
     },
@@ -41,7 +40,6 @@ cmp.setup({
         }
       },
       { name = 'path' },
-      { name = 'emoji' },
     }
   )
 })
@@ -60,16 +58,6 @@ require('nvim-autopairs').setup({
   }
 })
 require('nvim-ts-autotag').setup()
-
--- tabnine
-local tabnine = require('cmp_tabnine.config')
-tabnine:setup({
-  max_lines = 1000;
-  max_num_results = 20;
-  sort = true;
-  run_on_every_keystroke = true;
-  snippet_placeholder = '..';
-})
 
 -- vsnip
 vim.g['vsnip_snippet_dir'] = '~/.config/nvim/vsnip'

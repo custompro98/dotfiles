@@ -20,7 +20,6 @@ require('github-theme').setup({
   sidebars = {
     "NvimTree",
     "qf",
-    "SidebarNvim",
   },
 })
 

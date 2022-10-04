@@ -32,24 +32,3 @@ require('kommentary.config').configure_language('lua', {
 require('kommentary.config').configure_language('php', {
     prefer_single_line_comments = true,
 })
-
--- local loc_section = require('curloc-sidebar-nvim')
-
-require("sidebar-nvim").setup({
-  open = false,
-  -- sections = { "datetime", "git-status", "lsp-diagnostics", loc_section },
-  sections = { "datetime", "git" },
-  datetime = {
-    format = "%a %b %d, %l:%M %p",
-    clocks = {
-      { name = "eastern" },
-      { name = "pacific", offset = -3 },
-      { name = "ukraine", offset = 7 },
-      { name = "india", offset = 9.5 },
-      { name = "utc", offset = 5 },
-    }
-  },
-  disable_closing_prompt = true
-})
-
-api.nvim_set_keymap('n', '<Leader>\\', '<cmd>SidebarNvimToggle<CR>', { noremap = true })
