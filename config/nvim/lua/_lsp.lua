@@ -66,17 +66,17 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<C-n>', vim.diagnostic.goto_next, bufopts)
 
   -- capabilities overrides
-  if client.resolved_capabilities.document_formatting then
+  if client.server_capabilities.documentFormattingProvider then
     -- if null-ls is available, use it
     if null_sources.get_available(filetype) then
-      client.resolved_capabilities.document_formatting = false
-      client.resolved_capabilities.document_range_formatting = false
+      client.server_capabilities.documentFormattingProvider = false
+      client.server_capabilities.documentRangeFormattingProvider = false
     end
 
     vim.api.nvim_exec([[
       augroup Format
       autocmd! * <buffer>
-      autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 1000)
+      autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
       augroup end
     ]], false)
   end
