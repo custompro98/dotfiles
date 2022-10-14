@@ -14,7 +14,7 @@ opt.number = true
 opt.relativenumber = true
 
 -- formatting hints
-vim.wo.colorcolumn = "80"
+vim.wo.colorcolumn = "100"
 
 -- nowrap
 vim.wo.wrap = false
