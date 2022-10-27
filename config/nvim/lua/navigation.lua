@@ -79,7 +79,8 @@ require'nvim-tree'.setup {
   },
 }
 
-api.nvim_set_keymap('n', '<C-\\>', '<cmd>NvimTreeToggle<CR>', { noremap = true })
+-- Open the file tree
+vim.keymap.set('n', '<C-\\>', require('nvim-tree.api').tree.toggle, { noremap = true })
 
 -- marks navigation
 require'marks'.setup {
