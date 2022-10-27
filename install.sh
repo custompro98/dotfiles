@@ -85,6 +85,10 @@ then
 fi
 print_installed "nvm"
 
+# Install npm modules
+npm install -g rustywind
+print_installed "npm modules"
+
 # Install G
 print_checking "g"
 if ! command -v g &> /dev/null
