@@ -8,48 +8,51 @@ local api = vim.api
 opt.splitright = true
 opt.splitbelow = true
 
+-- Remove jitter
+opt.signcolumn = 'yes'
+
 -- Theme
 
 opt.termguicolors = true
 -- opt.background = 'dark'
 -- vim.cmd([[colorscheme gruvbox]])
 require('github-theme').setup({
-  dark_float = true,
-  dark_sidebar = true,
-  theme_style = 'dimmed',
-  sidebars = {
-    "NvimTree",
-    "qf",
-  },
+	dark_float = true,
+	dark_sidebar = true,
+	theme_style = 'dimmed',
+	sidebars = {
+		"NvimTree",
+		"qf",
+	},
 })
 
 -- Statusline
-require'lualine'.setup {
-  options = {
-    icons_enabled = true,
-    theme = 'auto',
-    component_separators = {'', ''},
-    section_separators = {'', ''},
-    disabled_filetypes = {}
-  },
-  sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch'},
-    lualine_c = { {'filename', path=1} },
-    lualine_x = {'encoding', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  },
-  tabline = {},
-  extensions = {}
+require 'lualine'.setup {
+	options = {
+		icons_enabled = true,
+		theme = 'auto',
+		component_separators = { '', '' },
+		section_separators = { '', '' },
+		disabled_filetypes = {}
+	},
+	sections = {
+		lualine_a = { 'mode' },
+		lualine_b = { 'branch' },
+		lualine_c = { { 'filename', path = 1 } },
+		lualine_x = { 'encoding', 'filetype' },
+		lualine_y = { 'progress' },
+		lualine_z = { 'location' }
+	},
+	inactive_sections = {
+		lualine_a = {},
+		lualine_b = {},
+		lualine_c = { 'filename' },
+		lualine_x = { 'location' },
+		lualine_y = {},
+		lualine_z = {}
+	},
+	tabline = {},
+	extensions = {}
 }
 
 -- Zoom a split
