@@ -59,7 +59,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<Leader>f', vim.lsp.buf.format, bufopts)
+  vim.keymap.set('n', '<Leader>f', vim.lsp.buf.format({ timeout_ms = 2000 }), bufopts)
   vim.keymap.set('n', '<Leader>;', ':lua vim.diagnostic.open_float(nil, { focus = false })<CR>', bufopts)
 
   vim.keymap.set('n', '<C-p>', vim.diagnostic.goto_prev, bufopts)
