@@ -18,3 +18,6 @@ vim.wo.colorcolumn = "100"
 
 -- nowrap
 vim.wo.wrap = false
+
+-- no mouse mode
+vim.opt.mouse = ""
