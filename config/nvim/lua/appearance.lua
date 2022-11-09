@@ -14,17 +14,48 @@ opt.signcolumn = 'yes'
 -- Theme
 
 opt.termguicolors = true
--- opt.background = 'dark'
--- vim.cmd([[colorscheme gruvbox]])
-require('github-theme').setup({
-	dark_float = true,
-	dark_sidebar = true,
-	theme_style = 'dimmed',
-	sidebars = {
-		"NvimTree",
-		"qf",
-	},
+
+require("catppuccin").setup({
+    flavour = "mocha", -- latte, frappe, macchiato, mocha
+    background = { -- :h background
+        light = "latte",
+        dark = "mocha",
+    },
+    compile_path = vim.fn.stdpath("cache") .. "/catppuccin",
+    transparent_background = false,
+    term_colors = false,
+    dim_inactive = {
+        enabled = true,
+        shade = "light",
+        percentage = 0.50,
+    },
+    styles = {
+        comments = { "italic" },
+        conditionals = { "italic" },
+        loops = {},
+        functions = {},
+        keywords = {},
+        strings = {},
+        variables = {},
+        numbers = {},
+        booleans = {},
+        properties = {},
+        types = {},
+        operators = {},
+    },
+    color_overrides = {},
+    custom_highlights = {},
+    integrations = {
+        cmp = true,
+        mason = true,
+        nvimtree = true,
+        telescope = true,
+        treesitter = true,
+        -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+    },
 })
+
+vim.cmd.colorscheme 'catppuccin'
 
 -- Statusline
 require 'lualine'.setup {

@@ -87,7 +87,7 @@ return packer.startup(function(use)
 
   -- appearance
   use 'kyazdani42/nvim-web-devicons'
-  use "projekt0n/github-nvim-theme"
+  use 'catppuccin/nvim'
   use 'hoob3rt/lualine.nvim'
 
   -- hack
