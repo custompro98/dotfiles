@@ -26,9 +26,9 @@ return packer.startup(function(use)
 
   -- lsp
   use {
-    "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
-    "neovim/nvim-lspconfig",
+    'williamboman/mason.nvim',
+    'williamboman/mason-lspconfig.nvim',
+    'neovim/nvim-lspconfig',
   }
 
   -- autocomplete
@@ -50,8 +50,11 @@ return packer.startup(function(use)
 
   -- development
   -- debugging
-  use 'mfussenegger/nvim-dap'
-  use 'nvim-telescope/telescope-dap.nvim'
+  use {
+    'mfussenegger/nvim-dap',
+    'rcarriga/nvim-dap-ui',
+    'nvim-telescope/telescope-dap.nvim',
+  }
 
   -- formatting
   use 'b3nj5m1n/kommentary'
@@ -65,7 +68,7 @@ return packer.startup(function(use)
   use {
     'jose-elias-alvarez/null-ls.nvim',
     requires = {
-      "nvim-lua/plenary.nvim",
+      'nvim-lua/plenary.nvim',
     },
   }
 
