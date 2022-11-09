@@ -108,6 +108,10 @@ print_installing "nvim plugins"
 nvim +PackerInstall +qall
 print_installed "nvim plugins"
 
+print_installing "node2"
+./install-node2.sh
+print_installed "node2"
+
 print_installing "fish"
 ./install-fish.sh
 print_installed "fish"

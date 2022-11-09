@@ -14,8 +14,8 @@ local lsps = {
   'bufls',
 }
 
-require("mason").setup()
-require("mason-lspconfig").setup({
+require('mason').setup()
+require('mason-lspconfig').setup({
   ensure_installed = lsps
 })
 
@@ -45,7 +45,7 @@ null_ls.setup({
 })
 
 local on_attach = function(client, bufnr)
-  local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+  local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
   vim.diagnostic.config({ virtual_text = false })

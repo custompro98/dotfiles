@@ -49,6 +49,10 @@ return packer.startup(function(use)
   use 'nvim-treesitter/playground'
 
   -- development
+  -- debugging
+  use 'mfussenegger/nvim-dap'
+  use 'nvim-telescope/telescope-dap.nvim'
+
   -- formatting
   use 'b3nj5m1n/kommentary'
   use 'windwp/nvim-autopairs'

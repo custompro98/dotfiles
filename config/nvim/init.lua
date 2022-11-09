@@ -18,3 +18,4 @@ require('navigation')
 require('terminal')
 require('_telescope')
 require('treesitter')
+require('debugging') -- has to be after telescope
