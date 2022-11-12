@@ -12,6 +12,7 @@ local lsps = {
   'tsserver',
   'graphql',
   'bufls',
+  'prismals',
 }
 
 require('mason').setup()
