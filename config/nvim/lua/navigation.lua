@@ -119,3 +119,11 @@ api.nvim_set_keymap('n', '<Leader>cc', '<cmd>cclose<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>cn', '<cmd>cnext<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>cp', '<cmd>cprev<CR>', { noremap = true })
 api.nvim_set_keymap('n', '<Leader>cx', '<cmd>cexpr[]<CR>', { noremap = true })
+
+-- Harpoon
+vim.keymap.set('n', '<Leader>ha', require('harpoon.mark').add_file, { noremap = true })
+vim.keymap.set('n', '<Leader>hu', require('harpoon.ui').toggle_quick_menu, { noremap = true })
+vim.keymap.set('n', '<Leader>1', function() require('harpoon.ui').nav_file(1) end, { noremap = true })
+vim.keymap.set('n', '<Leader>2', function() require('harpoon.ui').nav_file(2) end, { noremap = true })
+vim.keymap.set('n', '<Leader>3', function() require('harpoon.ui').nav_file(3) end, { noremap = true })
+vim.keymap.set('n', '<Leader>4', function() require('harpoon.ui').nav_file(4) end, { noremap = true })

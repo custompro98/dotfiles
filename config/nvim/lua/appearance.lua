@@ -26,8 +26,8 @@ require("catppuccin").setup({
     term_colors = false,
     dim_inactive = {
         enabled = true,
-        shade = "light",
-        percentage = 0.50,
+        shade = "dark",
+        percentage = 0.05,
     },
     styles = {
         comments = { "italic" },
