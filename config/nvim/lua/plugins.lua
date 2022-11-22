@@ -71,7 +71,6 @@ return packer.startup(function(use)
       'nvim-lua/plenary.nvim',
     },
   }
-
   -- language
   use 'fladson/vim-kitty'
 
@@ -80,10 +79,17 @@ return packer.startup(function(use)
     'kyazdani42/nvim-tree.lua',
     requires = 'kyazdani42/nvim-web-devicons',
   }
-  use 'chentoast/marks.nvim'
   use { 'knubie/vim-kitty-navigator',
     run = 'cp ./*.py ~/.config/kitty',
   }
+  use 'chentoast/marks.nvim'
+  use {
+    'ThePrimeagen/harpoon',
+    requires = {
+      'nvim-lua/plenary.nvim',
+    }
+  }
+
 
   -- searching
   use {
