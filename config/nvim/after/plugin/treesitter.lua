@@ -3,14 +3,14 @@ local opt = vim.opt
 local api = vim.api
 
 -- ** Treesitter ** --
-api.nvim_exec([[
-  augroup treesitter_folds
-  autocmd!
-  autocmd BufEnter * norm! zx
-  augroup end
-]], false)
+local aufold = vim.api.nvim_create_augroup("custompro98-fold", {})
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+  group = aufold,
+  pattern = "*",
+  command = "norm! zx"
+})
 
-require('nvim-treesitter.configs').setup {
+require("nvim-treesitter.configs").setup {
   highlight = {
     enable = true,
     disable = {},
@@ -24,15 +24,15 @@ require('nvim-treesitter.configs').setup {
     use_virtual_text = true,
     lint_events = { "BufWrite", "CursorHold" }
   },
-  ensure_installed =  'all',
-  ignore_install = { 'phpdoc', 'haskell' },
+  ensure_installed =  "all",
+  ignore_install = { "phpdoc", "haskell" },
   autopairs = { enable = true }
 }
 
-local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
-parser_config.tsx.filetype_to_parsername = { 'javascript', 'typescript.tsx' }
+local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
 
-require('nvim-treesitter.configs').setup {
+require("nvim-treesitter.configs").setup {
   textobjects = {
     select = {
       enable = true,
@@ -55,5 +55,6 @@ require('nvim-treesitter.configs').setup {
 
 -- folding
 opt.foldlevelstart = 99
-opt.foldmethod = 'expr'
-opt.foldexpr = 'nvim_treesitter#foldexpr()'
+opt.foldmethod = "expr"
+opt.foldexpr = "nvim_treesitter#foldexpr()"
+

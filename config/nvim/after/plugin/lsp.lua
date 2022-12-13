@@ -1,22 +1,21 @@
--- ** LSP Configuration ** --
--- named with an _ to avoid name conflicts
-
 local vim = vim
 
+-- ** LSP ** --
+
 local lsps = {
-  'dockerls',
-  'gopls',
-  'sumneko_lua',
-  'terraformls',
-  'tailwindcss',
-  'tsserver',
-  'graphql',
-  'bufls',
-  'prismals',
+  "dockerls",
+  "gopls",
+  "sumneko_lua",
+  "terraformls",
+  "tailwindcss",
+  "tsserver",
+  "graphql",
+  "bufls",
+  "prismals",
 }
 
-require('mason').setup()
-require('mason-lspconfig').setup({
+require("mason").setup()
+require("mason-lspconfig").setup({
   ensure_installed = lsps
 })
 
@@ -24,8 +23,8 @@ vim.cmd [[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]]
 vim.cmd [[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
 
 -- auto-format and lint
-local null_ls = require('null-ls')
-local null_sources = require('null-ls.sources')
+local null_ls = require("null-ls")
+local null_sources = require("null-ls.sources")
 
 null_ls.setup({
   sources = {
@@ -46,25 +45,25 @@ null_ls.setup({
 })
 
 local on_attach = function(client, bufnr)
-  local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+  local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
   vim.diagnostic.config({ virtual_text = false })
 
   -- mapping
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'gh', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('i', '<Leader>gh', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<Leader>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<Leader>f', vim.lsp.buf.format, bufopts)
-  vim.keymap.set('n', '<Leader>;', ':lua vim.diagnostic.open_float(nil, { focus = false })<CR>', bufopts)
+  vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+  vim.keymap.set("n", "gh", vim.lsp.buf.hover, bufopts)
+  vim.keymap.set("i", "<Leader>gh", vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set("n", "<Leader>D", vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename, bufopts)
+  vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
+  vim.keymap.set("n", "<Leader>f", vim.lsp.buf.format, bufopts)
+  vim.keymap.set("n", "<Leader>;", function () vim.diagnostic.open_float(nil, { focus = false }) end, bufopts)
 
-  vim.keymap.set('n', '<C-p>', vim.diagnostic.goto_prev, bufopts)
-  vim.keymap.set('n', '<C-n>', vim.diagnostic.goto_next, bufopts)
+  vim.keymap.set("n", "<C-p>", vim.diagnostic.goto_prev, bufopts)
+  vim.keymap.set("n", "<C-n>", vim.diagnostic.goto_next, bufopts)
 
   -- capabilities overrides
   if client.server_capabilities.documentFormattingProvider then
@@ -74,12 +73,12 @@ local on_attach = function(client, bufnr)
       client.server_capabilities.documentRangeFormattingProvider = false
     end
 
-    vim.api.nvim_exec([[
-      augroup Format
-      autocmd! * <buffer>
-      autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
-      augroup end
-    ]], false)
+    local auformat = vim.api.nvim_create_augroup("custompro98-autoformat", {})
+    vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+      group = auformat,
+      pattern = "* <buffer>",
+      callback = vim.lsp.buf.format,
+    })
   end
 end
 
@@ -87,8 +86,8 @@ local lsp_flags = {
   debounce_text_changes = 150,
 }
 
-local nvim_lsp = require('lspconfig')
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local nvim_lsp = require("lspconfig")
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 for _, lsp in pairs(lsps) do
   local opts = {
@@ -97,11 +96,11 @@ for _, lsp in pairs(lsps) do
     capabilities = capabilities,
   }
 
-  if lsp == 'sumneko_lua' then
+  if lsp == "sumneko_lua" then
     opts.settings = {
       Lua = {
         diagnostics = {
-          globals = { 'vim ' }
+          globals = { "vim " }
         }
       }
     }
@@ -109,3 +108,4 @@ for _, lsp in pairs(lsps) do
 
   nvim_lsp[lsp].setup(opts)
 end
+
