@@ -1,8 +1,10 @@
 local vim = vim
 
--- ** LSP ** --
+local lsp = require('lsp-zero')
 
-local lsps = {
+lsp.preset('recommended')
+
+lsp.ensure_installed({
   "dockerls",
   "gopls",
   "sumneko_lua",
@@ -12,15 +14,50 @@ local lsps = {
   "graphql",
   "bufls",
   "prismals",
-}
-
-require("mason").setup()
-require("mason-lspconfig").setup({
-  ensure_installed = lsps
 })
 
-vim.cmd [[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]]
-vim.cmd [[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
+local cmp = require('cmp')
+local cmp_select = {behavior = cmp.SelectBehavior.Select}
+
+lsp.setup_nvim_cmp({
+  mapping = lsp.defaults.cmp_mappings({
+    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+    ["<C-Space>"] = cmp.mapping.complete(),
+  }),
+  sources = cmp.config.sources(
+    {
+      { name = "kity" },
+      { name = "nvim_lsp" },
+      { name = "nvim_lua" },
+      { name = "vsnip" },
+      { name = "path" },
+      {
+        name = "buffer",
+        options = {
+          get_bufnrs = function()
+            return vim.api.nvim_list_bufs()
+          end
+        }
+      },
+    }
+  ),
+})
+
+lsp.set_preferences({
+    suggest_lsp_servers = false,
+    sign_icons = {
+        error = '❌',
+        warn = '⚠️',
+        hint = '💡',
+        info = 'ℹ️'
+    }
+})
+
+vim.diagnostic.config({
+    virtual_text = true,
+})
 
 -- auto-format and lint
 local null_ls = require("null-ls")
@@ -44,7 +81,7 @@ null_ls.setup({
   }
 })
 
-local on_attach = function(client, bufnr)
+lsp.on_attach(function(client, bufnr)
   local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
@@ -80,32 +117,30 @@ local on_attach = function(client, bufnr)
       callback = vim.lsp.buf.format,
     })
   end
-end
+end)
 
-local lsp_flags = {
-  debounce_text_changes = 150,
-}
+lsp.setup()
 
-local nvim_lsp = require("lspconfig")
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-for _, lsp in pairs(lsps) do
-  local opts = {
-    on_attach = on_attach,
-    flags = lsp_flags,
-    capabilities = capabilities,
+-- autopairs
+require("nvim-autopairs").setup({
+  check_ts = true,
+  ts_config = {
+    lua = {"string"},-- it will not add pair on that treesitter node
+    javascript = {"template_string"},
+    java = false,-- don"t check treesitter on java
   }
+})
+require("nvim-ts-autotag").setup()
 
-  if lsp == "sumneko_lua" then
-    opts.settings = {
-      Lua = {
-        diagnostics = {
-          globals = { "vim " }
-        }
-      }
-    }
-  end
+-- vsnip
+vim.g["vsnip_snippet_dir"] = "~/.config/nvim/vsnip"
 
-  nvim_lsp[lsp].setup(opts)
-end
+vim.cmd([[
+  imap <expr> <C-n> vsnip#available(1)   ? "<Plug>(vsnip-expand-or-jump)" : "<C-n>"
+  smap <expr> <C-n> vsnip#available(1)   ? "<Plug>(vsnip-expand-or-jump)" : "<C-n>"
+  imap <expr> <C-p> vsnip#jumpable(-1)  ? "<Plug>(vsnip-jump-prev)" : "<C-p>"
+  smap <expr> <C-p> vsnip#jumpable(-1)  ? "<Plug>(vsnip-jump-prev)" : "<C-p>"
+]])
 
+vim.keymap.set("v", "<Leader>vc", "<Plug>(vsnip-select-text)<Esc>", {})
+vim.keymap.set("v", "<Leader>vx", "<Plug>(vsnip-cut-text)<Esc>", {})

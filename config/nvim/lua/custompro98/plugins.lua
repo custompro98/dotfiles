@@ -26,20 +26,27 @@ return packer.startup(function(use)
 
   -- lsp
   use {
-    'williamboman/mason.nvim',
-    'williamboman/mason-lspconfig.nvim',
-    'neovim/nvim-lspconfig',
-  }
+    'VonHeikemen/lsp-zero.nvim',
+    requires = {
+      -- LSP Support
+      {'neovim/nvim-lspconfig'},
+      {'williamboman/mason.nvim'},
+      {'williamboman/mason-lspconfig.nvim'},
 
-  -- autocomplete
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/nvim-cmp'
-  use 'hrsh7th/cmp-vsnip'
-  use 'hrsh7th/vim-vsnip'
-  use 'hrsh7th/cmp-path'
-  use 'hrsh7th/cmp-nvim-lua'
-  use 'custompro98/cmp-kitty'
+      -- Autocompletion
+      {'hrsh7th/nvim-cmp'},
+      {'hrsh7th/cmp-nvim-lsp'},
+      {'hrsh7th/cmp-buffer'},
+      {'hrsh7th/cmp-vsnip'},
+      {'hrsh7th/cmp-path'},
+      {'hrsh7th/cmp-nvim-lua'},
+      {'custompro98/cmp-kitty'},
+
+      -- Snippets
+      {'hrsh7th/vim-vsnip'},
+      {'rafamadriz/friendly-snippets'},
+    }
+  }
 
   -- treesitter
   use {
