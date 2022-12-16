@@ -54,10 +54,7 @@ vim.diagnostic.config({
   virtual_text = true,
 })
 
-local null_sources = require("null-ls.sources")
-
 lsp.on_attach(function(client, bufnr)
-  local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
   vim.diagnostic.config({ virtual_text = false })
@@ -81,12 +78,6 @@ lsp.on_attach(function(client, bufnr)
 
   -- capabilities overrides
   if client.server_capabilities.documentFormattingProvider then
-    -- if null-ls is available, use it
-    if null_sources.get_available(filetype) then
-      client.server_capabilities.documentFormattingProvider = false
-      client.server_capabilities.documentRangeFormattingProvider = false
-    end
-
     local auformat = vim.api.nvim_create_augroup("custompro98-autoformat", {})
     vim.api.nvim_create_autocmd({ "BufWritePre" }, {
       group = auformat,
