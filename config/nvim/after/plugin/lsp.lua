@@ -1,8 +1,8 @@
 local vim = vim
 
-local lsp = require('lsp-zero')
+local lsp = require("lsp-zero")
 
-lsp.preset('recommended')
+lsp.preset("recommended")
 
 lsp.ensure_installed({
   "dockerls",
@@ -16,12 +16,12 @@ lsp.ensure_installed({
   "prismals",
 })
 
-local cmp = require('cmp')
+local cmp = require("cmp")
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mapping = lsp.defaults.cmp_mappings({
-  ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-  ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-  ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+  ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
+  ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
+  ["<C-y>"] = cmp.mapping.confirm({ select = true }),
   ["<C-Space>"] = cmp.mapping.complete(),
 })
 local cmp_sources = lsp.defaults.cmp_sources()
@@ -41,12 +41,14 @@ lsp.setup_nvim_cmp({
 lsp.set_preferences({
   suggest_lsp_servers = false,
   sign_icons = {
-    error = '❌',
-    warn = '⚠️',
-    hint = '💡',
-    info = 'ℹ️'
-  }
+    error = "❌",
+    warn = "⚠️",
+    hint = "💡",
+    info = "ℹ️",
+  },
 })
+
+lsp.nvim_workspace()
 
 vim.diagnostic.config({
   virtual_text = true,
@@ -70,7 +72,9 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
   vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
   vim.keymap.set("n", "<Leader>f", vim.lsp.buf.format, bufopts)
-  vim.keymap.set("n", "<Leader>;", function() vim.diagnostic.open_float(nil, { focus = false }) end, bufopts)
+  vim.keymap.set("n", "<Leader>;", function()
+    vim.diagnostic.open_float(nil, { focus = false })
+  end, bufopts)
 
   vim.keymap.set("n", "<C-p>", vim.diagnostic.goto_prev, bufopts)
   vim.keymap.set("n", "<C-n>", vim.diagnostic.goto_next, bufopts)
@@ -78,10 +82,10 @@ lsp.on_attach(function(client, bufnr)
   -- capabilities overrides
   if client.server_capabilities.documentFormattingProvider then
     -- if null-ls is available, use it
-    --[[ if null_sources.get_available(filetype) then
+    if null_sources.get_available(filetype) then
       client.server_capabilities.documentFormattingProvider = false
       client.server_capabilities.documentRangeFormattingProvider = false
-    end ]]
+    end
 
     local auformat = vim.api.nvim_create_augroup("custompro98-autoformat", {})
     vim.api.nvim_create_autocmd({ "BufWritePre" }, {
@@ -94,7 +98,7 @@ end)
 
 -- auto-format and lint
 local null_ls = require("null-ls")
-local null_opts = lsp.build_options('null-ls', {})
+local null_opts = lsp.build_options("null-ls", {})
 
 null_ls.setup({
   on_attach = null_opts.on_attach,
@@ -112,7 +116,8 @@ null_ls.setup({
     null_ls.builtins.formatting.goimports,
     null_ls.builtins.formatting.terraform_fmt,
     null_ls.builtins.formatting.protolint,
-  }
+    null_ls.builtins.formatting.stylua,
+  },
 })
 
 lsp.setup()
@@ -124,6 +129,6 @@ require("nvim-autopairs").setup({
     lua = { "string" }, -- it will not add pair on that treesitter node
     javascript = { "template_string" },
     java = false, -- don"t check treesitter on java
-  }
+  },
 })
 require("nvim-ts-autotag").setup()
