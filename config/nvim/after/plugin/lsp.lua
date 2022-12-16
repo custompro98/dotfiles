@@ -5,36 +5,37 @@ local lsp = require('lsp-zero')
 lsp.preset('recommended')
 
 lsp.ensure_installed({
-  "dockerls",
-  "gopls",
-  "sumneko_lua",
-  "terraformls",
-  "tailwindcss",
-  "tsserver",
-  "graphql",
-  "bufls",
-  "prismals",
+    "dockerls",
+    "gopls",
+    "sumneko_lua",
+    "terraformls",
+    "tailwindcss",
+    "tsserver",
+    "graphql",
+    "bufls",
+    "prismals",
 })
 
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
-
-lsp.setup_nvim_cmp({
-  mapping = lsp.defaults.cmp_mappings({
+local cmp_mapping = lsp.defaults.cmp_mappings({
     ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
     ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
     ['<C-y>'] = cmp.mapping.confirm({ select = true }),
     ["<C-Space>"] = cmp.mapping.complete(),
-  }),
-  sources = cmp.config.sources(
-    {
-      { name = "kity" },
-      { name = "nvim_lsp" },
-      { name = "nvim_lua" },
-      { name = "vsnip" },
-      { name = "path" },
-    }
-  ),
+})
+local cmp_sources = lsp.defaults.cmp_sources()
+table.insert(cmp_sources, {
+    { name = "kity" },
+    { name = "nvim_lsp" },
+    { name = "nvim_lua" },
+    { name = "luasnip" },
+    { name = "path" },
+})
+
+lsp.setup_nvim_cmp({
+  mapping = cmp_mapping,
+  sources = cmp_sources,
 })
 
 lsp.set_preferences({
@@ -123,16 +124,3 @@ require("nvim-autopairs").setup({
   }
 })
 require("nvim-ts-autotag").setup()
-
--- vsnip
-vim.g["vsnip_snippet_dir"] = "~/.config/nvim/vsnip"
-
-vim.cmd([[
-  imap <expr> <C-n> vsnip#available(1)   ? "<Plug>(vsnip-expand-or-jump)" : "<C-n>"
-  smap <expr> <C-n> vsnip#available(1)   ? "<Plug>(vsnip-expand-or-jump)" : "<C-n>"
-  imap <expr> <C-p> vsnip#jumpable(-1)  ? "<Plug>(vsnip-jump-prev)" : "<C-p>"
-  smap <expr> <C-p> vsnip#jumpable(-1)  ? "<Plug>(vsnip-jump-prev)" : "<C-p>"
-]])
-
-vim.keymap.set("v", "<Leader>vc", "<Plug>(vsnip-select-text)<Esc>", {})
-vim.keymap.set("v", "<Leader>vx", "<Plug>(vsnip-cut-text)<Esc>", {})
