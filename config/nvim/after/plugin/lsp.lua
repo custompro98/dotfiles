@@ -33,14 +33,6 @@ lsp.setup_nvim_cmp({
       { name = "nvim_lua" },
       { name = "vsnip" },
       { name = "path" },
-      {
-        name = "buffer",
-        options = {
-          get_bufnrs = function()
-            return vim.api.nvim_list_bufs()
-          end
-        }
-      },
     }
   ),
 })
