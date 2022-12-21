@@ -123,3 +123,8 @@ require("nvim-autopairs").setup({
   },
 })
 require("nvim-ts-autotag").setup()
+
+-- ai.vim
+vim.keymap.set("n", "<Leader>ai", ":AI ", {})
+vim.keymap.set("v", "<Leader>ai", ":AI ", {})
+vim.keymap.set("i", "<Leader>ai", "<Esc>:AI<CR>a", {})

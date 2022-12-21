@@ -19,6 +19,9 @@ packer.init({
   package_root = util.join_paths(fn.stdpath("data"), "site", "pack")
 })
 
+-- ai.vim, don't set up default mappings
+vim.g.ai_no_mappings = true
+
 -- startup and configure plugins
 return packer.startup(function(use)
   -- let packer manage itself
@@ -77,6 +80,7 @@ return packer.startup(function(use)
       "nvim-lua/plenary.nvim",
     },
   }
+  use "aduros/ai.vim"
   -- language
   use "fladson/vim-kitty"
 
