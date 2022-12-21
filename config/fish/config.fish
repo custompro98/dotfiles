@@ -11,6 +11,10 @@ if status --is-interactive
   set GOBIN $GOPATH/bin
   set PATH $PATH $GOBIN
 
+  ## rust
+  set RUSTPATH $HOME/.cargo/bin
+  set PATH $PATH $RUSTPATH
+
   ## fzf
   set -x FZF_DISABLE_KEYBINDINGS 0
   set -x FZF_LEGACY_KEYBINDINGS 0

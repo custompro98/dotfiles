@@ -115,3 +115,11 @@ print_installed "node2"
 print_installing "fish"
 ./install-fish.sh
 print_installed "fish"
+
+print_checking "rust"
+if ! command -v rustup &> /dev/null
+then
+  print_installing "rust"
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+fi
+print_installed "rust"
