@@ -69,23 +69,17 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename, bufopts)
   vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
   vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-  vim.keymap.set("n", "<Leader>f", vim.lsp.buf.format, bufopts)
+  vim.keymap.set("n", "<Leader>f", function ()
+    vim.lsp.buf.format({ filter = function (c)
+      return c.name == "null-ls"
+    end })
+  end, bufopts)
   vim.keymap.set("n", "<Leader>;", function()
     vim.diagnostic.open_float(nil, { focus = false })
   end, bufopts)
 
   vim.keymap.set("n", "<C-p>", vim.diagnostic.goto_prev, bufopts)
   vim.keymap.set("n", "<C-n>", vim.diagnostic.goto_next, bufopts)
-
-  -- capabilities overrides
-  if client.server_capabilities.documentFormattingProvider then
-    local auformat = vim.api.nvim_create_augroup("custompro98-autoformat", {})
-    vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-      group = auformat,
-      pattern = "* <buffer>",
-      callback = vim.lsp.buf.format,
-    })
-  end
 end)
 
 -- auto-format and lint
@@ -94,6 +88,7 @@ local null_opts = lsp.build_options("null-ls", {})
 
 null_ls.setup({
   on_attach = null_opts.on_attach,
+  debug = true,
   sources = {
     -- diagnostics
     null_ls.builtins.diagnostics.eslint,
