@@ -4,16 +4,16 @@ if status --is-interactive
   echo "configuring fish"
   # env variables
   ## general
-  set EDITOR nvim
+  set -x EDITOR nvim
 
   ## golang
   set GOPATH $HOME/go
   set GOBIN $GOPATH/bin
-  set PATH $PATH $GOBIN
+  set -x PATH $PATH $GOBIN
 
   ## rust
   set RUSTPATH $HOME/.cargo/bin
-  set PATH $PATH $RUSTPATH
+  set -x PATH $PATH $RUSTPATH
 
   ## fzf
   set -x FZF_DISABLE_KEYBINDINGS 0

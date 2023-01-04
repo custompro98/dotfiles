@@ -14,6 +14,7 @@ lsp.ensure_installed({
   "graphql",
   "bufls",
   "prismals",
+  "rust_analyzer",
 })
 
 local cmp = require("cmp")
@@ -108,6 +109,7 @@ null_ls.setup({
     null_ls.builtins.formatting.terraform_fmt,
     null_ls.builtins.formatting.protolint,
     null_ls.builtins.formatting.stylua,
+    null_ls.builtins.formatting.rustfmt,
   },
 })
 
