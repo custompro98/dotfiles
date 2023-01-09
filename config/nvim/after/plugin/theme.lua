@@ -49,15 +49,13 @@ require "lualine".setup {
 	options = {
 		icons_enabled = true,
 		theme = "auto",
-		component_separators = { "", "" },
-		section_separators = { "", "" },
 		disabled_filetypes = {}
 	},
 	sections = {
 		lualine_a = { "mode" },
-		lualine_b = { "branch" },
-		lualine_c = { { "filename", path = 1 } },
-		lualine_x = { "encoding", "filetype" },
+		lualine_b = { "branch", "diff" },
+		lualine_c = { { "filename", path = 0 } },
+		lualine_x = { "filetype" },
 		lualine_y = { "progress" },
 		lualine_z = { "location" }
 	},
@@ -69,6 +67,4 @@ require "lualine".setup {
 		lualine_y = {},
 		lualine_z = {}
 	},
-	tabline = {},
-	extensions = {}
 }
