@@ -76,7 +76,9 @@ require'nvim-tree'.setup {
 }
 
 -- Open the file tree
-vim.keymap.set('n', '<C-\\>', require('nvim-tree.api').tree.toggle, { noremap = true })
+vim.keymap.set('n', '<C-\\>', function()
+  require('nvim-tree.api').tree.toggle(true, false)
+end, { noremap = true })
 
 -- Harpoon
 vim.keymap.set('n', '<Leader>ha', require('harpoon.mark').add_file, { noremap = true })
