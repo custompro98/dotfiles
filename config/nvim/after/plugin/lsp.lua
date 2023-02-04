@@ -82,6 +82,30 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "<C-n>", vim.diagnostic.goto_next, bufopts)
 end)
 
+lsp.configure('rust_analyzer', {
+  cmd = {
+    "rustup", "run", "stable", "rust-analyzer",
+  },
+  settings = {
+    ["rust-analyzer"] = {
+      imports = {
+        granularity = {
+          group = "module",
+        },
+        prefix = "self",
+      },
+      cargo = {
+        buildScripts = {
+          enable = true,
+        },
+      },
+      procMacro = {
+        enable = true
+      },
+    }
+  },
+})
+
 -- auto-format and lint
 local null_ls = require("null-ls")
 local null_opts = lsp.build_options("null-ls", {})
