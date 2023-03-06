@@ -40,8 +40,7 @@ require("nvim-treesitter.configs").setup {
       -- Automatically jump forward to textobj, similar to targets.vim
       lookahead = true,
 
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
+      keymaps = { -- You can use the capture groups defined in textobjects.scm
         ["af"] = "@function.outer",
         ["if"] = "@function.inner",
         ["ac"] = "@class.outer",
@@ -58,3 +57,5 @@ opt.foldlevelstart = 99
 opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 
+-- TS Node Action
+vim.keymap.set("n", "<Leader>ta", require("ts-node-action").node_action, { desc = "Trigger Node Action" })
