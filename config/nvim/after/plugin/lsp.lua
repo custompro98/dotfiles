@@ -15,6 +15,7 @@ lsp.ensure_installed({
   "bufls",
   "prismals",
   "rust_analyzer",
+  "yamlls",
 })
 
 local cmp = require("cmp")
@@ -130,6 +131,16 @@ null_ls.setup({
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.formatting.rustfmt,
   },
+})
+
+lsp.configure('yamlls', {
+  settings = {
+    yaml = {
+      schemas = {
+        kubernetes = "/*.yaml"
+      }
+    }
+  }
 })
 
 lsp.setup()
