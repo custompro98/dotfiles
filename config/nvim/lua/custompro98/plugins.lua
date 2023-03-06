@@ -56,6 +56,7 @@ return packer.startup(function(use)
     run = ":TSUpdate"
   }
   use "nvim-treesitter/playground"
+  use "CKolkey/ts-node-action"
 
   -- development
   -- debugging
@@ -105,6 +106,7 @@ return packer.startup(function(use)
     requires = { { "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" } }
   }
   use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
+  use { "nvim-telescope/telescope-live-grep-args.nvim" }
 
   -- appearance
   use "catppuccin/nvim"
