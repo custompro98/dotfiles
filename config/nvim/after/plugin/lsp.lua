@@ -7,7 +7,7 @@ lsp.preset("recommended")
 lsp.ensure_installed({
   "dockerls",
   "gopls",
-  "sumneko_lua",
+  "lua_ls",
   "terraformls",
   "tailwindcss",
   "tsserver",
@@ -137,7 +137,12 @@ lsp.configure('yamlls', {
   settings = {
     yaml = {
       schemas = {
-        kubernetes = "/*.yaml"
+        -- kubernetes = "*.yaml",
+        ["https://raw.githubusercontent.com/argoproj/argo-schema-generator/main/schema/argo_all_k8s_kustomize_schema.json"] = "{dev,prod}/**/*.yaml",
+        ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
+        ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
+        ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
+        ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*docker-compose*.{yml,yaml}",
       }
     }
   }
