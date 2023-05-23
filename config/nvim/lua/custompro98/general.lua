@@ -20,3 +20,10 @@ vim.wo.wrap = false
 
 -- no mouse mode
 vim.opt.mouse = ""
+
+--[[ local autsc = vim.api.nvim_create_augroup("custompro98-tsc", {})
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  group = autsc,
+  pattern = {"typescript", "typescriptreact" },
+  command = "compiler tsc | setlocal makeprg=npx\\ tsc\\ --noEmit"
+}) ]]
