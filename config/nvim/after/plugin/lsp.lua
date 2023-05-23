@@ -123,7 +123,6 @@ null_ls.setup({
     null_ls.builtins.code_actions.eslint,
     -- formatting
     null_ls.builtins.formatting.prettier,
-    null_ls.builtins.formatting.rustywind,
     null_ls.builtins.formatting.gofmt,
     null_ls.builtins.formatting.goimports,
     null_ls.builtins.formatting.terraform_fmt,
