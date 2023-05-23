@@ -80,14 +80,8 @@ if ! command -v nvm &> /dev/null
 then
   print_installing "nvm"
   curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash
-  nvm install --lts
-  nvm use --lts
 fi
 print_installed "nvm"
-
-# Install npm modules
-npm install -g rustywind
-print_installed "npm modules"
 
 # Install G
 print_checking "g"

@@ -21,12 +21,7 @@ if status --is-interactive
 
   # sourcing shell tools
   ## nvm
-  set NODE_VERSION "lts/gallium"
-  set NVM_INSTALLED (nvm list $NODE_VERSION)
-  [ -z "$NVM_INSTALLED" ]; and nvm install $NODE_VERSION
-
-  set NVM_VSN_SET (nvm current)
-  [ "$NVM_VSN_SET" != "$NODE_VERSION" ]; and nvm use $NODE_VERSION
+  set --universal nvm_default_version 18
 
   ## g
   set -gx GOPATH $HOME/go; set -gx GOROOT $HOME/.go; set -gx PATH $GOPATH/bin $PATH; # g-install: do NOT edit, see https://github.com/stefanmaric/g
