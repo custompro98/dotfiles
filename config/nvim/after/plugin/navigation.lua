@@ -5,7 +5,7 @@ local vim = vim
 -- following options are the default
 require'nvim-tree'.setup {
   -- disables netrw completely
-  disable_netrw       = true,
+  disable_netrw       = false,
   -- hijack netrw window on startup
   hijack_netrw        = true,
   -- open the tree when running this setup function

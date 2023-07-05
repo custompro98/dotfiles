@@ -75,6 +75,7 @@ return packer.startup(function(use)
 
   -- tooling
   use "tpope/vim-fugitive"
+  use "tpope/vim-rhubarb"
   use {
     "jose-elias-alvarez/null-ls.nvim",
     requires = {
