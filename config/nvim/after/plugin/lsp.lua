@@ -16,6 +16,7 @@ lsp.ensure_installed({
   "prismals",
   "rust_analyzer",
   "yamlls",
+  "denols",
 })
 
 local cmp = require("cmp")
@@ -145,6 +146,16 @@ lsp.configure('yamlls', {
       }
     }
   }
+})
+
+lsp.configure('tsserver', {
+  single_file_support = false,
+  root_dir = require('lspconfig.util').root_pattern('package.json')
+})
+
+lsp.configure('denols', {
+  single_file_support = false,
+  root_dir = require('lspconfig.util').root_pattern('deno.jsonc')
 })
 
 lsp.setup()
