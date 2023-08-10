@@ -155,7 +155,7 @@ lsp.configure('tsserver', {
 
 lsp.configure('denols', {
   single_file_support = false,
-  root_dir = require('lspconfig.util').root_pattern('deno.jsonc')
+  root_dir = require('lspconfig.util').root_pattern('deno.*')
 })
 
 lsp.setup()
