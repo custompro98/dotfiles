@@ -155,7 +155,11 @@ lsp.configure('tsserver', {
 
 lsp.configure('denols', {
   single_file_support = false,
-  root_dir = require('lspconfig.util').root_pattern('deno.*')
+  root_dir = require('lspconfig.util').root_pattern('deno.json', 'deno.jsonc')
+})
+
+lsp.configure('tailwindcss', {
+  root_dir = require('lspconfig.util').root_pattern('tailwind.config.js', 'tailwind.config.ts', 'twind.config.ts')
 })
 
 lsp.setup()
