@@ -29,6 +29,9 @@ if status --is-interactive
   ## autojump
   [ -f $BREW_PATH/share/autojump/autojump.fish ]; and source $BREW_PATH/share/autojump/autojump.fish
 
+  ## krew
+  set -q KREW_ROOT; and set -gx PATH $PATH $KREW_ROOT/.krew/bin; or set -gx PATH $PATH $HOME/.krew/bin
+
   # source company-specific aliases
   [ -f ~/.company.fish ]; and source ~/.company.fish
   [ -f ~/.overrides.fish ]; and source ~/.overrides.fish
