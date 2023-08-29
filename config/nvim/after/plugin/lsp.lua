@@ -137,7 +137,7 @@ lsp.configure('yamlls', {
   settings = {
     yaml = {
       schemas = {
-        -- kubernetes = "*.yaml",
+        kubernetes = "deployments/**/*.yaml",
         ["https://raw.githubusercontent.com/argoproj/argo-schema-generator/main/schema/argo_all_k8s_kustomize_schema.json"] = "{dev,prod}/**/*.yaml",
         ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
         ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
