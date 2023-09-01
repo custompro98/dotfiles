@@ -6,17 +6,17 @@ local fn = vim.fn
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 
 if fn.empty(fn.glob(install_path)) > 0 then
-  fn.system({ "git", "clone", "https://github.com/wbthomason/packer.nvim", install_path })
-  execute "packadd packer.nvim"
+	fn.system({ "git", "clone", "https://github.com/wbthomason/packer.nvim", install_path })
+	execute("packadd packer.nvim")
 end
 
 vim.cmd("packadd packer.nvim")
 
-local packer = require "packer"
-local util = require "packer.util"
+local packer = require("packer")
+local util = require("packer.util")
 
 packer.init({
-  package_root = util.join_paths(fn.stdpath("data"), "site", "pack")
+	package_root = util.join_paths(fn.stdpath("data"), "site", "pack"),
 })
 
 -- ai.vim, don't set up default mappings
@@ -24,95 +24,105 @@ vim.g.ai_no_mappings = true
 
 -- startup and configure plugins
 return packer.startup(function(use)
-  -- let packer manage itself
-  use "wbthomason/packer.nvim"
+	-- let packer manage itself
+	use("wbthomason/packer.nvim")
 
-  -- lsp
-  use {
-    'VonHeikemen/lsp-zero.nvim',
-    requires = {
-      -- LSP Support
-      {'neovim/nvim-lspconfig'},
-      {'williamboman/mason.nvim'},
-      {'williamboman/mason-lspconfig.nvim'},
+	-- lsp
+	use({
+		"VonHeikemen/lsp-zero.nvim",
+		requires = {
+			-- LSP Support
+			{ "neovim/nvim-lspconfig" },
+			{ "williamboman/mason.nvim" },
+			{ "williamboman/mason-lspconfig.nvim" },
 
-      -- Autocompletion
-      {'hrsh7th/nvim-cmp'},
-      {'hrsh7th/cmp-nvim-lsp'},
-      {'saadparwaiz1/cmp_luasnip'},
-      {'hrsh7th/cmp-path'},
-      {'hrsh7th/cmp-nvim-lua'},
-      {'custompro98/cmp-kitty'},
+			-- Autocompletion
+			{ "hrsh7th/nvim-cmp" },
+			{ "hrsh7th/cmp-nvim-lsp" },
+			{ "saadparwaiz1/cmp_luasnip" },
+			{ "hrsh7th/cmp-path" },
+			{ "hrsh7th/cmp-nvim-lua" },
+			{ "custompro98/cmp-kitty" },
 
-      -- Snippets
-      {'L3MON4D3/LuaSnip'},
-      {'rafamadriz/friendly-snippets'},
-    }
-  }
+			-- Snippets
+			{ "L3MON4D3/LuaSnip" },
+			{ "rafamadriz/friendly-snippets" },
+		},
+	})
 
-  -- treesitter
-  use {
-    "nvim-treesitter/nvim-treesitter",
-    run = ":TSUpdate"
-  }
-  use "nvim-treesitter/playground"
-  use "CKolkey/ts-node-action"
+	-- treesitter
+	use({
+		"nvim-treesitter/nvim-treesitter",
+		run = ":TSUpdate",
+	})
+	use("nvim-treesitter/playground")
+	use("CKolkey/ts-node-action")
 
-  -- development
-  -- debugging
-  use {
-    "mfussenegger/nvim-dap",
-    "rcarriga/nvim-dap-ui",
-    "nvim-telescope/telescope-dap.nvim",
-  }
+	-- development
+	-- debugging
+	use({
+		"mfussenegger/nvim-dap",
+		"rcarriga/nvim-dap-ui",
+		"nvim-telescope/telescope-dap.nvim",
+	})
 
-  -- formatting
-  use "b3nj5m1n/kommentary"
-  use "windwp/nvim-autopairs"
-  use "windwp/nvim-ts-autotag"
-  use "tpope/vim-surround"
-  use "custompro98/listify.nvim"
+	-- formatting
+	use("b3nj5m1n/kommentary")
+	use("windwp/nvim-autopairs")
+	use("windwp/nvim-ts-autotag")
+	use("tpope/vim-surround")
+	use("custompro98/listify.nvim")
 
-  -- tooling
-  use "tpope/vim-fugitive"
-  use "tpope/vim-rhubarb"
-  use {
-    "jose-elias-alvarez/null-ls.nvim",
-    requires = {
-      "nvim-lua/plenary.nvim",
-    },
-  }
-  use "aduros/ai.vim"
-  -- language
-  use "fladson/vim-kitty"
+	-- tooling
+	use("tpope/vim-fugitive")
+	use("tpope/vim-rhubarb")
+	use({
+		"jose-elias-alvarez/null-ls.nvim",
+		requires = {
+			"nvim-lua/plenary.nvim",
+		},
+	})
+	use("aduros/ai.vim")
+	-- language
+	use("fladson/vim-kitty")
 
-  -- navigation
-  use {
-    "kyazdani42/nvim-tree.lua",
-    requires = "kyazdani42/nvim-web-devicons",
-  }
-  use { "knubie/vim-kitty-navigator",
-    run = "cp ./*.py ~/.config/kitty",
-  }
-  use {
-    "ThePrimeagen/harpoon",
-    requires = {
-      "nvim-lua/plenary.nvim",
-    }
-  }
+	-- navigation
+	use({
+		"kyazdani42/nvim-tree.lua",
+		requires = "kyazdani42/nvim-web-devicons",
+	})
+	use({ "knubie/vim-kitty-navigator", run = "cp ./*.py ~/.config/kitty" })
+	use({
+		"ThePrimeagen/harpoon",
+		requires = {
+			"nvim-lua/plenary.nvim",
+		},
+	})
 
-  -- searching
-  use {
-    "nvim-telescope/telescope.nvim",
-    requires = { { "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" } }
-  }
-  use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
-  use { "nvim-telescope/telescope-live-grep-args.nvim" }
+	-- searching
+	use({
+		"nvim-telescope/telescope.nvim",
+		requires = { { "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" } },
+	})
+	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
+	use({ "nvim-telescope/telescope-live-grep-args.nvim" })
 
-  -- appearance
-  use "catppuccin/nvim"
-  use "hoob3rt/lualine.nvim"
+	-- appearance
+	use("catppuccin/nvim")
+	use("hoob3rt/lualine.nvim")
 
-  -- hack
-  use "antoinemadec/FixCursorHold.nvim" -- resolves https://github.com/neovim/neovim/issues/12587
+	-- hack
+	use("antoinemadec/FixCursorHold.nvim") -- resolves https://github.com/neovim/neovim/issues/12587
+
+	-- obsidian
+	use({
+		"epwalsh/obsidian.nvim",
+		requires = {
+			-- Required.
+			"nvim-lua/plenary.nvim",
+
+			"hrsh7th/nvim-cmp",
+			"nvim-telescope/telescope.nvim",
+		},
+	})
 end)
