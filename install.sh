@@ -117,3 +117,11 @@ then
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 fi
 print_installed "rust"
+
+print_checking "bun"
+if ! command -v bun &> /dev/null
+then
+  print_installing "bun"
+  curl -fsSL https://bun.sh/install | bash
+fi
+print_installed "bun"
