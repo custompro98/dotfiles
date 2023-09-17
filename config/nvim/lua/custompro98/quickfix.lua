@@ -1,5 +1,3 @@
-local vim = vim
-
 -- ** Quickfix ** --
 
 -- quickfix navigation

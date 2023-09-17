@@ -1,9 +1,9 @@
-local vim = vim
-
 -- ** Terminal ** --
 
 -- enter terminal mode
-vim.keymap.set("n", "<Leader>t", function () OpenWindow("botright", vim.api.nvim_list_uis()[1].height/5, "split|terminal") end, { noremap = true })
+vim.keymap.set("n", "<Leader>t", function ()
+    OpenWindow("botright", vim.api.nvim_list_uis()[1].height/5, "split|terminal")
+end, { noremap = true })
 
 -- leave terminal mode
 vim.keymap.set("t", "<Leader>t", "<C-\\><C-n>", {})

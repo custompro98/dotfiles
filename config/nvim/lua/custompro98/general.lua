@@ -1,16 +1,13 @@
-local vim = vim
-local opt = vim.opt
-
--- ** General Configuration ** --
+-- ** General ** --
 
 -- spaces not tabs
-opt.expandtab = true
-opt.shiftwidth = 2
-opt.tabstop = 2
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
 
 -- line numbers
-opt.number = true
-opt.relativenumber = true
+vim.opt.number = true
+vim.opt.relativenumber = true
 
 -- formatting hints
 vim.wo.colorcolumn = "100"
@@ -20,6 +17,9 @@ vim.wo.wrap = false
 
 -- no mouse mode
 vim.opt.mouse = ""
+
+-- save undo history
+vim.o.undofile = true
 
 --[[ local autsc = vim.api.nvim_create_augroup("custompro98-tsc", {})
 vim.api.nvim_create_autocmd({ "FileType" }, {

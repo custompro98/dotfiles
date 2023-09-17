@@ -99,7 +99,7 @@ fi
 print_installed "g"
 
 print_installing "nvim plugins"
-nvim +PackerInstall +qall
+nvim --headless "+Lazy! sync" +qa
 print_installed "nvim plugins"
 
 print_installing "node2"
