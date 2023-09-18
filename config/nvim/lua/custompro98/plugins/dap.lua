@@ -5,7 +5,7 @@ return {
 	{
 		"mfussenegger/nvim-dap",
 		dependencies = {
-			"rcarriga/nvim-dap-ui",
+			{ "rcarriga/nvim-dap-ui", opts = {} },
 			{
 				"microsoft/vscode-js-debug",
 				build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
