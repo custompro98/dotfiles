@@ -209,6 +209,11 @@ local languages = {
         require("efmls-configs.formatters.prettier_d"),
         require("efmls-configs.linters.eslint_d"),
     },
+    json = {
+        require("efmls-configs.formatters.eslint_d"),
+        require("efmls-configs.formatters.prettier_d"),
+        require("efmls-configs.linters.eslint_d"),
+    },
     lua = {
         require("efmls-configs.formatters.stylua"),
         require("efmls-configs.linters.luacheck"),
