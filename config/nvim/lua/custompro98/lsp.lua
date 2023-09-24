@@ -19,6 +19,14 @@ local servers = {
 	tsserver = {
 		single_file_support = false,
 		root_dir = require("lspconfig.util").root_pattern("package.json"),
+		filetypes = {
+			"typescript",
+			"typescriptreact",
+			"javascript",
+			"javascriptreact",
+			"json",
+			"json5",
+		},
 	},
 	graphql = {},
 	tailwindcss = {
@@ -237,9 +245,10 @@ local languages = {
 		require("efmls-configs.formatters.stylua"),
 		require("efmls-configs.linters.luacheck"),
 	},
-	-- proto = {
-	--     require("efmls-configs.linters.protolint"),
-	-- },
+	proto = {
+	    require("efmls-configs.formatters.protolint"),
+	    -- require("efmls-configs.linters.protolint"),
+	},
 	rust = {
 		require("efmls-configs.formatters.rustfmt"),
 	},

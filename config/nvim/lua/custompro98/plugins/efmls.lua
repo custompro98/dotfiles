@@ -2,7 +2,7 @@
 
 return {
     {
-        "creativenull/efmls-configs-nvim",
+        "custompro98/efmls-configs-nvim",
         dependencies = { "neovim/nvim-lspconfig" },
     },
 }
