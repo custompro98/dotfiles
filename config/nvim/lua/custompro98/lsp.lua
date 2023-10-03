@@ -71,6 +71,18 @@ local servers = {
 			},
 		},
 	},
+	prismals = {
+		single_file_support = false,
+		root_dir = require("lspconfig.util").root_pattern("schema.prisma"),
+		filetypes = {
+			"typescript",
+			"typescriptreact",
+			"javascript",
+			"javascriptreact",
+			"json",
+			"json5",
+		},
+	},
 }
 
 -- set appearances to differentiate
