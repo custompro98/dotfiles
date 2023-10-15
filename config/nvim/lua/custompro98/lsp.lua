@@ -83,6 +83,7 @@ local servers = {
 			"json5",
 		},
 	},
+	templ = {},
 }
 
 -- set appearances to differentiate

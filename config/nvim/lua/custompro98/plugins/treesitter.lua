@@ -7,7 +7,8 @@ return {
                 "nvim-treesitter/playground",
                 "CKolkey/ts-node-action",
                 { "windwp/nvim-autopairs", event = "InsertEnter", opts = {} },
-                "windwp/nvim-ts-autotag"
+                "windwp/nvim-ts-autotag",
+                "vrischmann/tree-sitter-templ", -- enable custom treesitter highlighting for templ
             },
             build = ":TSUpdate",
             config = function ()
@@ -50,6 +51,13 @@ return {
 
                 local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
                 parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
+                parser_config.templ = {
+                    install_info = {
+                        url = "https://github.com/vrischmann/tree-sitter-templ.git",
+                        files = {"src/parser.c", "src/scanner.c"},
+                        branch = "master",
+                    },
+                }
 
                 -- TS Node Action
                 vim.keymap.set("n", "<Leader>ta", require("ts-node-action").node_action)
