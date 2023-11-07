@@ -84,6 +84,8 @@ local servers = {
 		},
 	},
 	templ = {},
+	astro = {},
+	pyright = {},
 }
 
 -- set appearances to differentiate
@@ -219,6 +221,14 @@ cmp.setup({
 	}),
 	sources = {
 		{ name = "kity" },
+		{
+			name = "bulma",
+			option = {
+				filetypes = {
+					"templ",
+				},
+			},
+		},
 		{ name = "nvim_lsp" },
 		{ name = "nvim_lua" },
 		{ name = "luasnip" },
@@ -261,6 +271,9 @@ local languages = {
 	proto = {
 	    require("efmls-configs.formatters.protolint"),
 	    -- require("efmls-configs.linters.protolint"),
+	},
+	python = {
+		require("efmls-configs.formatters.black"),
 	},
 	rust = {
 		require("efmls-configs.formatters.rustfmt"),

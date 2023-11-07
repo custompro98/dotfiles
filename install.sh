@@ -61,6 +61,10 @@ then
 fi
 print_installed "pynvim"
 
+print_installing "python formatting"
+PIP_REQUIRE_VIRTUALENV="0" python -m pip install --upgrade black flake8
+print_intalled "pyton formatting"
+
 print_installing "dotfiles"
 mkdir -p ~/.config
 ln -sFfn ~/.dotfiles/config/nvim/ ~/.config/nvim
