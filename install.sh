@@ -44,7 +44,7 @@ print_installing "applications from brew"
 brew tap homebrew/cask-fonts
 brew tap yoheimuta/protolint
 brew tap heroku/brew
-brew install node kitty neovim tree bat chrome-cli autojump fzf fd ripgrep font-hack-nerd-font devutils yarn protolint tfenv heroku hadolint chruby-fish ruby-install coreutils krew protobuf@3
+brew install node kitty neovim tree bat chrome-cli autojump fzf fd ripgrep font-hack-nerd-font devutils yarn protolint tfenv heroku hadolint chruby-fish ruby-install coreutils krew protobuf@3 python
 print_installed "applications from brew"
 
 print_checking "pynvim"
@@ -65,6 +65,7 @@ print_installing "dotfiles"
 mkdir -p ~/.config
 ln -sFfn ~/.dotfiles/config/nvim/ ~/.config/nvim
 ln -sFfn ~/.dotfiles/config/kitty/ ~/.config/kitty
+ln -sFfn ~/.dotfiles/config/pip/ ~/.config/pip
 ln -sFfn ~/.dotfiles/rgignore ~/.rgignore
 ln -sFfn ~/.dotfiles/bash_profile ~/.bash_profile
 ln -sFfn ~/.dotfiles/bashrc ~/.bashrc
