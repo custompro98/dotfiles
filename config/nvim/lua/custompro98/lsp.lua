@@ -273,7 +273,7 @@ local languages = {
 	    -- require("efmls-configs.linters.protolint"),
 	},
 	python = {
-		require("efmls-configs.formatters.black"),
+		require("efmls-configs.formatters.ruff"),
 	},
 	rust = {
 		require("efmls-configs.formatters.rustfmt"),
