@@ -62,7 +62,7 @@ fi
 print_installed "pynvim"
 
 print_installing "python formatting"
-PIP_REQUIRE_VIRTUALENV="0" python -m pip install --upgrade ruff flake8
+PIP_REQUIRE_VIRTUALENV="0" python -m pip install --upgrade ruff
 print_intalled "pyton formatting"
 
 print_installing "dotfiles"

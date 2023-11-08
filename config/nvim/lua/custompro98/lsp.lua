@@ -1,5 +1,15 @@
 -- ** LSP ** --
 
+local function has_value (tab, val)
+    for index, value in ipairs(tab) do
+        if value == val then
+            return true
+        end
+    end
+
+    return false
+end
+
 local servers = {
 	dockerls = {},
 	gopls = {},
@@ -86,6 +96,62 @@ local servers = {
 	templ = {},
 	astro = {},
 	pyright = {},
+	ruff_lsp = {},
+}
+
+local efms = {
+	docker = {
+		require("efmls-configs.linters.hadolint"),
+	},
+	go = {
+		require("efmls-configs.formatters.gofmt"),
+		require("efmls-configs.linters.golint"),
+	},
+	html = {
+		require("efmls-configs.linters.eslint_d"),
+	},
+	javascript = {
+		require("efmls-configs.formatters.eslint_d"),
+		require("efmls-configs.formatters.prettier_d"),
+		require("efmls-configs.linters.eslint_d"),
+	},
+	javascriptreact = {
+		require("efmls-configs.formatters.eslint_d"),
+		require("efmls-configs.formatters.prettier_d"),
+		require("efmls-configs.linters.eslint_d"),
+	},
+	json = {
+		require("efmls-configs.formatters.eslint_d"),
+		require("efmls-configs.formatters.prettier_d"),
+		require("efmls-configs.linters.eslint_d"),
+	},
+	lua = {
+		require("efmls-configs.formatters.stylua"),
+		require("efmls-configs.linters.luacheck"),
+	},
+	proto = {
+	    require("efmls-configs.formatters.protolint"),
+	    -- require("efmls-configs.linters.protolint"),
+	},
+	rust = {
+		require("efmls-configs.formatters.rustfmt"),
+	},
+	terraform = {
+		require("efmls-configs.formatters.terraform_fmt"),
+	},
+	typescript = {
+		require("efmls-configs.formatters.eslint_d"),
+		require("efmls-configs.formatters.prettier_d"),
+		require("efmls-configs.linters.eslint_d"),
+	},
+	typescriptreact = {
+		require("efmls-configs.formatters.eslint_d"),
+		require("efmls-configs.formatters.prettier_d"),
+		require("efmls-configs.linters.eslint_d"),
+	},
+	yaml = {
+		require("efmls-configs.linters.yamllint"),
+	},
 }
 
 -- set appearances to differentiate
@@ -121,7 +187,11 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("n", "<Leader>f", function()
 		vim.lsp.buf.format({
 			filter = function(c)
-				return c.name == "efm"
+				if has_value(vim.tbl_keys(efms), vim.bo.filetype) then
+					return c.name == "efm"
+				else
+					return true
+				end
 			end,
 		})
 	end, bufopts)
@@ -238,74 +308,16 @@ cmp.setup({
 
 -- auto-format and lint
 
-local languages = {
-	docker = {
-		require("efmls-configs.linters.hadolint"),
-	},
-	go = {
-		require("efmls-configs.formatters.gofmt"),
-		require("efmls-configs.linters.golint"),
-	},
-	html = {
-		require("efmls-configs.linters.eslint_d"),
-	},
-	javascript = {
-		require("efmls-configs.formatters.eslint_d"),
-		require("efmls-configs.formatters.prettier_d"),
-		require("efmls-configs.linters.eslint_d"),
-	},
-	javascriptreact = {
-		require("efmls-configs.formatters.eslint_d"),
-		require("efmls-configs.formatters.prettier_d"),
-		require("efmls-configs.linters.eslint_d"),
-	},
-	json = {
-		require("efmls-configs.formatters.eslint_d"),
-		require("efmls-configs.formatters.prettier_d"),
-		require("efmls-configs.linters.eslint_d"),
-	},
-	lua = {
-		require("efmls-configs.formatters.stylua"),
-		require("efmls-configs.linters.luacheck"),
-	},
-	proto = {
-	    require("efmls-configs.formatters.protolint"),
-	    -- require("efmls-configs.linters.protolint"),
-	},
-	python = {
-		require("efmls-configs.formatters.ruff"),
-	},
-	rust = {
-		require("efmls-configs.formatters.rustfmt"),
-	},
-	terraform = {
-		require("efmls-configs.formatters.terraform_fmt"),
-	},
-	typescript = {
-		require("efmls-configs.formatters.eslint_d"),
-		require("efmls-configs.formatters.prettier_d"),
-		require("efmls-configs.linters.eslint_d"),
-	},
-	typescriptreact = {
-		require("efmls-configs.formatters.eslint_d"),
-		require("efmls-configs.formatters.prettier_d"),
-		require("efmls-configs.linters.eslint_d"),
-	},
-	yaml = {
-		require("efmls-configs.linters.yamllint"),
-	},
-}
-
 require("lspconfig").efm.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 	settings = {
 		rootMarkers = { ".git/" },
-		languages = languages,
+		languages = efms,
 	},
 	init_options = {
 		documentFormatting = true,
 		documentRangeFormatting = true,
 	},
-	filetypes = vim.tbl_keys(languages),
+	filetypes = vim.tbl_keys(efms),
 })
