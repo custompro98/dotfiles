@@ -1,11 +1,14 @@
 -- ** DAP ** --
 
--- https://github.com/mxsdev/nvim-dap-vscode-js#setup
 return {
     {
         "mfussenegger/nvim-dap",
         dependencies = {
             { "rcarriga/nvim-dap-ui", opts = {} },
+            "williamboman/mason.nvim",
+            "jay-babu/mason-nvim-dap.nvim",
+            -- Typescript
+            -- https://github.com/mxsdev/nvim-dap-vscode-js#setup
             {
                 "microsoft/vscode-js-debug",
                 build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
@@ -15,6 +18,9 @@ return {
                 opts = {
                     debugger_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug",
                     adapters = { "pwa-node" },
+                    -- log_file_path = "(stdpath cache)/dap_vscode_js.log",
+                    log_file_level = false,    -- Logging level for output to file. Set to false to disable file logging.
+                    log_console_level = false, -- vim.log.levels.DEBUG, -- Logging level for output to console. Set to false to disable console output.
                 },
             },
         },
@@ -34,7 +40,7 @@ return {
                 desc = "Evaluate Input",
             },
             {
-                "<leader>dC",
+                "<leader>dT",
                 function()
                     require("dap").set_breakpoint(vim.fn.input("[Condition] > "))
                 end,
@@ -147,6 +153,13 @@ return {
                 desc = "Toggle Breakpoint",
             },
             {
+                "<leader>dT",
+                function()
+                    require("dap").set_breakpoint(vim.fn.input("[Condition] > "))
+                end,
+                desc = "Conditional Breakpoint",
+            },
+            {
                 "<leader>dx",
                 function()
                     require("dap").terminate()
@@ -161,5 +174,40 @@ return {
                 desc = "Step Out",
             },
         },
+        config = function()
+            local dap = require("dap")
+            local dapui = require("dapui")
+
+            require("mason-nvim-dap").setup({
+                automatic_setup = true,
+                handlers = {},
+                ensure_installed = {},
+            })
+
+            dapui.setup({
+                icons = {
+                    expanded = "▾",
+                    collapsed = "▸",
+                    current_frame = "*",
+                },
+                controls = {
+                    icons = {
+                        pause = "⏸",
+                        play = "▶",
+                        step_into = "⏎",
+                        step_over = "⏭",
+                        step_out = "⏮",
+                        step_back = "b",
+                        run_last = "▶▶",
+                        terminate = "⏹",
+                        disconnect = "⏏",
+                    },
+                },
+            })
+
+            dap.listeners.after.event_initialized["dapui_config"] = dapui.open
+            dap.listeners.before.event_terminated["dapui_config"] = dapui.close
+            dap.listeners.before.event_exited["dapui_config"] = dapui.close
+        end,
     },
 }
