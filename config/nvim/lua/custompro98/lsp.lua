@@ -103,10 +103,6 @@ local efms = {
     docker = {
         require("efmls-configs.linters.hadolint"),
     },
-    go = {
-        require("efmls-configs.formatters.gofmt"),
-        require("efmls-configs.linters.golint"),
-    },
     html = {
         require("efmls-configs.linters.eslint_d"),
     },
