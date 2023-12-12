@@ -6,8 +6,8 @@ vim.keymap.set("i", "jk", "<Esc>", { remap = true })
 vim.keymap.set("t", "jk", "<Esc>", { remap = true })
 
 -- toggle highlight search
-vim.keymap.set("n", "<Leader>h", ":set hlsearch<CR>", {})
-vim.keymap.set("n", "<Leader>H", ":set nohlsearch<CR>", {})
+vim.keymap.set("n", "<Leader>h", function () vim.opt.hlsearch = true end, {})
+vim.keymap.set("n", "<Leader>H", function () vim.opt.hlsearch = false end, {})
 
 -- resource config
 vim.keymap.set("n", "<Leader>r", ":source ~/.config/nvim/init.lua<CR>", {})
