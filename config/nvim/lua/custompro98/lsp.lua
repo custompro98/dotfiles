@@ -100,12 +100,6 @@ local servers = {
 }
 
 local efms = {
-	docker = {
-		require("efmls-configs.linters.hadolint"),
-	},
-	html = {
-		require("efmls-configs.linters.eslint_d"),
-	},
 	javascript = {
 		require("efmls-configs.formatters.eslint_d"),
 		require("efmls-configs.formatters.prettier_d"),
@@ -121,19 +115,8 @@ local efms = {
 		require("efmls-configs.formatters.prettier_d"),
 		require("efmls-configs.linters.eslint_d"),
 	},
-	lua = {
-		require("efmls-configs.formatters.stylua"),
-		require("efmls-configs.linters.luacheck"),
-	},
 	proto = {
 		require("efmls-configs.formatters.protolint"),
-		-- require("efmls-configs.linters.protolint"),
-	},
-	rust = {
-		require("efmls-configs.formatters.rustfmt"),
-	},
-	terraform = {
-		require("efmls-configs.formatters.terraform_fmt"),
 	},
 	typescript = {
 		require("efmls-configs.formatters.eslint_d"),
@@ -144,9 +127,6 @@ local efms = {
 		require("efmls-configs.formatters.eslint_d"),
 		require("efmls-configs.formatters.prettier_d"),
 		require("efmls-configs.linters.eslint_d"),
-	},
-	yaml = {
-		require("efmls-configs.linters.yamllint"),
 	},
 }
 
@@ -180,7 +160,9 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
 	vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
 
-	vim.keymap.set("n", "<Leader>f", Format, bufopts)
+	vim.keymap.set("n", "<Leader>f", function()
+		Format(client.id)
+	end, bufopts)
 
 	vim.keymap.set("n", "<Leader>;", function()
 		vim.diagnostic.open_float(nil, { focus = false })
@@ -346,18 +328,20 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.api.nvim_create_autocmd("BufWritePre", {
 			group = get_augroup(client),
 			buffer = bufnr,
-			callback = Format,
+			callback = function()
+				Format(client_id)
+			end,
 		})
 	end,
 })
 
-function Format()
+function Format(client_id)
 	vim.lsp.buf.format({
 		filter = function(c)
 			if has_value(vim.tbl_keys(efms), vim.bo.filetype) then
 				return c.name == "efm"
 			else
-				return true
+				return c.id == client_id
 			end
 		end,
 	})
