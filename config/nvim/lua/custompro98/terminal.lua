@@ -10,5 +10,5 @@ vim.keymap.set("t", "<Leader>t", "<C-\\><C-n>", {})
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { remap = true })
 
 function OpenWindow(position, height, cmd)
-  vim.cmd(position..height..cmd)
+    vim.cmd(position..height..cmd)
 end
