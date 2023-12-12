@@ -203,6 +203,22 @@ return {
                         disconnect = "⏏",
                     },
                 },
+                layouts = {
+                    {
+                        elements = {
+                            {
+                                id = "repl",
+                                size = 0.75,
+                            },
+                            {
+                                id = "breakpoints",
+                                size = 0.25,
+                            },
+                        },
+                        position = "bottom",
+                        size = 15,
+                    },
+                },
             })
 
             dap.listeners.after.event_initialized["dapui_config"] = dapui.open
