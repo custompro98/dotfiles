@@ -7,7 +7,9 @@ for _, language in ipairs({ "typescript", "javascript" }) do
             type = "pwa-node",
             request = "attach",
             name = "Attach",
-            processId = require("dap.utils").pick_process,
+            processId = function()
+                require("dap.utils").pick_process({ filter = "sway" })
+            end,
             cwd = "${workspaceFolder}",
         },
     }
