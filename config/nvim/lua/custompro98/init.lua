@@ -9,6 +9,7 @@ require("custompro98.appearance")
 require("custompro98.convenience")
 require("custompro98.copy-paste")
 require("custompro98.general")
+require("custompro98.navigation")
 require("custompro98.quickfix")
 require("custompro98.terminal")
 
