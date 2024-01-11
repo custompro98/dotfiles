@@ -31,5 +31,3 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("custompro98.plugins")
-
-require("custompro98.lsp")
