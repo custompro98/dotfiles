@@ -94,6 +94,16 @@ return {
 					},
 				},
 			},
+			prismals = {
+				single_file_support = false,
+				root_dir = require("lspconfig.util").root_pattern("schema.prisma"),
+				filetypes = {
+					"typescript",
+					"typescriptreact",
+					"javascript",
+					"javascriptreact",
+				},
+			},
 			tsserver = {
 				format = false,
 				single_file_support = false,
