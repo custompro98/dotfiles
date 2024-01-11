@@ -3,6 +3,10 @@ local tooling_by_ft = {
 		form = { "stylua" },
 		lint = {},
 	},
+	typescript = {
+		form = { "prettierd" },
+		lint = { "eslint_d" },
+	},
 }
 
 function AllTools()
@@ -43,7 +47,18 @@ return {
 		{
 			"mfussenegger/nvim-lint",
 			config = function()
-				require("lint").linters_by_ft = {}
+				require("lint").linters_by_ft = {
+					typescript = tooling_by_ft["typescript"].lint,
+					typescriptreact = tooling_by_ft["typescript"].lint,
+					javascript = tooling_by_ft["typescript"].lint,
+					javascriptreact = tooling_by_ft["typescript"].lint,
+				}
+
+				vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+					callback = function()
+						require("lint").try_lint()
+					end,
+				})
 			end,
 		},
 		{
@@ -52,6 +67,12 @@ return {
 				require("conform").setup({
 					formatters_by_ft = {
 						lua = tooling_by_ft["lua"].form,
+						typescript = tooling_by_ft["typescript"].form,
+						typescriptreact = tooling_by_ft["typescript"].form,
+						javascript = tooling_by_ft["typescript"].form,
+						javascriptreact = tooling_by_ft["typescript"].form,
+						json = tooling_by_ft["typescript"].form,
+						json5 = tooling_by_ft["typescript"].form,
 					},
 					format_on_save = {
 						timeout_ms = 500,
@@ -71,6 +92,19 @@ return {
 							globals = { "vim" },
 						},
 					},
+				},
+			},
+			tsserver = {
+				format = false,
+				single_file_support = false,
+				root_dir = require("lspconfig.util").root_pattern("package.json"),
+				filetypes = {
+					"typescript",
+					"typescriptreact",
+					"javascript",
+					"javascriptreact",
+					"json",
+					"json5",
 				},
 			},
 		}
@@ -127,6 +161,8 @@ return {
 					on_attach = on_attach,
 					settings = (servers[server_name] or {}).settings,
 					filetypes = (servers[server_name] or {}).filetypes,
+					single_file_support = (servers[server_name] or {}).single_file_support,
+					root_dir = (servers[server_name] or {}).root_dir,
 				})
 			end,
 		})
