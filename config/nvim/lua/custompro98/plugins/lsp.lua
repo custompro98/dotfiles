@@ -84,6 +84,7 @@ return {
 	},
 	config = function()
 		local servers = {
+			gopls = {},
 			lua_ls = {
 				format = false,
 				settings = {
@@ -104,6 +105,7 @@ return {
 					"javascriptreact",
 				},
 			},
+			templ = {},
 			tsserver = {
 				format = false,
 				single_file_support = false,
