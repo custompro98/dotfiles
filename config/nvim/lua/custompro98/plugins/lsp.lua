@@ -1,42 +1,3 @@
-local servers = {
-	gopls = {},
-	graphql = {},
-	lua_ls = {
-		format = false,
-		settings = {
-			Lua = {
-				diagnostics = {
-					globals = { "vim" },
-				},
-			},
-		},
-	},
-	prismals = {
-		single_file_support = false,
-		root_dir = require("lspconfig.util").root_pattern("schema.prisma"),
-		filetypes = {
-			"typescript",
-			"typescriptreact",
-			"javascript",
-			"javascriptreact",
-		},
-	},
-	templ = {},
-	tsserver = {
-		format = false,
-		single_file_support = false,
-		root_dir = require("lspconfig.util").root_pattern("package.json"),
-		filetypes = {
-			"typescript",
-			"typescriptreact",
-			"javascript",
-			"javascriptreact",
-			"json",
-			"json5",
-		},
-	},
-}
-
 local tooling_by_ft = {
 	lua = {
 		form = { "stylua" },
@@ -74,6 +35,7 @@ return {
 		{ "j-hui/fidget.nvim", opts = {} },
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
+		"neovim/nvim-lspconfig",
 		{
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			dependencies = {
@@ -122,6 +84,45 @@ return {
 		},
 	},
 	config = function()
+		local servers = {
+			gopls = {},
+			graphql = {},
+			lua_ls = {
+				format = false,
+				settings = {
+					Lua = {
+						diagnostics = {
+							globals = { "vim" },
+						},
+					},
+				},
+			},
+			prismals = {
+				single_file_support = false,
+				root_dir = require("lspconfig.util").root_pattern("schema.prisma"),
+				filetypes = {
+					"typescript",
+					"typescriptreact",
+					"javascript",
+					"javascriptreact",
+				},
+			},
+			templ = {},
+			tsserver = {
+				format = false,
+				single_file_support = false,
+				root_dir = require("lspconfig.util").root_pattern("package.json"),
+				filetypes = {
+					"typescript",
+					"typescriptreact",
+					"javascript",
+					"javascriptreact",
+					"json",
+					"json5",
+				},
+			},
+		}
+
 		require("mason").setup()
 		require("mason-lspconfig").setup({
 			ensure_installed = vim.tbl_keys(servers),
