@@ -103,6 +103,10 @@ then
 fi
 print_installed "g"
 
+print_installing "go dependencies"
+go install github.com/a-h/templ/cmd/templ@latest
+print_installed "go dependencies"
+
 print_installing "nvim plugins"
 nvim --headless "+Lazy! sync" +qa
 print_installed "nvim plugins"
