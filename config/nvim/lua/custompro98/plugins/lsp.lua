@@ -107,7 +107,9 @@ return {
 					"javascriptreact",
 				},
 			},
-			rust_analyzer = {},
+			rust_analyzer = {
+				format = true,
+			},
 			templ = {},
 			tsserver = {
 				format = false,
