@@ -161,6 +161,12 @@ return {
 				end, bufopts)
 			else
 				vim.keymap.set("n", "<Leader>f", vim.lsp.buf.format, bufopts)
+
+				vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+					callback = function()
+						vim.lsp.buf.format()
+					end,
+				})
 			end
 
 			vim.keymap.set("n", "<Leader>;", function()
