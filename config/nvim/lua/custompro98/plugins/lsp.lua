@@ -85,7 +85,10 @@ return {
 	},
 	config = function()
 		local servers = {
-			gopls = {},
+			bufls = {},
+			gopls = {
+				format = true,
+			},
 			graphql = {},
 			lua_ls = {
 				format = false,
