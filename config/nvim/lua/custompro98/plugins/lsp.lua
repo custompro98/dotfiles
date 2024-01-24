@@ -114,6 +114,7 @@ return {
 				format = true,
 			},
 			templ = {},
+			tailwindcss = {},
 			tsserver = {
 				format = false,
 				single_file_support = false,
