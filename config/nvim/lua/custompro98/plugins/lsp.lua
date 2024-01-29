@@ -3,6 +3,10 @@ local tooling_by_ft = {
 		form = { "stylua" },
 		lint = {},
 	},
+	python = {
+		form = { "black" },
+		lint = { "ruff" },
+	},
 	typescript = {
 		form = { "prettierd" },
 		lint = { "eslint_d" },
@@ -53,6 +57,7 @@ return {
 					typescriptreact = tooling_by_ft["typescript"].lint,
 					javascript = tooling_by_ft["typescript"].lint,
 					javascriptreact = tooling_by_ft["typescript"].lint,
+					python = tooling_by_ft["python"].lint,
 				}
 
 				vim.api.nvim_create_autocmd({ "BufWritePost" }, {
@@ -74,6 +79,7 @@ return {
 						javascriptreact = tooling_by_ft["typescript"].form,
 						json = tooling_by_ft["typescript"].form,
 						json5 = tooling_by_ft["typescript"].form,
+						python = tooling_by_ft["python"].form,
 					},
 					format_on_save = {
 						timeout_ms = 500,
@@ -110,6 +116,7 @@ return {
 					"javascriptreact",
 				},
 			},
+			pyright = {},
 			rust_analyzer = {
 				format = true,
 			},
