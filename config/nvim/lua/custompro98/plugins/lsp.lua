@@ -86,6 +86,9 @@ return {
 	config = function()
 		local servers = {
 			bufls = {},
+			denols = {
+				format = true,
+			},
 			gopls = {
 				format = true,
 			},
