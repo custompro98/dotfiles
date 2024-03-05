@@ -48,11 +48,10 @@ return {
 							fallback()
 						end
 					end),
+					["<C-y>"] = cmp.mapping.confirm({ select = true }),
 					["<C-d>"] = cmp.mapping.scroll_docs(-4),
 					["<C-f>"] = cmp.mapping.scroll_docs(4),
 					["<C-Space>"] = cmp.mapping.complete({}),
-					["<C-y>"] = cmp.mapping.confirm({ select = true }),
-					["<CR>"] = cmp.mapping.confirm({ select = true }),
 				}),
 				sources = {
 					{ name = "kity" },
