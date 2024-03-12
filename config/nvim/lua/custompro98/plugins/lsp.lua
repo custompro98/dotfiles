@@ -92,6 +92,9 @@ return {
 	config = function()
 		local servers = {
 			bufls = {},
+			gleam = {
+				format = true,
+			},
 			gopls = {
 				format = true,
 			},
