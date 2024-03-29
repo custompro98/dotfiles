@@ -9,7 +9,7 @@ local tooling_by_ft = {
 	},
 	typescript = {
 		form = { "prettierd" },
-		lint = { "eslint_d" },
+		lint = {},
 	},
 }
 
@@ -52,7 +52,9 @@ return {
 		{
 			"mfussenegger/nvim-lint",
 			config = function()
-				require("lint").linters_by_ft = {
+				local lint = require("lint")
+
+				lint.linters_by_ft = {
 					typescript = tooling_by_ft["typescript"].lint,
 					typescriptreact = tooling_by_ft["typescript"].lint,
 					javascript = tooling_by_ft["typescript"].lint,
@@ -62,7 +64,7 @@ return {
 
 				vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 					callback = function()
-						require("lint").try_lint()
+						lint.try_lint()
 					end,
 				})
 			end,
@@ -92,6 +94,7 @@ return {
 	config = function()
 		local servers = {
 			bufls = {},
+			eslint = {},
 			gopls = {
 				format = true,
 			},
