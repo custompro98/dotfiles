@@ -32,11 +32,15 @@ if status --is-interactive
   ## krew
   set -q KREW_ROOT; and set -gx PATH $PATH $KREW_ROOT/.krew/bin; or set -gx PATH $PATH $HOME/.krew/bin
 
+  ## bun
+  set --export BUN_INSTALL "$HOME/.bun"
+  set --export PATH $BUN_INSTALL/bin $PATH
+
+  ## perl
+  ### plenv
+  if which plenv > /dev/null; plenv init - | source ; end
+
   # source company-specific aliases
   [ -f ~/.company.fish ]; and source ~/.company.fish
   [ -f ~/.overrides.fish ]; and source ~/.overrides.fish
 end
-
-# bun
-set --export BUN_INSTALL "$HOME/.bun"
-set --export PATH $BUN_INSTALL/bin $PATH
