@@ -7,6 +7,10 @@ local tooling_by_ft = {
 		form = { "black" },
 		lint = { "ruff" },
 	},
+	ruby = {
+		form = { "rubyfmt" },
+		lint = {},
+	},
 	typescript = {
 		form = { "prettierd" },
 		lint = {},
@@ -82,6 +86,7 @@ return {
 						json = tooling_by_ft["typescript"].form,
 						json5 = tooling_by_ft["typescript"].form,
 						python = tooling_by_ft["python"].form,
+						ruby = tooling_by_ft["ruby"].form,
 					},
 					format_on_save = {
 						timeout_ms = 500,
@@ -109,6 +114,9 @@ return {
 					},
 				},
 			},
+			perlnavigator = {
+				format = true,
+			},
 			prismals = {
 				single_file_support = false,
 				root_dir = require("lspconfig.util").root_pattern("schema.prisma"),
@@ -123,6 +131,7 @@ return {
 			rust_analyzer = {
 				format = true,
 			},
+			solargraph = {},
 			templ = {},
 			tailwindcss = {},
 			tsserver = {
