@@ -78,6 +78,7 @@ return {
 			config = function()
 				require("conform").setup({
 					formatters_by_ft = {
+						astro = tooling_by_ft["typescript"].form,
 						lua = tooling_by_ft["lua"].form,
 						typescript = tooling_by_ft["typescript"].form,
 						typescriptreact = tooling_by_ft["typescript"].form,
@@ -98,6 +99,9 @@ return {
 	},
 	config = function()
 		local servers = {
+			astro = {
+				format = false,
+			},
 			bufls = {},
 			eslint = {},
 			gopls = {
