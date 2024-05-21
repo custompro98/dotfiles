@@ -176,7 +176,15 @@ return {
 			vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
 			vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
 
-			if not servers[client.name].format then
+			if client.name == "gleam" or servers[client.name].format then
+				vim.keymap.set("n", "<Leader>f", vim.lsp.buf.format, bufopts)
+
+				vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+					callback = function()
+						vim.lsp.buf.format()
+					end,
+				})
+			else
 				client.server_capabilities.documentFormattingProvider = false
 				client.server_capabilities.documentRangeFormattingProvider = false
 
@@ -186,14 +194,6 @@ return {
 						bufnr = bufnr,
 					})
 				end, bufopts)
-			else
-				vim.keymap.set("n", "<Leader>f", vim.lsp.buf.format, bufopts)
-
-				vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-					callback = function()
-						vim.lsp.buf.format()
-					end,
-				})
 			end
 
 			vim.keymap.set("n", "<Leader>;", function()
@@ -215,6 +215,11 @@ return {
 					root_dir = (servers[server_name] or {}).root_dir,
 				})
 			end,
+		})
+
+		require("lspconfig").gleam.setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
 		})
 	end,
 }
