@@ -4,7 +4,7 @@ local tooling_by_ft = {
 		lint = {},
 	},
 	python = {
-		form = { "black" },
+		form = { "ruff" },
 		lint = { "ruff" },
 	},
 	ruby = {
