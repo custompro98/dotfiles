@@ -11,6 +11,10 @@ local tooling_by_ft = {
 		form = { "rubyfmt" },
 		lint = {},
 	},
+	eruby = {
+		form = { "erb-formatter" },
+		lint = {},
+	},
 	typescript = {
 		form = { "prettierd" },
 		lint = {},
@@ -88,6 +92,7 @@ return {
 						json5 = tooling_by_ft["typescript"].form,
 						python = tooling_by_ft["python"].form,
 						ruby = tooling_by_ft["ruby"].form,
+						eruby = { "erb_format" },
 					},
 					format_on_save = {
 						timeout_ms = 500,
