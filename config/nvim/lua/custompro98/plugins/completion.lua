@@ -18,6 +18,25 @@ return {
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-nvim-lua",
 			"custompro98/cmp-kitty",
+			{
+				"supermaven-inc/supermaven-nvim",
+				config = function()
+					require("supermaven-nvim").setup({
+						keymaps = {
+							accept_suggestion = "<C-f>",
+							clear_suggestion = "<C-]>",
+							accept_word = "<C-g>",
+						},
+						ignore_filetypes = {},
+						color = {
+							suggestion_color = "#ffffff",
+							cterm = 244,
+						},
+						disable_inline_completion = false, -- disables inline completion for use with cmp
+						disable_keymaps = false, -- disables built in keymaps for more manual control
+					})
+				end,
+			},
 		},
 		config = function()
 			local cmp = require("cmp")
