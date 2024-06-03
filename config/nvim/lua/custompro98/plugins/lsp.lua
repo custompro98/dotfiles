@@ -3,6 +3,10 @@ local tooling_by_ft = {
 		form = { "stylua" },
 		lint = {},
 	},
+	php = {
+		form = { "pint" },
+		lint = { "phpstan" },
+	},
 	python = {
 		form = { "ruff" },
 		lint = { "ruff" },
@@ -67,6 +71,7 @@ return {
 					typescriptreact = tooling_by_ft["typescript"].lint,
 					javascript = tooling_by_ft["typescript"].lint,
 					javascriptreact = tooling_by_ft["typescript"].lint,
+					php = tooling_by_ft["php"].lint,
 					python = tooling_by_ft["python"].lint,
 				}
 
@@ -90,6 +95,7 @@ return {
 						javascriptreact = tooling_by_ft["typescript"].form,
 						json = tooling_by_ft["typescript"].form,
 						json5 = tooling_by_ft["typescript"].form,
+						php = tooling_by_ft["php"].form,
 						python = tooling_by_ft["python"].form,
 						ruby = tooling_by_ft["ruby"].form,
 						eruby = { "erb_format" },
@@ -126,6 +132,7 @@ return {
 			perlnavigator = {
 				format = true,
 			},
+			phpactor = {},
 			prismals = {
 				single_file_support = false,
 				root_dir = require("lspconfig.util").root_pattern("schema.prisma"),
