@@ -1,4 +1,8 @@
 local tooling_by_ft = {
+	blade = {
+		form = { "blade-formatter" },
+		lint = {},
+	},
 	lua = {
 		form = { "stylua" },
 		lint = {},
@@ -88,6 +92,7 @@ return {
 				require("conform").setup({
 					formatters_by_ft = {
 						astro = tooling_by_ft["typescript"].form,
+						blade = tooling_by_ft["blade"].form,
 						lua = tooling_by_ft["lua"].form,
 						typescript = tooling_by_ft["typescript"].form,
 						typescriptreact = tooling_by_ft["typescript"].form,
@@ -132,7 +137,9 @@ return {
 			perlnavigator = {
 				format = true,
 			},
-			phpactor = {},
+			phpactor = {
+				filetypes = { "blade", "php" },
+			},
 			prismals = {
 				single_file_support = false,
 				root_dir = require("lspconfig.util").root_pattern("schema.prisma"),
