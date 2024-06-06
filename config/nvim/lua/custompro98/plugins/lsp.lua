@@ -156,7 +156,15 @@ return {
 			},
 			solargraph = {},
 			templ = {},
-			tailwindcss = {},
+			tailwindcss = {
+				settings = {
+					tailwindCSS = {
+						experimental = {
+							classRegex = { [[\bclass:\s*'([^']*)']], [[\bclass:\s*\"([^"]*)"]] },
+						},
+					},
+				},
+			},
 			tsserver = {
 				format = false,
 				single_file_support = false,
