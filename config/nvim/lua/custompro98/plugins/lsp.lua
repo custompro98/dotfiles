@@ -1,6 +1,6 @@
 local tooling_by_ft = {
 	blade = {
-		form = { "blade-formatter" },
+		form = { "blade-formatter", "pint" },
 		lint = {},
 	},
 	lua = {
