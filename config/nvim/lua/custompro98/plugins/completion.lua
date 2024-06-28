@@ -36,7 +36,7 @@ return {
 						disable_keymaps = false, -- disables built in keymaps for more manual control
 					})
 
-					vim.keymap.set("n", "<Leader>ai", ":SupermavenToggle<CR>", {})
+					vim.keymap.set("n", "<Leader>sm", ":SupermavenToggle<CR>", {})
 				end,
 			},
 		},
