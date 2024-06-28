@@ -10,7 +10,7 @@ return {
 			harpoon:setup()
 
 			vim.keymap.set("n", "<Leader>ha", function()
-				harpoon:list():append()
+				harpoon:list():add()
 			end)
 
 			vim.keymap.set("n", "<Leader>hu", function()
