@@ -115,6 +115,10 @@ return {
 	},
 	config = function()
 		local servers = {
+			als = {
+				format = true,
+				root_dir = require("lspconfig.util").root_pattern("*.gpr"),
+			},
 			astro = {
 				format = false,
 			},
@@ -296,6 +300,7 @@ return {
 					filetypes = (servers[server_name] or {}).filetypes,
 					single_file_support = (servers[server_name] or {}).single_file_support,
 					root_dir = (servers[server_name] or {}).root_dir,
+					on_init = (servers[server_name] or {}).on_init,
 				})
 			end,
 		})
