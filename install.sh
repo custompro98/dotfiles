@@ -43,8 +43,30 @@ print_installed "brew"
 print_installing "applications from brew"
 brew tap homebrew/cask-fonts
 brew tap yoheimuta/protolint
-brew tap heroku/brew
-brew install kitty neovim tree bat autojump fzf fd ripgrep font-hack-nerd-font devutils yarn protolint tfenv heroku hadolint chruby-fish ruby-install coreutils krew protobuf@3 luarocks plenv perl-build starship
+brew install \
+    # shell tools
+    kitty neovim coreutils tree bat starship \
+    # navigation
+    autojump fzf fd ripgrep \
+    # display
+    font-hack-nerd-font \
+    # node
+    yarn \
+    # protocol buffers
+    protolint protobuf@3 \
+    # terraform
+    tfenv \
+    # docker
+    docker hadolint \
+    # ruby
+    chruby-fish ruby-install \
+    # kubernetes
+    krew \
+    # lua
+    luarocks \
+    #perl
+    plenv perl-build
+
 print_installed "applications from brew"
 
 print_checking "pynvim"
