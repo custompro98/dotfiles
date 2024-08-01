@@ -44,7 +44,7 @@ print_installing "applications from brew"
 brew tap homebrew/cask-fonts
 brew tap yoheimuta/protolint
 brew tap heroku/brew
-brew install node kitty neovim tree bat chrome-cli autojump fzf fd ripgrep font-hack-nerd-font devutils yarn protolint tfenv heroku hadolint chruby-fish ruby-install coreutils krew protobuf@3 python luarocks plenv perl-build
+brew install kitty neovim tree bat autojump fzf fd ripgrep font-hack-nerd-font devutils yarn protolint tfenv heroku hadolint chruby-fish ruby-install coreutils krew protobuf@3 luarocks plenv perl-build starship
 print_installed "applications from brew"
 
 print_checking "pynvim"
@@ -82,6 +82,7 @@ print_installed "dotfiles"
 # Install NVM
 print_checking "nvm"
 if ! command -v nvm &> /dev/null
+    d
 then
   print_installing "nvm"
   curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash

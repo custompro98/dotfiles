@@ -40,6 +40,10 @@ if status --is-interactive
   ### plenv
   if which plenv > /dev/null; plenv init - | source ; end
 
+  ## shell
+  ### starship
+  if command -q starship; starship init fish | source; end
+
   # source company-specific aliases
   [ -f ~/.company.fish ]; and source ~/.company.fish
   [ -f ~/.overrides.fish ]; and source ~/.overrides.fish
