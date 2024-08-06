@@ -16,8 +16,8 @@ local tooling_by_ft = {
 		lint = { "ruff" },
 	},
 	ruby = {
-		form = { "rubyfmt" },
-		lint = {},
+		form = { "rubocop" },
+		lint = { "rubocop" },
 	},
 	eruby = {
 		form = { "erb-formatter" },
@@ -77,6 +77,7 @@ return {
 					javascriptreact = tooling_by_ft["typescript"].lint,
 					php = tooling_by_ft["php"].lint,
 					python = tooling_by_ft["python"].lint,
+					ruby = tooling_by_ft["ruby"].lint,
 				}
 
 				vim.api.nvim_create_autocmd({ "BufWritePost" }, {
