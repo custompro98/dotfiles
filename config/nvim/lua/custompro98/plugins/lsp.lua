@@ -156,6 +156,9 @@ return {
 				},
 			},
 			pyright = {},
+			ruff = {
+				format = true,
+			},
 			rust_analyzer = {
 				format = true,
 			},
