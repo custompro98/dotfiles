@@ -1,3 +1,3 @@
 function dc
-  docker-compose $argv
+  docker compose $argv
 end
