@@ -14,7 +14,7 @@ return {
 	event = { "VeryLazy" },
 	config = function()
 		require("laravel").setup({
-			lsp_server = "phpactor",
+			lsp_server = "intelephense",
 			register_user_commands = true,
 			features = {
 				null_ls = {

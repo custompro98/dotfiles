@@ -129,6 +129,9 @@ return {
 				format = true,
 			},
 			graphql = {},
+			intelephense = {
+				filetypes = { "blade", "php" },
+			},
 			lua_ls = {
 				format = false,
 				settings = {
@@ -141,9 +144,6 @@ return {
 			},
 			perlnavigator = {
 				format = true,
-			},
-			phpactor = {
-				filetypes = { "blade", "php" },
 			},
 			prismals = {
 				single_file_support = false,
