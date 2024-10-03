@@ -156,13 +156,13 @@ return {
 				},
 			},
 			pyright = {},
+			ruby_lsp = {},
 			ruff = {
 				format = true,
 			},
 			rust_analyzer = {
 				format = true,
 			},
-			solargraph = {},
 			templ = {},
 			tailwindcss = {
 				filetypes = {
