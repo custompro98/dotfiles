@@ -142,6 +142,7 @@ return {
 					},
 				},
 			},
+			omnisharp = {},
 			perlnavigator = {
 				format = true,
 			},
@@ -156,7 +157,8 @@ return {
 				},
 			},
 			pyright = {},
-			ruby_lsp = {},
+			-- ruby_lsp = {},
+			solargraph = {},
 			ruff = {
 				format = true,
 			},
