@@ -44,6 +44,9 @@ return {
 					},
 				},
 				defaults = {
+					file_ignore_patterns = {
+						"vendor",
+					},
 					mappings = {
 						i = {
 							["<Leader>q"] = require("telescope.actions").send_selected_to_qflist
