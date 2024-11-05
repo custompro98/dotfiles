@@ -123,6 +123,9 @@ return {
 			astro = {
 				format = false,
 			},
+			biome = {
+				format = true,
+			},
 			bufls = {},
 			eslint = {},
 			gopls = {
@@ -157,7 +160,7 @@ return {
 				},
 			},
 			pyright = {},
-			-- ruby_lsp = {},
+			ruby_lsp = {},
 			solargraph = {},
 			ruff = {
 				format = true,
