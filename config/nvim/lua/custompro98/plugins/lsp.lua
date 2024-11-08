@@ -24,7 +24,7 @@ local tooling_by_ft = {
 		lint = {},
 	},
 	typescript = {
-		form = { "prettierd" },
+		form = { "prettierd", "biome" },
 		lint = {},
 	},
 }
@@ -91,6 +91,14 @@ return {
 			"stevearc/conform.nvim",
 			config = function()
 				require("conform").setup({
+					formatters = {
+						biome = {
+							require_cwd = true,
+						},
+						prettierd = {
+							require_cwd = true,
+						},
+					},
 					formatters_by_ft = {
 						astro = tooling_by_ft["typescript"].form,
 						blade = tooling_by_ft["blade"].form,
