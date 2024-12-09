@@ -24,7 +24,7 @@ local tooling_by_ft = {
 		lint = {},
 	},
 	typescript = {
-		form = { "prettierd", "biome" },
+		form = { "prettierd", "biome-check" },
 		lint = {},
 	},
 }
@@ -40,7 +40,11 @@ function AllTools()
 						table.insert(everything, submember)
 					end
 				else
-					table.insert(everything, member)
+					if member == "biome-check" then
+						table.insert(everything, "biome")
+					else
+						table.insert(everything, member)
+					end
 				end
 			end
 		end
@@ -90,15 +94,17 @@ return {
 		{
 			"stevearc/conform.nvim",
 			config = function()
-				require("conform").setup({
-					formatters = {
-						biome = {
-							require_cwd = true,
-						},
-						prettierd = {
-							require_cwd = true,
-						},
+				local formatters = {
+					biome = {
+						require_cwd = true,
 					},
+					prettierd = {
+						require_cwd = true,
+					},
+				}
+
+				require("conform").setup({
+					formatters = formatters,
 					formatters_by_ft = {
 						astro = tooling_by_ft["typescript"].form,
 						blade = tooling_by_ft["blade"].form,
@@ -132,7 +138,7 @@ return {
 				format = false,
 			},
 			biome = {
-				format = true,
+				format = false,
 			},
 			bufls = {},
 			eslint = {},
