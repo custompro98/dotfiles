@@ -1,13 +1,18 @@
 -- ** Terminal ** --
 
--- enter terminal mode
-vim.keymap.set("n", "<Leader>t", function()
+local M = {
+	termid = nil,
+}
+
+M.Terminal = function()
 	vim.cmd.vnew()
 	vim.cmd.term()
 	vim.cmd.wincmd("L")
 	vim.api.nvim_win_set_width(0, 120)
-	-- vim.api.nvim_open_term(0, { force_crlf = true })
-end, { noremap = true })
+end
+
+-- enter terminal mode
+vim.keymap.set("n", "<Leader>t", M.Terminal, { noremap = true })
 
 vim.api.nvim_create_autocmd("TermOpen", {
 	group = vim.api.nvim_create_augroup("custompro98-termopen", { clear = true }),
@@ -15,6 +20,15 @@ vim.api.nvim_create_autocmd("TermOpen", {
 		vim.opt.number = false
 		vim.opt.relativenumber = false
 		vim.cmd.startinsert()
+
+		M.termid = vim.bo.channel
+	end,
+})
+
+vim.api.nvim_create_autocmd("TermClose", {
+	group = vim.api.nvim_create_augroup("custompro98-termclose", { clear = true }),
+	callback = function()
+		M.termid = nil
 	end,
 })
 
@@ -40,3 +54,5 @@ end, { remap = true })
 vim.keymap.set("t", "<C-l>", function()
 	navigate("l")
 end, { remap = true })
+
+return M
