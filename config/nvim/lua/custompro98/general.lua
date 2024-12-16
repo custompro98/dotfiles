@@ -21,9 +21,9 @@ vim.opt.mouse = ""
 -- save undo history
 vim.o.undofile = true
 
---[[ local autsc = vim.api.nvim_create_augroup("custompro98-tsc", {})
-vim.api.nvim_create_autocmd({ "FileType" }, {
-    group = autsc,
-    pattern = {"typescript", "typescriptreact" },
-    command = "compiler tsc | setlocal makeprg=npx\\ tsc\\ --noEmit"
-}) ]]
+-- local autsc = vim.api.nvim_create_augroup("custompro98-tsc", { clear = true })
+-- vim.api.nvim_create_autocmd({ "FileType" }, {
+-- 	group = autsc,
+-- 	pattern = { "typescript", "typescriptreact" },
+-- 	command = "compiler tsc | setlocal makeprg=npx\\ tsc\\ --noEmit",
+-- })
