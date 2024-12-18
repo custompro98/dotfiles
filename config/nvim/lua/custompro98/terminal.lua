@@ -8,7 +8,7 @@ M.Terminal = function()
 	vim.cmd.vnew()
 	vim.cmd.term()
 	vim.cmd.wincmd("L")
-	vim.api.nvim_win_set_width(0, 120)
+	vim.api.nvim_win_set_width(0, vim.o.columns / 2.5)
 end
 
 -- enter terminal mode
