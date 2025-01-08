@@ -95,12 +95,17 @@ return {
 			"stevearc/conform.nvim",
 			config = function()
 				local formatters = {
-					biome = {
-						require_cwd = true,
-					},
 					prettierd = {
 						require_cwd = true,
+						cwd = require("conform.util").root_file({ ".prettierrc", ".prettierrc.json", ".prettierrc.js" }),
 					},
+				}
+
+				-- biome-check has a `-` in the name and so cannot be used as a table key.
+				-- this more general syntax will allow the `-` to be used in the table key.
+				formatters["biome-check"] = {
+					require_cwd = true,
+					cwd = require("conform.util").root_file({ "biome.json" }),
 				}
 
 				require("conform").setup({
@@ -141,6 +146,9 @@ return {
 				format = false,
 			},
 			bufls = {},
+			denols = {
+				root_dir = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc"),
+			},
 			eslint = {},
 			gopls = {
 				format = true,
