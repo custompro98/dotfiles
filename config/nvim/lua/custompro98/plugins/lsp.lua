@@ -135,26 +135,27 @@ return {
 	},
 	config = function()
 		local servers = {
-			als = {
-				format = true,
-				root_dir = require("lspconfig.util").root_pattern("*.gpr"),
-			},
 			astro = {
 				format = false,
 			},
 			biome = {
 				format = false,
 			},
-			bufls = {},
+			buf_ls = {
+				format = true,
+			},
 			denols = {
+				format = true,
 				root_dir = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc"),
 			},
-			eslint = {},
+			eslint = {
+				format = false,
+			},
 			gopls = {
 				format = true,
 			},
-			graphql = {},
 			intelephense = {
+				format = false,
 				filetypes = { "blade", "php" },
 			},
 			lua_ls = {
@@ -167,10 +168,6 @@ return {
 					},
 				},
 			},
-			omnisharp = {},
-			perlnavigator = {
-				format = true,
-			},
 			prismals = {
 				single_file_support = false,
 				root_dir = require("lspconfig.util").root_pattern("schema.prisma"),
@@ -181,16 +178,15 @@ return {
 					"javascriptreact",
 				},
 			},
-			pyright = {},
-			ruby_lsp = {},
-			solargraph = {},
+			pyright = {
+				format = false,
+			},
 			ruff = {
 				format = true,
 			},
 			rust_analyzer = {
 				format = true,
 			},
-			templ = {},
 			tailwindcss = {
 				filetypes = {
 					"aspnetcorerazor",
@@ -256,7 +252,7 @@ return {
 					},
 				},
 			},
-			tsserver = {
+			ts_ls = {
 				format = false,
 				single_file_support = false,
 				root_dir = require("lspconfig.util").root_pattern("package.json"),

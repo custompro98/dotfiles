@@ -4,6 +4,7 @@ return {
 		"nvim-telescope/telescope.nvim",
 		"tpope/vim-dotenv",
 		"MunifTanjim/nui.nvim",
+		"kevinhwang91/promise-async",
 	},
 	cmd = { "Sail", "Artisan", "Composer", "Npm", "Yarn", "Laravel" },
 	keys = {
@@ -25,11 +26,11 @@ return {
 					position = "right",
 				},
 			},
-			ui = require("laravel.config.ui"),
-			commands_options = require("laravel.config.command_options"),
-			environments = require("laravel.config.environments"),
-			user_commands = require("laravel.config.user_commands"),
-			resources = require("laravel.config.resources"),
+			ui = require("laravel.options.ui"),
+			commands_options = require("laravel.options.command_options"),
+			environments = require("laravel.options.environments"),
+			user_commands = require("laravel.options.user_commands"),
+			resources = require("laravel.options.resources"),
 		})
 	end,
 }
