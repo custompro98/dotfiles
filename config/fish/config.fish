@@ -16,6 +16,7 @@ if status --is-interactive
   set -x PATH $PATH $RUSTPATH
 
   ## fzf
+  fzf --fish | source
   set -x FZF_DISABLE_KEYBINDINGS 0
   set -x FZF_LEGACY_KEYBINDINGS 0
 
