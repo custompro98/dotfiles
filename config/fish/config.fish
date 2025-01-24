@@ -19,6 +19,7 @@ if status --is-interactive
   fzf --fish | source
   set -x FZF_DISABLE_KEYBINDINGS 0
   set -x FZF_LEGACY_KEYBINDINGS 0
+  set -x FZF_DEFAULT_OPTS "--preview 'fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}' --height $FZF_TMUX_HEIGHT"
 
   # sourcing shell tools
   ## nvm
