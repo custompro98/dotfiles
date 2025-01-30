@@ -18,6 +18,7 @@ return {
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-nvim-lua",
 			"custompro98/cmp-kitty",
+			"Jezda1337/nvim-html-css",
 			{
 				"supermaven-inc/supermaven-nvim",
 				config = function()
@@ -76,6 +77,18 @@ return {
 				}),
 				sources = {
 					{ name = "kitty" },
+					{
+						name = "html-css",
+						option = {
+							enable_on = { "html" },
+							documentation = {
+								auto_show = true,
+							},
+							style_sheets = {
+								"https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css",
+							},
+						},
+					},
 					{ name = "nvim_lsp" },
 					{ name = "nvim_lua" },
 					{ name = "luasnip" },
