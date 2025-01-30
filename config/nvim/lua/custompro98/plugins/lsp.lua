@@ -252,6 +252,9 @@ return {
 					},
 				},
 			},
+			templ = {
+				format = true,
+			},
 			ts_ls = {
 				format = false,
 				single_file_support = false,
