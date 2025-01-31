@@ -154,6 +154,12 @@ return {
 			gopls = {
 				format = true,
 			},
+			html = {
+				format = false,
+			},
+			htmx = {
+				format = false,
+			},
 			intelephense = {
 				format = false,
 				filetypes = { "blade", "php" },
