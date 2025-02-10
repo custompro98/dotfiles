@@ -222,6 +222,9 @@ return {
 					"json5",
 				},
 			},
+			zls = {
+				format = false,
+			},
 		}
 
 		require("mason").setup()
