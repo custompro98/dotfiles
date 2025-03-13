@@ -7,6 +7,7 @@ function set_brew_path() {
 set_brew_path
 
 if command -v fish
+then
   $BREW_PATH/bin/brew install fish
 
   # initialize config

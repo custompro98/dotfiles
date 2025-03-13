@@ -6,14 +6,9 @@ if status --is-interactive
   ## general
   set -x EDITOR nvim
 
-  ## golang
-  set GOPATH $HOME/go
-  set GOBIN $GOPATH/bin
-  set -x PATH $PATH $GOBIN
-
   ## rust
   set RUSTPATH $HOME/.cargo/bin
-  set -x PATH $PATH $RUSTPATH
+  fish_add_path $RUSTPATH
 
   ## fzf
   fzf --fish | source
@@ -27,17 +22,17 @@ if status --is-interactive
   __check_nvm
 
   ## g
-  set -gx GOPATH $HOME/go; set -gx GOROOT $HOME/.go; set -gx PATH $GOPATH/bin $PATH; # g-install: do NOT edit, see https://github.com/stefanmaric/g
+  set -gx GOPATH $HOME/go; set -gx GOROOT $HOME/.go; fish_add_path $GOPATH/bin; # g-install: do NOT edit, see https://github.com/stefanmaric/g
 
   ## autojump
   [ -f $BREW_PATH/share/autojump/autojump.fish ]; and source $BREW_PATH/share/autojump/autojump.fish
 
   ## krew
-  set -q KREW_ROOT; and set -gx PATH $PATH $KREW_ROOT/.krew/bin; or set -gx PATH $PATH $HOME/.krew/bin
+  set -q KREW_ROOT; and fish_add_path $KREW_ROOT/.krew/bin; or fish_add_path $HOME/.krew/bin
 
   ## bun
   set --export BUN_INSTALL "$HOME/.bun"
-  set --export PATH $BUN_INSTALL/bin $PATH
+  fish_add_path $BUN_INSTALL/bin
 
   ## perl
   ### plenv
@@ -46,6 +41,9 @@ if status --is-interactive
   ## shell
   ### starship
   if command -q starship; starship init fish | source; end
+
+  ## php
+  fish_add_path "$HOME/.config/herd-lite/bin"
 
   # source company-specific aliases
   [ -f ~/.company.fish ]; and source ~/.company.fish

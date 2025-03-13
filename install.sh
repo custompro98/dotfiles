@@ -41,30 +41,18 @@ print_installed "brew"
 # print_installed "powerline fonts"
 
 print_installing "applications from brew"
-brew tap homebrew/cask-fonts
 brew tap yoheimuta/protolint
 brew install \
-    # shell tools
     kitty neovim coreutils tree bat starship \
-    # navigation
     autojump fzf fd ripgrep \
-    # display
     font-hack-nerd-font \
-    # node
     yarn \
-    # protocol buffers
     protolint protobuf@3 \
-    # terraform
     tfenv \
-    # docker
     docker hadolint \
-    # ruby
     chruby-fish ruby-install \
-    # kubernetes
     krew \
-    # lua
     luarocks \
-    #perl
     plenv perl-build
 
 print_installed "applications from brew"
@@ -104,10 +92,9 @@ print_installed "dotfiles"
 # Install NVM
 print_checking "nvm"
 if ! command -v nvm &> /dev/null
-    d
 then
   print_installing "nvm"
-  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
 fi
 print_installed "nvm"
 
@@ -134,10 +121,6 @@ print_installing "nvim plugins"
 nvim --headless "+Lazy! sync" +qa
 print_installed "nvim plugins"
 
-print_installing "node2"
-./install-node2.sh
-print_installed "node2"
-
 print_installing "fish"
 ./install-fish.sh
 print_installed "fish"
@@ -157,3 +140,11 @@ then
   curl -fsSL https://bun.sh/install | bash
 fi
 print_installed "bun"
+
+print_checking "php"
+if ! command -v php &> /dev/null
+then
+  print_installing "php"
+  /bin/bash -c "$(curl -fsSL https://php.new/install/mac)"
+fi
+print_installed "php"
