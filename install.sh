@@ -133,6 +133,14 @@ then
 fi
 print_installed "rust"
 
+print_checking "deno"
+if ! command -v deno &> /dev/null
+then
+  print_installing "deno"
+  curl -fsSL https://deno.land/install.sh | sh
+fi
+print_installed "deno"
+
 print_checking "bun"
 if ! command -v bun &> /dev/null
 then
