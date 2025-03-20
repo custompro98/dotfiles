@@ -2,8 +2,7 @@ if status --is-interactive
   set BREW_PATH (brew --prefix)
 
   echo "configuring fish"
-  # env variables
-  ## general
+  # env variables # general
   set -x EDITOR nvim
 
   ## rust
@@ -44,6 +43,10 @@ if status --is-interactive
 
   ## php
   fish_add_path "$HOME/.config/herd-lite/bin"
+
+  ## docker
+  not test -e "$HOME/.config/fish/completions/docker.fish"; and docker completion fish > ~/.config/fish/completions/docker.fish
+
 
   # source company-specific aliases
   [ -f ~/.company.fish ]; and source ~/.company.fish
