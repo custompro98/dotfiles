@@ -154,9 +154,9 @@ return {
 			eslint = {
 				format = false,
 			},
-			-- gh_actions_ls = {
-			-- 	format = false,
-			-- },
+			gh_actions_ls = {
+				format = false,
+			},
 			gopls = {
 				format = true,
 			},
