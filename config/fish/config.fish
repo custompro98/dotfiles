@@ -4,6 +4,7 @@ if status --is-interactive
   echo "configuring fish"
   # env variables # general
   set -x EDITOR nvim
+  fish_add_path $HOME/.local/bin
 
   ## rust
   set RUSTPATH $HOME/.cargo/bin
