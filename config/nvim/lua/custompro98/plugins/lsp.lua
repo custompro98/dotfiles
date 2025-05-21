@@ -144,6 +144,9 @@ return {
 			buf_ls = {
 				format = true,
 			},
+			cssls = {
+				format = true,
+			},
 			denols = {
 				format = true,
 				root_dir = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc"),
@@ -155,7 +158,7 @@ return {
 				format = true,
 			},
 			html = {
-				format = false,
+				format = true,
 			},
 			htmx = {
 				format = false,
