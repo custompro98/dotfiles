@@ -57,13 +57,13 @@ return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
 		{ "j-hui/fidget.nvim", opts = {} },
-		"williamboman/mason.nvim",
-		"williamboman/mason-lspconfig.nvim",
+		"mason-org/mason.nvim",
+		"mason-org/mason-lspconfig.nvim",
 		"neovim/nvim-lspconfig",
 		{
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			dependencies = {
-				"williamboman/mason.nvim",
+				"mason-org/mason.nvim",
 			},
 			opts = {
 				ensure_installed = AllTools(),
@@ -154,6 +154,9 @@ return {
 			eslint = {
 				format = false,
 			},
+			-- gh_actions_ls = {
+			-- 	format = false,
+			-- },
 			gopls = {
 				format = true,
 			},
@@ -230,6 +233,7 @@ return {
 		require("mason").setup()
 		require("mason-lspconfig").setup({
 			ensure_installed = vim.tbl_keys(servers),
+			automatic_enable = false,
 		})
 
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -278,20 +282,18 @@ return {
 			vim.keymap.set("n", "<C-n>", vim.diagnostic.goto_next, bufopts)
 		end
 
-		require("mason-lspconfig").setup_handlers({
-			function(server_name)
-				require("lspconfig")[server_name].setup({
-					capabilities = capabilities,
-					on_attach = on_attach,
-					settings = (servers[server_name] or {}).settings,
-					filetypes = (servers[server_name] or {}).filetypes,
-					single_file_support = (servers[server_name] or {}).single_file_support,
-					root_dir = (servers[server_name] or {}).root_dir,
-					on_init = (servers[server_name] or {}).on_init,
-					init_options = (servers[server_name] or {}).init_options,
-				})
-			end,
-		})
+		for server_name in pairs(servers) do
+			require("lspconfig")[server_name].setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+				settings = (servers[server_name] or {}).settings,
+				filetypes = (servers[server_name] or {}).filetypes,
+				single_file_support = (servers[server_name] or {}).single_file_support,
+				root_dir = (servers[server_name] or {}).root_dir,
+				on_init = (servers[server_name] or {}).on_init,
+				init_options = (servers[server_name] or {}).init_options,
+			})
+		end
 
 		require("lspconfig").gleam.setup({
 			capabilities = capabilities,
