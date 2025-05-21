@@ -156,3 +156,11 @@ then
   /bin/bash -c "$(curl -fsSL https://php.new/install/mac)"
 fi
 print_installed "php"
+
+print_checking "goose"
+if ! command -v goose &> /dev/null
+then
+  print_installing "goose"
+  curl -fsSL https://github.com/block/goose/releases/download/stable/download_cli.sh | CONFIGURE=false bash
+fi
+print_installed "goose"
