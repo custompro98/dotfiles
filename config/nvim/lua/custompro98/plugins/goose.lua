@@ -5,7 +5,10 @@ return {
 			require("goose").setup({
 				providers = {
 					google = {
-						"gemini-2.5-flash-preview-05-20",
+						"gemini-2.0-flash",
+					},
+					ollama = {
+						"devstral",
 					},
 				},
 			})
