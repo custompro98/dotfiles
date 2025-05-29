@@ -124,6 +124,8 @@ return {
 						python = tooling_by_ft["python"].form,
 						ruby = tooling_by_ft["ruby"].form,
 						eruby = { "erb_format" },
+						go = { "gofmt" },
+						templ = { "templ" },
 					},
 					format_on_save = {
 						timeout_ms = 500,
@@ -158,7 +160,7 @@ return {
 				format = false,
 			},
 			gopls = {
-				format = true,
+				format = false,
 			},
 			html = {
 				format = true,
