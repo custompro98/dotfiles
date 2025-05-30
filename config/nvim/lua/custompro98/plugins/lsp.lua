@@ -164,6 +164,7 @@ return {
 			},
 			html = {
 				format = true,
+				filetypes = { "html" },
 			},
 			htmx = {
 				format = false,
@@ -212,7 +213,7 @@ return {
 				},
 			},
 			templ = {
-				format = true,
+				format = false,
 			},
 			ts_ls = {
 				format = false,
