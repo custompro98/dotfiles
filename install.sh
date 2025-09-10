@@ -89,6 +89,15 @@ ln -sFfn ~/.dotfiles/tmux.conf ~/.tmux.conf
 ln -sFfn ~/.dotfiles/scripts/templatemux /usr/local/bin/templatemux
 print_installed "dotfiles"
 
+# Install mise
+print_checking "mise"
+if ! command -v mise &> /dev/null
+then
+    print_installing "mise"
+    curl https://mise.run | sh
+fi
+print_installed "mise"
+
 # Install NVM
 print_checking "nvm"
 if ! command -v nvm &> /dev/null

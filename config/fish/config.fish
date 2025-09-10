@@ -17,6 +17,9 @@ if status --is-interactive
   set -x FZF_DEFAULT_OPTS "--preview 'fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}' --height $FZF_TMUX_HEIGHT"
 
   # sourcing shell tools
+  ## mise
+  mise activate fish | source
+
   ## nvm
   set --universal nvm_default_version lts
   __check_nvm
