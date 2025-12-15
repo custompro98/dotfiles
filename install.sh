@@ -50,7 +50,6 @@ brew install \
     protolint protobuf@3 \
     tfenv \
     docker hadolint \
-    chruby-fish ruby-install \
     krew \
     luarocks \
     plenv perl-build
