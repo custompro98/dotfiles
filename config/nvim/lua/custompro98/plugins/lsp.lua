@@ -166,9 +166,9 @@ return {
 				format = true,
 				filetypes = { "html" },
 			},
-			htmx = {
-				format = false,
-			},
+			-- htmx = {
+			-- 	format = false,
+			-- },
 			intelephense = {
 				format = false,
 				filetypes = { "blade", "php" },

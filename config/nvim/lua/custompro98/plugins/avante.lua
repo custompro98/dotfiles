@@ -1,0 +1,41 @@
+return {
+	-- "yetone/avante.nvim",
+	-- event = "VeryLazy",
+	-- lazy = false,
+	-- version = false,
+	-- build = "make",
+	-- opts = {
+	-- 	provider = "gemini",
+	-- 	providers = {
+	-- 		gemini = {
+	-- 			-- @see https://ai.google.dev/gemini-api/docs/models/gemini
+	-- 			model = "gemini-2.5-flash-preview-05-20",
+	-- 			api_key_name = "GEMINI_API_KEY",
+	-- 			extra_request_body = {
+	-- 				max_tokens = 8192,
+	-- 				temperature = 0,
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
+	-- dependencies = {
+	-- 	"nvim-treesitter/nvim-treesitter",
+	-- 	"stevearc/dressing.nvim",
+	-- 	"nvim-lua/plenary.nvim",
+	-- 	"MunifTanjim/nui.nvim",
+	--
+	-- 	--- The below dependencies are optional,
+	-- 	"nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+	-- 	"hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+	-- 	"ibhagwan/fzf-lua", -- for file_selector provider fzf
+	-- 	"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+	-- 	{
+	-- 		-- Make sure to set this up properly if you have lazy=true
+	-- 		"MeanderingProgrammer/render-markdown.nvim",
+	-- 		opts = {
+	-- 			file_types = { "markdown", "Avante" },
+	-- 		},
+	-- 		ft = { "markdown", "Avante" },
+	-- 	},
+	-- },
+}
