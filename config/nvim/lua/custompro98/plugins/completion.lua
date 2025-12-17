@@ -40,6 +40,31 @@ return {
 					vim.keymap.set("n", "<Leader>sm", ":SupermavenToggle<CR>", {})
 				end,
 			},
+			{
+				"zbirenbaum/copilot.lua",
+				dependencies = {
+					"copilotlsp-nvim/copilot-lsp",
+				},
+				cmd = "Copilot",
+				config = function()
+					require("copilot").setup({
+						suggestion = {
+							enabled = true,
+							auto_trigger = true,
+							keymap = {
+								accept = "<C-f>",
+							},
+						},
+						nes = {
+							enabled = false,
+							auto_trigger = true,
+							keymap = {
+								accept = "<C-F>",
+							},
+						},
+					})
+				end,
+			},
 		},
 		config = function()
 			local cmp = require("cmp")
