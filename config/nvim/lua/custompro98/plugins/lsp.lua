@@ -59,7 +59,6 @@ return {
 		{ "j-hui/fidget.nvim", opts = {} },
 		"mason-org/mason.nvim",
 		"mason-org/mason-lspconfig.nvim",
-		"neovim/nvim-lspconfig",
 		{
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			dependencies = {
@@ -129,7 +128,7 @@ return {
 					},
 					format_on_save = {
 						timeout_ms = 500,
-						lsp_fallback = false,
+						lsp_format = "never",
 					},
 				})
 			end,
@@ -312,11 +311,15 @@ return {
 
 				-- diagnostics
 				vim.keymap.set("n", "<Leader>;", function()
-					vim.diagnostic.open_float(nil, { focus = false })
+					vim.diagnostic.open_float({ focus = false })
 				end, bufopts)
 
-				vim.keymap.set("n", "<C-p>", vim.diagnostic.goto_prev, bufopts)
-				vim.keymap.set("n", "<C-n>", vim.diagnostic.goto_next, bufopts)
+				vim.keymap.set("n", "<C-p>", function()
+					vim.diagnostic.jump({ count = -1 })
+				end, bufopts)
+				vim.keymap.set("n", "<C-n>", function()
+					vim.diagnostic.jump({ count = 1 })
+				end, bufopts)
 			end,
 		})
 	end,
