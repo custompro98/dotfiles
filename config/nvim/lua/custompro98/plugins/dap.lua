@@ -7,6 +7,7 @@ return {
 			{ "rcarriga/nvim-dap-ui", opts = {} },
 			"williamboman/mason.nvim",
 			"jay-babu/mason-nvim-dap.nvim",
+			"mfussenegger/nvim-dap-python",
 			-- Typescript
 			-- https://github.com/mxsdev/nvim-dap-vscode-js#setup
 			{
@@ -180,9 +181,8 @@ return {
 			local dapui = require("dapui")
 
 			require("mason-nvim-dap").setup({
-				automatic_setup = true,
 				handlers = {},
-				ensure_installed = {},
+				ensure_installed = { "python" },
 			})
 
 			dapui.setup({
@@ -226,6 +226,7 @@ return {
 			dap.listeners.before.event_terminated["dapui_config"] = dapui.close
 			dap.listeners.before.event_exited["dapui_config"] = dapui.close
 
+			require("custompro98.debugging.python")
 			require("custompro98.debugging.typescript")
 		end,
 	},
