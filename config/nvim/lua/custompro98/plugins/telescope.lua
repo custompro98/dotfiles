@@ -81,7 +81,7 @@ return {
 			vim.keymap.set("n", "<Leader>fr", "<cmd>Telescope lsp_references<CR>", {})
 			vim.keymap.set("n", "<Leader>fs", "<cmd>Telescope lsp_document_symbols<CR>", {})
 			vim.keymap.set("n", "<Leader>fh", "<cmd>Telescope help_tags<CR>", {})
-			vim.keymap.set("n", "<Leader>fd", "<cmd>lua TelescopeDotfiles()<CR>", {})
+			vim.keymap.set("n", "<Leader>fd", TelescopeDotfiles, {})
 			vim.keymap.set("n", "<Leader>fm", "<cmd>Telescope man_pages<CR>", {})
 			vim.keymap.set("n", "<Leader>fb", "<cmd>Telescope buffers<CR>", {})
 		end,
