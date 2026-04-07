@@ -5,7 +5,7 @@ return {
 		"mfussenegger/nvim-dap",
 		dependencies = {
 			{ "rcarriga/nvim-dap-ui", opts = {} },
-			"williamboman/mason.nvim",
+			"mason-org/mason.nvim",
 			"jay-babu/mason-nvim-dap.nvim",
 			"mfussenegger/nvim-dap-python",
 			-- Typescript
@@ -41,15 +41,8 @@ return {
 				end,
 				desc = "Evaluate Input",
 			},
-			{
-				"<leader>dT",
-				function()
-					require("dap").set_breakpoint(vim.fn.input("[Condition] > "))
-				end,
-				desc = "Conditional Breakpoint",
-			},
-			{
-				"<leader>dU",
+		{
+			"<leader>dU",
 				function()
 					require("dapui").toggle()
 				end,
@@ -122,7 +115,7 @@ return {
 			{
 				"<leader>dp",
 				function()
-					require("dap").pause.toggle()
+					require("dap").pause()
 				end,
 				desc = "Pause",
 			},

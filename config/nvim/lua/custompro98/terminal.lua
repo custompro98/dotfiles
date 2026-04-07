@@ -17,8 +17,8 @@ vim.keymap.set("n", "<Leader>t", M.Terminal, { noremap = true })
 vim.api.nvim_create_autocmd("TermOpen", {
 	group = vim.api.nvim_create_augroup("custompro98-termopen", { clear = true }),
 	callback = function()
-		vim.opt.number = false
-		vim.opt.relativenumber = false
+		vim.wo.number = false
+		vim.wo.relativenumber = false
 		vim.cmd.startinsert()
 
 		M.termid = vim.bo.channel

@@ -4,10 +4,8 @@ return {
 			"nvim-treesitter/nvim-treesitter",
 			dependencies = {
 				"nvim-treesitter/nvim-treesitter-textobjects",
-				"nvim-treesitter/playground",
 				{ "windwp/nvim-autopairs", event = "InsertEnter", opts = {} },
 				"windwp/nvim-ts-autotag",
-				"vrischmann/tree-sitter-templ", -- enable custom treesitter highlighting for templ
 				"EmranMR/tree-sitter-blade", -- enable custom treesitter highlighting for blade
 			},
 			build = ":TSUpdate",
@@ -21,15 +19,8 @@ return {
 						enable = false,
 						disable = {},
 					},
-					query_linter = {
-						enable = true,
-						use_virtual_text = true,
-						lint_events = { "BufWrite", "CursorHold" },
-					},
 					ensure_installed = "all",
 					ignore_install = { "phpdoc", "haskell" },
-					autopairs = { enable = true },
-					autotag = { enable = true },
 					textobjects = {
 						select = {
 							enable = true,
@@ -49,16 +40,14 @@ return {
 					},
 				})
 
+				-- nvim-ts-autotag requires its own setup call (no longer configured via treesitter)
+				require("nvim-ts-autotag").setup()
+
+				-- register tsx parser for additional filetypes
+				vim.treesitter.language.register("tsx", { "javascript", "typescript.tsx" })
+
+				-- blade custom parser (not yet natively available in nvim-treesitter)
 				local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-				parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
-				parser_config.templ = {
-					install_info = {
-						url = "https://github.com/vrischmann/tree-sitter-templ.git",
-						files = { "src/parser.c", "src/scanner.c" },
-						branch = "master",
-					},
-					filetype = "templ",
-				}
 				parser_config.blade = {
 					install_info = {
 						url = "https://github.com/EmranMR/tree-sitter-blade.git",
@@ -69,7 +58,7 @@ return {
 				}
 
 				vim.opt.foldmethod = "expr"
-				vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+				vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 				vim.opt.foldenable = false
 			end,
 		},

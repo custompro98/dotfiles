@@ -29,7 +29,7 @@ local tooling_by_ft = {
 	},
 }
 
-function AllTools()
+local function AllTools()
 	local everything = {}
 
 	for ft in pairs(tooling_by_ft) do
@@ -292,6 +292,7 @@ return {
 					vim.keymap.set("n", "<Leader>f", vim.lsp.buf.format, bufopts)
 
 					vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+						group = vim.api.nvim_create_augroup("LspFormatOnSave_" .. bufnr, { clear = true }),
 						buffer = bufnr,
 						callback = function()
 							vim.lsp.buf.format()

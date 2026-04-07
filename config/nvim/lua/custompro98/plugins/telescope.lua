@@ -65,7 +65,7 @@ return {
 			require("telescope").load_extension("ui-select")
 			-- require("telescope").load_extension("dap")
 
-			function TelescopeDotfiles()
+			local function TelescopeDotfiles()
 				require("telescope.builtin").git_files({
 					cwd = "~/.dotfiles/",
 				})

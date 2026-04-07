@@ -25,6 +25,11 @@ vim.cmd("cabbrev sw w !sudo tee %")
 local autrail = vim.api.nvim_create_augroup("custompro98-autormtrail", { clear = true })
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 	group = autrail,
-	pattern = "*[^.md]",
-	command = "%s/\\s\\+$//e",
+	pattern = "*",
+	callback = function()
+		if vim.bo.filetype == "markdown" then
+			return
+		end
+		vim.cmd("%s/\\s\\+$//e")
+	end,
 })
