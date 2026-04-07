@@ -56,3 +56,20 @@ if status --is-interactive
   [ -f ~/.company.fish ]; and source ~/.company.fish
   [ -f ~/.overrides.fish ]; and source ~/.overrides.fish
 end
+eval "$(~/.local/bin/mise activate fish)"
+
+# pnpm
+set -gx PNPM_HOME "/Users/mitchjoa/Library/pnpm"
+if not string match -q -- $PNPM_HOME $PATH
+  set -gx PATH "$PNPM_HOME" $PATH
+end
+# pnpm end
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /Users/mitchjoa/.lmstudio/bin
+# End of LM Studio CLI section
+
+
+# Added by OrbStack: command-line tools and integration
+# This won't be added again if you remove it.
+source ~/.orbstack/shell/init2.fish 2>/dev/null || :
