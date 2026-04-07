@@ -136,6 +136,9 @@ return {
 		},
 	},
 	config = function()
+		-- Servers managed by Mason. `format` controls whether LSP formatting
+		-- is used (true) or conform.nvim handles it (false/nil). All other
+		-- keys are passed directly to vim.lsp.config().
 		local servers = {
 			astro = {
 				format = false,
@@ -151,7 +154,7 @@ return {
 			},
 			denols = {
 				format = true,
-				root_dir = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc"),
+				root_markers = { "deno.json", "deno.jsonc" },
 			},
 			eslint = {
 				format = false,
@@ -184,11 +187,10 @@ return {
 				},
 			},
 			prismals = {
+				format = false,
 				single_file_support = false,
-				root_dir = require("lspconfig.util").root_pattern("schema.prisma"),
-				filetypes = {
-					"prisma",
-				},
+				root_markers = { "schema.prisma" },
+				filetypes = { "prisma" },
 			},
 			pyright = {
 				format = false,
@@ -200,6 +202,7 @@ return {
 				format = true,
 			},
 			tailwindcss = {
+				format = false,
 				settings = {
 					tailwindCSS = {
 						experimental = {
@@ -218,7 +221,7 @@ return {
 			ts_ls = {
 				format = false,
 				single_file_support = false,
-				root_dir = require("lspconfig.util").root_pattern("package.json"),
+				root_markers = { "package.json" },
 				filetypes = {
 					"typescript",
 					"typescriptreact",
@@ -236,71 +239,85 @@ return {
 		require("mason").setup()
 		require("mason-lspconfig").setup({
 			ensure_installed = vim.tbl_keys(servers),
-			automatic_enable = false,
+			automatic_enable = true,
 		})
 
+		-- Global capabilities for all LSP servers (completion support via cmp)
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
 		capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-		local on_attach = function(client, bufnr)
-			local bufopts = { noremap = true, silent = true, buffer = bufnr }
-
-			vim.diagnostic.config({ virtual_text = true })
-
-			-- mapping
-			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-			vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-			vim.keymap.set("n", "gh", vim.lsp.buf.hover, bufopts)
-			vim.keymap.set("i", "<Leader>gh", vim.lsp.buf.signature_help, bufopts)
-			vim.keymap.set("n", "<Leader>D", vim.lsp.buf.type_definition, bufopts)
-			vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename, bufopts)
-			vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
-			vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-
-			if client.name == "gleam" or servers[client.name].format then
-				vim.keymap.set("n", "<Leader>f", vim.lsp.buf.format, bufopts)
-
-				vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-					callback = function()
-						vim.lsp.buf.format()
-					end,
-				})
-			else
-				client.server_capabilities.documentFormattingProvider = false
-				client.server_capabilities.documentRangeFormattingProvider = false
-
-				vim.keymap.set("n", "<Leader>f", function()
-					require("conform").format({
-						timeout_ms = 500,
-						bufnr = bufnr,
-					})
-				end, bufopts)
-			end
-
-			vim.keymap.set("n", "<Leader>;", function()
-				vim.diagnostic.open_float(nil, { focus = false })
-			end, bufopts)
-
-			vim.keymap.set("n", "<C-p>", vim.diagnostic.goto_prev, bufopts)
-			vim.keymap.set("n", "<C-n>", vim.diagnostic.goto_next, bufopts)
-		end
-
-		for server_name in pairs(servers) do
-			require("lspconfig")[server_name].setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-				settings = (servers[server_name] or {}).settings,
-				filetypes = (servers[server_name] or {}).filetypes,
-				single_file_support = (servers[server_name] or {}).single_file_support,
-				root_dir = (servers[server_name] or {}).root_dir,
-				on_init = (servers[server_name] or {}).on_init,
-				init_options = (servers[server_name] or {}).init_options,
-			})
-		end
-
-		require("lspconfig").gleam.setup({
+		vim.lsp.config("*", {
 			capabilities = capabilities,
-			on_attach = on_attach,
+		})
+
+		-- Apply per-server overrides, stripping the custom `format` key
+		for name, cfg in pairs(servers) do
+			local lsp_cfg = vim.tbl_extend("force", cfg, {})
+			lsp_cfg.format = nil
+			vim.lsp.config(name, lsp_cfg)
+		end
+
+		-- Gleam is not managed by Mason, configure and enable manually
+		vim.lsp.config("gleam", {})
+		vim.lsp.enable("gleam")
+
+		-- Global LspAttach autocmd replaces per-server on_attach callbacks
+		vim.api.nvim_create_autocmd("LspAttach", {
+			callback = function(args)
+				local client = vim.lsp.get_client_by_id(args.data.client_id)
+				if not client then
+					return
+				end
+
+				local bufnr = args.buf
+				local bufopts = { noremap = true, silent = true, buffer = bufnr }
+
+				vim.diagnostic.config({ virtual_text = true })
+
+				-- navigation & refactoring
+				vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+				vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+				vim.keymap.set("n", "gh", vim.lsp.buf.hover, bufopts)
+				vim.keymap.set("i", "<Leader>gh", vim.lsp.buf.signature_help, bufopts)
+				vim.keymap.set("n", "<Leader>D", vim.lsp.buf.type_definition, bufopts)
+				vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename, bufopts)
+				vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
+				vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
+
+				-- formatting: LSP format for servers with format=true (or gleam),
+				-- otherwise delegate to conform.nvim
+				local server_cfg = servers[client.name]
+				local use_lsp_format = client.name == "gleam" or (server_cfg and server_cfg.format)
+
+				if use_lsp_format then
+					vim.keymap.set("n", "<Leader>f", vim.lsp.buf.format, bufopts)
+
+					vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+						buffer = bufnr,
+						callback = function()
+							vim.lsp.buf.format()
+						end,
+					})
+				else
+					client.server_capabilities.documentFormattingProvider = false
+					client.server_capabilities.documentRangeFormattingProvider = false
+
+					vim.keymap.set("n", "<Leader>f", function()
+						require("conform").format({
+							timeout_ms = 500,
+							bufnr = bufnr,
+						})
+					end, bufopts)
+				end
+
+				-- diagnostics
+				vim.keymap.set("n", "<Leader>;", function()
+					vim.diagnostic.open_float(nil, { focus = false })
+				end, bufopts)
+
+				vim.keymap.set("n", "<C-p>", vim.diagnostic.goto_prev, bufopts)
+				vim.keymap.set("n", "<C-n>", vim.diagnostic.goto_next, bufopts)
+			end,
 		})
 	end,
 }
