@@ -46,7 +46,8 @@ if status --is-interactive
   if command -q starship; starship init fish | source; end
 
   ## php
-  fish_add_path "$HOME/.config/herd-lite/bin"
+  # fish_add_path "$HOME/.config/herd-lite/bin"
+  fish_add_path -U $HOME/Library/Application\ Support/Herd/bin/
 
   ## docker
   not test -e "$HOME/.config/fish/completions/docker.fish"; and docker completion fish > ~/.config/fish/completions/docker.fish
@@ -58,8 +59,13 @@ if status --is-interactive
 end
 eval "$(~/.local/bin/mise activate fish)"
 
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /Users/mitchelljoa/.lmstudio/bin
+# End of LM Studio CLI section
+
 # pnpm
-set -gx PNPM_HOME "/Users/mitchjoa/Library/pnpm"
+set -gx PNPM_HOME "~/Library/pnpm"
+
 if not string match -q -- $PNPM_HOME $PATH
   set -gx PATH "$PNPM_HOME" $PATH
 end

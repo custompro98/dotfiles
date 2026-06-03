@@ -1,6 +1,6 @@
 local tooling_by_ft = {
 	blade = {
-		form = { "blade-formatter", "pint" },
+		form = { "pint" },
 		lint = {},
 	},
 	lua = {
@@ -194,6 +194,9 @@ return {
 			pyright = {
 				format = false,
 			},
+			ruby_lsp = {
+				format = false,
+			},
 			ruff = {
 				format = true,
 			},
@@ -204,6 +207,7 @@ return {
 				format = false,
 				settings = {
 					tailwindCSS = {
+						["includeLanguages"] = { ["eruby"] = "erb" },
 						experimental = {
 							classRegex = {
 								[[class= "([^"]*)]],

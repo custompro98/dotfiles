@@ -1,0 +1,1 @@
+complete --command fastapi --no-files --arguments "(env _FASTAPI_COMPLETE=complete_fish _TYPER_COMPLETE_FISH_ACTION=get-args _TYPER_COMPLETE_ARGS=(commandline -cp) fastapi)" --condition "env _FASTAPI_COMPLETE=complete_fish _TYPER_COMPLETE_FISH_ACTION=is-args _TYPER_COMPLETE_ARGS=(commandline -cp) fastapi"
