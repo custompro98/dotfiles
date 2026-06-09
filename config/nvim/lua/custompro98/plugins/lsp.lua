@@ -139,9 +139,9 @@ return {
 		-- is used (true) or conform.nvim handles it (false/nil). All other
 		-- keys are passed directly to vim.lsp.config().
 		local servers = {
-			astro = {
-				format = false,
-			},
+			-- astro = {
+			-- 	format = false,
+			-- },
 			biome = {
 				format = false,
 			},
@@ -151,10 +151,10 @@ return {
 			cssls = {
 				format = true,
 			},
-			denols = {
-				format = true,
-				root_markers = { "deno.json", "deno.jsonc" },
-			},
+			-- denols = {
+			-- 	format = true,
+			-- 	root_markers = { "deno.json", "deno.jsonc" },
+			-- },
 			eslint = {
 				format = false,
 			},
@@ -185,12 +185,12 @@ return {
 					},
 				},
 			},
-			prismals = {
-				format = false,
-				single_file_support = false,
-				root_markers = { "schema.prisma" },
-				filetypes = { "prisma" },
-			},
+			-- prismals = {
+			-- 	format = false,
+			-- 	single_file_support = false,
+			-- 	root_markers = { "schema.prisma" },
+			-- 	filetypes = { "prisma" },
+			-- },
 			pyright = {
 				format = false,
 			},
@@ -233,9 +233,6 @@ return {
 					"json",
 					"json5",
 				},
-			},
-			zls = {
-				format = false,
 			},
 		}
 
