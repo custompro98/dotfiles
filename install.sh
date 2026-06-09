@@ -45,6 +45,7 @@ brew tap yoheimuta/protolint
 brew install \
     kitty neovim coreutils tree bat starship \
     autojump fzf fd ripgrep \
+    tree-sitter tree-sitter-cli \
     font-hack-nerd-font \
     yarn \
     protolint protobuf@3 \
