@@ -253,6 +253,27 @@ require("conform").setup({
 	default_format_opts = {
 		lsp_format = "fallback",
 	},
+	formatters = {
+		biome = {
+			require_cwd = true,
+		},
+		eslint_d = {
+			-- for some reason, the default cwd for eslint_d only looks for package.json
+			cwd = require("conform.util").root_file({
+				".eslintrc.js",
+				".eslintrc.json",
+				".eslintrc.yaml",
+				"eslint.config.js",
+				"eslint.config.mjs",
+				"eslint.config.cjs",
+				"eslint.config.ts",
+			}),
+			require_cwd = true,
+		},
+		prettierd = {
+			require_cwd = true,
+		},
+	},
 	formatters_by_ft = {
 		astro = tooling_by_ft["typescript"].form,
 		blade = tooling_by_ft["blade"].form,
