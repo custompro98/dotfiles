@@ -14,6 +14,10 @@ local tooling_by_ft = {
 		form = { "pint" },
 		lint = { "phpstan" },
 	},
+	proto = {
+		form = { "buf" },
+		lint = {},
+	},
 	python = {
 		form = { "ruff" },
 		lint = { "ruff" },
