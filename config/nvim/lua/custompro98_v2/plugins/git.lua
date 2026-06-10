@@ -12,3 +12,4 @@ require("gitsigns").setup({
 		changedelete = { text = "~" }, ---@diagnostic disable-line: missing-fields
 	},
 })
+vim.keymap.set("n", "<Leader>gb", ":Gitsigns blame<CR>", {})
