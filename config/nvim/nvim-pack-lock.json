@@ -102,6 +102,10 @@
     "todo-comments.nvim": {
       "rev": "31e3c38ce9b29781e4422fc0322eb0a21f4e8668",
       "src": "https://github.com/folke/todo-comments.nvim"
+    },
+    "vim-kitty-navigator": {
+      "rev": "c40c7d6181fa44fade771980952c60c1d89c28ea",
+      "src": "https://github.com/knubie/vim-kitty-navigator"
     }
   }
 }

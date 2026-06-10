@@ -17,7 +17,11 @@ local mason_map = {
 ---@param tool string
 ---@return string|nil
 local function tool_to_mason(tool)
-	return mason_map[tool]
+	if mason_map[tool] then
+		return mason_map[tool]
+	end
+
+	return tool
 end
 
 ---@param tooling_by_ft table<string, table<string, string[] | string[][]>>
