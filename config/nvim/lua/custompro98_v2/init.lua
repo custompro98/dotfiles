@@ -8,13 +8,13 @@ vim.g.maplocalleader = ";"
 vim.g.have_nerd_font = true
 
 -- non-plugin configuration
-require("custompro98_v2.appearance")
-require("custompro98_v2.convenience")
-require("custompro98_v2.copy-paste")
-require("custompro98_v2.general")
-require("custompro98_v2.navigation")
-require("custompro98_v2.quickfix")
-require("custompro98_v2.terminal")
+local nonplugins_dir = vim.fs.joinpath(vim.fn.stdpath("config"), "lua", "custompro98_v2")
+for file_name, type in vim.fs.dir(nonplugins_dir) do
+	if type == "file" and file_name:match("%.lua$") and file_name ~= "init.lua" then
+		local module = file_name:gsub("%.lua$", "")
+		require("custompro98_v2." .. module)
+	end
+end
 
 -- plugin configuration
 require("custompro98_v2.plugins")
