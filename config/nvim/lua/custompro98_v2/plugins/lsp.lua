@@ -16,7 +16,7 @@ local tooling_by_ft = {
 	},
 	proto = {
 		form = { "buf" },
-		lint = {},
+		lint = { "buf" },
 	},
 	python = {
 		form = { "ruff" },
