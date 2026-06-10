@@ -9,11 +9,11 @@ local telescope_plugins = {
 	utils.gh("nvim-telescope/telescope-ui-select.nvim"),
 	utils.gh("nvim-treesitter/nvim-treesitter-textobjects"),
 }
+
 if vim.fn.executable("make") == 1 then
 	table.insert(telescope_plugins, utils.gh("nvim-telescope/telescope-fzf-native.nvim"))
 end
 
--- NOTE: You can install multiple plugins at once
 vim.pack.add(telescope_plugins)
 
 -- See `:help telescope` and `:help telescope.setup()`
@@ -60,9 +60,9 @@ require("telescope").setup({
 })
 
 -- Enable Telescope extensions if they are installed
-pcall(require("telescope").load_extension, "fzf")
-pcall(require("telescope").load_extension, "live_grep_args")
-pcall(require("telescope").load_extension, "ui-select")
+pcall(require("telescope").load_extension("fzf"))
+pcall(require("telescope").load_extension("live_grep_args"))
+pcall(require("telescope").load_extension("ui-select"))
 
 -- See `:help telescope.builtin`
 local builtin = require("telescope.builtin")
