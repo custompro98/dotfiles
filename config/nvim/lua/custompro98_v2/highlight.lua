@@ -2,7 +2,7 @@
 
 -- toggle highlight search
 vim.keymap.set("n", "<Leader>h", function()
-	if vim.opt.hlsearch == true then
+	if vim.opt.hlsearch._value == true then
 		vim.opt.hlsearch = false
 	else
 		vim.opt.hlsearch = true
