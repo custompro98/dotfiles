@@ -23,3 +23,13 @@ vim.diagnostic.config({
 })
 
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+vim.keymap.set("n", "<Leader>;", function()
+	vim.diagnostic.open_float({ focus = false })
+end, { desc = "Open floating panel for diagnostic" })
+
+vim.keymap.set("n", "<C-p>", function()
+	vim.diagnostic.jump({ count = -1 })
+end, { desc = "Go to [P]revious diagnostic" })
+vim.keymap.set("n", "<C-n>", function()
+	vim.diagnostic.jump({ count = 1 })
+end, { desc = "Go to [N]ext diagnostic" })
