@@ -2,7 +2,11 @@
 local utils = require("custompro98_v2.plugins.utils")
 
 --  A collection of various small independent plugins/modules
-vim.pack.add({ utils.gh("nvim-mini/mini.nvim") })
+vim.pack.add({
+	-- must be added before mini so mini.ai can use specs
+	utils.gh("nvim-treesitter/nvim-treesitter-textobjects"),
+	utils.gh("nvim-mini/mini.nvim"),
+})
 
 -- ** Text Editing ** --
 
@@ -15,8 +19,19 @@ require("mini.pairs").setup()
 --  - va)  - [V]isually select [A]round [)]paren
 --  - yiiq - [Y]ank [I]nside [I]+1 [Q]uote
 --  - ci'  - [C]hange [I]nside [']quote
+local spec_treesitter = require("mini.ai").gen_spec.treesitter
 require("mini.ai").setup({
 	n_lines = 500,
+	custom_textobjects = {
+		F = spec_treesitter({
+			a = "@function.outer",
+			i = "@function.inner",
+		}),
+		o = spec_treesitter({
+			a = { "@conditional.outer", "@loop.outer" },
+			i = { "@conditional.inner", "@loop.inner" },
+		}),
+	},
 })
 
 -- Add/delete/replace surroundings (brackets, quotes, etc.)
