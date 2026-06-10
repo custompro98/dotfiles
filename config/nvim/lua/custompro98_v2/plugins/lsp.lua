@@ -239,7 +239,8 @@ vim.pack.add({ "https://github.com/stevearc/conform.nvim" })
 require("conform").setup({
 	notify_on_error = false,
 	format_on_save = function(bufnr)
-		if tooling_by_ft[vim.bo[bufnr].filetype].form then
+		local config = tooling_by_ft[vim.bo[bufnr].filetype]
+		if config and config.form then
 			return { timeout_ms = 500 }
 		else
 			return nil

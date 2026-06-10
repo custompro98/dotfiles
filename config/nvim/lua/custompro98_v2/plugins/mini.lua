@@ -31,6 +31,9 @@ require("mini.surround").setup({
 -- Commenting
 require("mini.comment").setup()
 
+-- Trailing whitespace
+require("mini.trailspace").setup()
+
 -- ** Workflow ** --
 
 -- ** Appearance ** --
