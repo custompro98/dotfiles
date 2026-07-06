@@ -99,11 +99,6 @@ local servers = {
 			},
 		},
 	},
-	pyright = {
-		on_attach = function(client)
-			disable_formatting(client)
-		end,
-	},
 	ruby_lsp = {
 		on_attach = function(client)
 			disable_formatting(client)
@@ -148,6 +143,7 @@ local servers = {
 		end,
 		root_markers = { "package.json" },
 	},
+	ty = {},
 }
 
 -- Useful status updates for LSP.
