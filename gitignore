@@ -8,3 +8,5 @@
 tags
 .zed
 **/tmp.*
+
+**/.claude/settings.local.json
