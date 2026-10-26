@@ -10,8 +10,10 @@ function M.gh(repo)
 	return "https://github.com/" .. repo
 end
 
+-- conform/nvim-lint name -> Mason package name
 local mason_map = {
 	["biome-check"] = "biome",
+	["erb_format"] = "erb-formatter",
 }
 
 ---@param tool string
@@ -33,13 +35,15 @@ function M.all_tools(tooling_by_ft)
 			for _, member in ipairs(toolist) do
 				if type(member) == "table" then
 					for _, submember in ipairs(member) do
-						if tool_to_mason(submember) then
-							table.insert(everything, submember)
+						local mason_name = tool_to_mason(submember)
+						if mason_name then
+							table.insert(everything, mason_name)
 						end
 					end
 				else
-					if tool_to_mason(member) then
-						table.insert(everything, member)
+					local mason_name = tool_to_mason(member)
+					if mason_name then
+						table.insert(everything, mason_name)
 					end
 				end
 			end

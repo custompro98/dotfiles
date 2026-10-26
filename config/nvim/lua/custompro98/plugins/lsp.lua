@@ -20,14 +20,14 @@ local tooling_by_ft = {
 	},
 	python = {
 		form = { "ruff" },
-		lint = { "ruff" },
+		lint = {}, -- ruff LSP already reports lint diagnostics
 	},
 	ruby = {
 		form = { "rubocop" },
 		lint = { "rubocop" },
 	},
 	eruby = {
-		form = { "erb-formatter" },
+		form = { "erb_format" },
 		lint = {},
 	},
 	typescript = {
@@ -319,19 +319,6 @@ require("conform").setup({
 		biome = {
 			require_cwd = true,
 		},
-		eslint_d = {
-			-- for some reason, the default cwd for eslint_d only looks for package.json
-			cwd = require("conform.util").root_file({
-				".eslintrc.js",
-				".eslintrc.json",
-				".eslintrc.yaml",
-				"eslint.config.js",
-				"eslint.config.mjs",
-				"eslint.config.cjs",
-				"eslint.config.ts",
-			}),
-			require_cwd = true,
-		},
 		prettierd = {
 			require_cwd = true,
 		},
@@ -355,9 +342,9 @@ require("conform").setup({
 	},
 })
 
-vim.keymap.set({ "n", "v" }, "<leader>f", function()
+vim.keymap.set({ "n", "v" }, "<leader>fm", function()
 	require("conform").format({ async = true })
-end, { desc = "[F]ormat buffer" })
+end, { desc = "[F]or[m]at buffer" })
 
 -- ** Linting ** --
 

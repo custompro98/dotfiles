@@ -1,5 +1,5 @@
--- ** Vim Kity Navigaor ** --
-local utils = require('custompro98.plugins.utils')
+-- ** Vim Kitty Navigator ** --
+local utils = require("custompro98.plugins.utils")
 
 vim.pack.add({ utils.gh("knubie/vim-kitty-navigator") })
 vim.g.kitty_navigator_enable_stack_layout = 1

@@ -62,9 +62,10 @@ vim.api.nvim_create_autocmd("PackChanged", {
 
 -- Iterate over all Lua files in the plugins directory and load them
 local plugins_dir = vim.fs.joinpath(vim.fn.stdpath("config"), "lua", "custompro98", "plugins")
-for file_name, type in vim.fs.dir(plugins_dir) do
-	if type == "file" and file_name:match("%.lua$") and file_name ~= "init.lua" then
-		local module = file_name:gsub("%.lua$", "")
-		require("custompro98.plugins." .. module)
-	end
+local files = vim.fn.readdir(plugins_dir, function(name)
+	return name:match("%.lua$") and name ~= "init.lua" and 1 or 0
+end)
+for _, file_name in ipairs(files) do
+	local module = file_name:gsub("%.lua$", "")
+	require("custompro98.plugins." .. module)
 end

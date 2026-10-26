@@ -1,8 +1,8 @@
 -- ** Treesitter ** --
 local utils = require("custompro98.plugins.utils")
 
+-- Parsers are installed on demand by the FileType autocmd below
 vim.pack.add({ { src = utils.gh("nvim-treesitter/nvim-treesitter"), version = "main" } })
-require("nvim-treesitter").install("all")
 
 ---@param buf integer
 ---@param language string
@@ -25,12 +25,13 @@ local function treesitter_try_attach(buf, language)
 
 	-- Enable treesitter based indentation
 	if has_indent_query then
-		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+		vim.bo[buf].indentexpr ="v:lua.require'nvim-treesitter'.indentexpr()"
 	end
 end
 
 local available_parsers = require("nvim-treesitter").get_available()
 vim.api.nvim_create_autocmd("FileType", {
+	group = vim.api.nvim_create_augroup("custompro98-treesitter", { clear = true }),
 	callback = function(args)
 		local buf, filetype = args.buf, args.match
 

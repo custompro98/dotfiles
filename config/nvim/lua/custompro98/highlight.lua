@@ -2,11 +2,7 @@
 
 -- toggle highlight search
 vim.keymap.set("n", "<Leader>h", function()
-	if vim.opt.hlsearch._value == true then
-		vim.opt.hlsearch = false
-	else
-		vim.opt.hlsearch = true
-	end
+	vim.o.hlsearch = not vim.o.hlsearch
 end, { desc = "Toggle highlight search" })
 
 -- Highlight when yanking (copying) text

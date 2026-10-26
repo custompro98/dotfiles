@@ -5,10 +5,10 @@ vim.o.number = true
 vim.o.relativenumber = true
 
 -- nowrap
-vim.wo.wrap = false
+vim.o.wrap = false
 vim.o.breakindent = true
 
--- no mouse mode
+-- enable mouse in all modes
 vim.o.mouse = "a"
 
 -- Don't show the mode, since it's already in the status line

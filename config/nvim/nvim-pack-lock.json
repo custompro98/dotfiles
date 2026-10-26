@@ -18,14 +18,6 @@
       "rev": "619363c30309d29ffa631e67c8183f2a72caa373",
       "src": "git@github.com:/stevearc/conform.nvim"
     },
-    "copilot-lsp": {
-      "rev": "1b6d8273594643f51bb4c0c1d819bdb21b42159d",
-      "src": "git@github.com:/copilotlsp-nvim/copilot-lsp"
-    },
-    "copilot.lua": {
-      "rev": "0415bd625c3076a6a5ee445be484574d55b4fbfc",
-      "src": "git@github.com:/zbirenbaum/copilot.lua"
-    },
     "dracula.nvim": {
       "rev": "7fadc372bbb9638c19a18c2497167d854cdd6a19",
       "src": "git@github.com:/maxmx03/dracula.nvim"
@@ -37,10 +29,6 @@
     "friendly-snippets": {
       "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
       "src": "git@github.com:/rafamadriz/friendly-snippets"
-    },
-    "git-blame.nvim": {
-      "rev": "5c536e2d4134d064aa3f41575280bc8a2a0e03d7",
-      "src": "git@github.com:/f-person/git-blame.nvim"
     },
     "gitsigns.nvim": {
       "rev": "25050e4ed39e628282831d4cbecb1850454ce915",
@@ -73,10 +61,6 @@
     "mini.nvim": {
       "rev": "ff8b3580935818ef2f21bdd651f057a2ae071eab",
       "src": "git@github.com:/nvim-mini/mini.nvim"
-    },
-    "nvim-autopairs": {
-      "rev": "7b9923abad60b903ece7c52940e1321d39eccc79",
-      "src": "git@github.com:/windwp/nvim-autopairs"
     },
     "nvim-dap": {
       "rev": "cfa2d58f4537aca6ca83e2de1a0d9f1491121264",

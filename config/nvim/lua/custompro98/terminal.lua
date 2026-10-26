@@ -12,7 +12,7 @@ M.Terminal = function()
 end
 
 -- enter terminal mode
-vim.keymap.set("n", "<Leader>t", M.Terminal, { noremap = true })
+vim.keymap.set("n", "<Leader>tt", M.Terminal, { noremap = true })
 
 vim.api.nvim_create_autocmd("TermOpen", {
 	group = vim.api.nvim_create_augroup("custompro98-termopen", { clear = true }),
@@ -33,13 +33,11 @@ vim.api.nvim_create_autocmd("TermClose", {
 })
 
 -- leave terminal mode
-vim.keymap.set("t", "jk", "<Esc>", { remap = true })
-vim.keymap.set("t", "<Leader>t", "<C-\\><C-n>", {})
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { remap = true })
+--  use the builtin <C-\><C-n>, so <Esc> and `;` still reach programs running in the terminal
 
 -- navigate from terminal
 local function navigate(direction)
-	vim.api.nvim_input("<ESC>")
+	vim.api.nvim_input("<C-\\><C-n>")
 	vim.cmd.wincmd(direction)
 end
 

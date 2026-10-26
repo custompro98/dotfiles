@@ -1,4 +1,4 @@
 -- ** Copy Paste ** --
 
-vim.keymap.set("n", "<Leader>v", '"+p', {})
-vim.keymap.set("v", "<Leader>c", '"+y', {})
+vim.keymap.set("n", "<Leader>p", '"+p', {})
+vim.keymap.set("v", "<Leader>y", '"+y', {})
