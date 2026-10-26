@@ -11,4 +11,4 @@ end
 
 vim.keymap.set("n", "<leader>yb", function()
 	vim.fn.chansend(get_term_id(), "yarn protobuf:codegen\n")
-end, { buffer = true })
+end, { buffer = true, desc = "[Y]arn protobuf codegen ([B]uild)" })

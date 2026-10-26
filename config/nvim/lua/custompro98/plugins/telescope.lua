@@ -105,7 +105,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			"n",
 			"<leader>fs",
 			builtin.lsp_document_symbols,
-			{ buffer = buf, desc = "[Find] Document [S]ymbols" }
+			{ buffer = buf, desc = "[F]ind Document [S]ymbols" }
 		)
 
 		-- Fuzzy find all the symbols in your current workspace.
@@ -124,7 +124,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			"n",
 			"<leader>ftd",
 			builtin.lsp_type_definitions,
-			{ buffer = buf, desc = "[Find [T]ype [D]efinition" }
+			{ buffer = buf, desc = "[F]ind [T]ype [D]efinition" }
 		)
 	end,
 })
@@ -150,4 +150,4 @@ end, { desc = "[F]ind with [G]rep [/] in Open Files" })
 -- Shortcut for searching your dotfiles
 vim.keymap.set("n", "<leader>fD", function()
 	builtin.find_files({ cwd = "~/.dotfiles" })
-end, { desc = "[F]earch [D]otfiles" })
+end, { desc = "[F]ind [D]otfiles" })

@@ -204,7 +204,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 		end
 
-		map("<Leader>gh", vim.lsp.buf.signature_help, "[G]oto [H]over")
+		map("<Leader>gh", vim.lsp.buf.signature_help, "[G]oto signature [H]elp")
 		map("gh", vim.lsp.buf.hover, "[G]oto [H]over")
 
 		map("<Leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")

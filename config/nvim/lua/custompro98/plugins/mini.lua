@@ -58,8 +58,8 @@ require("mini.surround").setup({
 
 -- Surround the visual selection with `S`, and the whole line with `yss`
 vim.keymap.del("x", "ys")
-vim.keymap.set("x", "S", [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
-vim.keymap.set("n", "yss", "ys_", { remap = true })
+vim.keymap.set("x", "S", [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true, desc = "Surround selection" })
+vim.keymap.set("n", "yss", "ys_", { remap = true, desc = "Surround line" })
 
 -- Commenting
 require("mini.comment").setup()
@@ -68,48 +68,6 @@ require("mini.comment").setup()
 require("mini.trailspace").setup()
 
 -- ** Workflow ** --
-
--- Show next-key clues after a trigger key, see `:help MiniClue-examples`
-local miniclue = require("mini.clue")
-miniclue.setup({
-	triggers = {
-		{ mode = "n", keys = "<Leader>" },
-		{ mode = "x", keys = "<Leader>" },
-		{ mode = "n", keys = "g" },
-		{ mode = "x", keys = "g" },
-		{ mode = "n", keys = "[" },
-		{ mode = "n", keys = "]" },
-		{ mode = "n", keys = "'" },
-		{ mode = "n", keys = "`" },
-		{ mode = "x", keys = "'" },
-		{ mode = "x", keys = "`" },
-		{ mode = "n", keys = '"' },
-		{ mode = "x", keys = '"' },
-		{ mode = "i", keys = "<C-r>" },
-		{ mode = "c", keys = "<C-r>" },
-		{ mode = "n", keys = "<C-w>" },
-		{ mode = "n", keys = "z" },
-		{ mode = "x", keys = "z" },
-	},
-	clues = {
-		{ mode = "n", keys = "<Leader>c", desc = "+Code/Quickfix" },
-		{ mode = "n", keys = "<Leader>d", desc = "+Debug" },
-		{ mode = "n", keys = "<Leader>f", desc = "+Find" },
-		{ mode = "n", keys = "<Leader>g", desc = "+Git/LSP" },
-		{ mode = "n", keys = "<Leader>t", desc = "+Toggle/Terminal" },
-		{ mode = "n", keys = "<Leader>y", desc = "+Yarn" },
-		miniclue.gen_clues.square_brackets(),
-		miniclue.gen_clues.builtin_completion(),
-		miniclue.gen_clues.g(),
-		miniclue.gen_clues.marks(),
-		miniclue.gen_clues.registers(),
-		miniclue.gen_clues.windows(),
-		miniclue.gen_clues.z(),
-	},
-	window = {
-		delay = 300,
-	},
-})
 
 -- ** Appearance ** --
 

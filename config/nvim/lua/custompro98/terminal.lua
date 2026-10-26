@@ -12,7 +12,7 @@ M.Terminal = function()
 end
 
 -- enter terminal mode
-vim.keymap.set("n", "<Leader>tt", M.Terminal, { noremap = true })
+vim.keymap.set("n", "<Leader>tt", M.Terminal, { desc = "Open [T]erminal" })
 
 vim.api.nvim_create_autocmd("TermOpen", {
 	group = vim.api.nvim_create_augroup("custompro98-termopen", { clear = true }),
@@ -43,15 +43,15 @@ end
 
 vim.keymap.set("t", "<C-h>", function()
 	navigate("h")
-end, { remap = true })
+end, { desc = "Move focus to the left window" })
 vim.keymap.set("t", "<C-j>", function()
 	navigate("j")
-end, { remap = true })
+end, { desc = "Move focus to the lower window" })
 vim.keymap.set("t", "<C-k>", function()
 	navigate("k")
-end, { remap = true })
+end, { desc = "Move focus to the upper window" })
 vim.keymap.set("t", "<C-l>", function()
 	navigate("l")
-end, { remap = true })
+end, { desc = "Move focus to the right window" })
 
 return M
