@@ -1,5 +1,5 @@
 -- ** TS Auto Tag ** --
-local utils = require("custompro98_v2.plugins.utils")
+local utils = require("custompro98.plugins.utils")
 
 vim.pack.add({ utils.gh("windwp/nvim-ts-autotag") })
 require("nvim-ts-autotag").setup({

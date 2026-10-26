@@ -1,66 +1,57 @@
-return {
-	{
-		{
-			"nvim-treesitter/nvim-treesitter",
-			dependencies = {
-				"nvim-treesitter/nvim-treesitter-textobjects",
-				{ "windwp/nvim-autopairs", event = "InsertEnter", opts = {} },
-				"windwp/nvim-ts-autotag",
-				"EmranMR/tree-sitter-blade", -- enable custom treesitter highlighting for blade
-			},
-			build = ":TSUpdate",
-			config = function()
-				require("nvim-treesitter.configs").setup({
-					highlight = {
-						enable = true,
-						disable = {},
-					},
-					indent = {
-						enable = false,
-						disable = {},
-					},
-					ensure_installed = "all",
-					ignore_install = { "phpdoc", "haskell" },
-					textobjects = {
-						select = {
-							enable = true,
+-- ** Treesitter ** --
+local utils = require("custompro98.plugins.utils")
 
-							-- Automatically jump forward to textobj, similar to targets.vim
-							lookahead = true,
+vim.pack.add({ { src = utils.gh("nvim-treesitter/nvim-treesitter"), version = "main" } })
+require("nvim-treesitter").install("all")
 
-							keymaps = { -- You can use the capture groups defined in textobjects.scm
-								["af"] = "@function.outer",
-								["if"] = "@function.inner",
-								["ac"] = "@class.outer",
-								["ic"] = "@class.inner",
-								["aP"] = "@parameter.outer",
-								["iP"] = "@parameter.inner",
-							},
-						},
-					},
-				})
+---@param buf integer
+---@param language string
+local function treesitter_try_attach(buf, language)
+	-- Check if a parser exists and load it
+	if not vim.treesitter.language.add(language) then
+		return
+	end
+	-- Enable syntax highlighting and other treesitter features
+	vim.treesitter.start(buf, language)
 
-				-- nvim-ts-autotag requires its own setup call (no longer configured via treesitter)
-				require("nvim-ts-autotag").setup()
+	-- Enable treesitter based folds
+	-- For more info on folds see `:help folds`
+	-- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+	-- vim.wo.foldmethod = 'expr'
 
-				-- register tsx parser for additional filetypes
-				vim.treesitter.language.register("tsx", { "javascript", "typescript.tsx" })
+	-- Check if treesitter indentation is available for this language, and if so enable it
+	-- in case there is no indent query, the indentexpr will fallback to the vim's built in one
+	local has_indent_query = vim.treesitter.query.get(language, "indents") ~= nil
 
-				-- blade custom parser (not yet natively available in nvim-treesitter)
-				local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-				parser_config.blade = {
-					install_info = {
-						url = "https://github.com/EmranMR/tree-sitter-blade.git",
-						files = { "src/parser.c" },
-						branch = "main",
-					},
-					filetype = "blade",
-				}
+	-- Enable treesitter based indentation
+	if has_indent_query then
+		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+	end
+end
 
-				vim.opt.foldmethod = "expr"
-				vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-				vim.opt.foldenable = false
-			end,
-		},
-	},
-}
+local available_parsers = require("nvim-treesitter").get_available()
+vim.api.nvim_create_autocmd("FileType", {
+	callback = function(args)
+		local buf, filetype = args.buf, args.match
+
+		local language = vim.treesitter.language.get_lang(filetype)
+		if not language then
+			return
+		end
+
+		local installed_parsers = require("nvim-treesitter").get_installed("parsers")
+
+		if vim.tbl_contains(installed_parsers, language) then
+			-- Enable the parser if it is already installed
+			treesitter_try_attach(buf, language)
+		elseif vim.tbl_contains(available_parsers, language) then
+			-- If a parser is available in `nvim-treesitter`, auto-install it and enable it after the installation is done
+			require("nvim-treesitter").install(language):await(function()
+				treesitter_try_attach(buf, language)
+			end)
+		else
+			-- Try to enable treesitter features in case the parser exists but is not available from `nvim-treesitter`
+			treesitter_try_attach(buf, language)
+		end
+	end,
+})

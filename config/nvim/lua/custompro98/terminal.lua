@@ -33,6 +33,7 @@ vim.api.nvim_create_autocmd("TermClose", {
 })
 
 -- leave terminal mode
+vim.keymap.set("t", "jk", "<Esc>", { remap = true })
 vim.keymap.set("t", "<Leader>t", "<C-\\><C-n>", {})
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { remap = true })
 

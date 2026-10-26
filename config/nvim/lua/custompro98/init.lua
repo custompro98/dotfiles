@@ -1,33 +1,24 @@
 -- ** Init ** --
 
--- leader
+vim.loader.enable()
+
 vim.g.mapleader = ";"
 vim.g.maplocalleader = ";"
 
--- non-plugin configuration
-require("custompro98.appearance")
-require("custompro98.convenience")
-require("custompro98.copy-paste")
-require("custompro98.general")
-require("custompro98.navigation")
-require("custompro98.quickfix")
-require("custompro98.terminal")
+vim.g.have_nerd_font = true
 
--- set company overrides
+-- non-plugin configuration
+local nonplugins_dir = vim.fs.joinpath(vim.fn.stdpath("config"), "lua", "custompro98")
+for file_name, type in vim.fs.dir(nonplugins_dir) do
+	if type == "file" and file_name:match("%.lua$") and file_name ~= "init.lua" then
+		local module = file_name:gsub("%.lua$", "")
+		require("custompro98." .. module)
+	end
+end
+
+-- plugin configuration
+require("custompro98.plugins")
+
+-- set company overrides (if applicable)
 local override_path = "~/.config/nvim/override/after"
 vim.opt.runtimepath:append(override_path)
-
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not vim.uv.fs_stat(lazypath) then
-    vim.fn.system {
-        'git',
-        'clone',
-        '--filter=blob:none',
-        'https://github.com/folke/lazy.nvim.git',
-        '--branch=stable', -- latest stable release
-        lazypath,
-    }
-end
-vim.opt.rtp:prepend(lazypath)
-
-require("lazy").setup("custompro98.plugins")

@@ -1,10 +1,13 @@
-return {
-	{
-		"maxmx03/dracula.nvim",
-		config = function()
-			require("dracula").setup({})
+-- ** Theme ** --
+local utils = require("custompro98.plugins.utils")
 
-			vim.cmd.colorscheme("dracula")
-		end,
-	},
-}
+if vim.g.have_nerd_font then
+	vim.pack.add({ utils.gh("nvim-tree/nvim-web-devicons") })
+end
+
+vim.pack.add({ utils.gh("maxmx03/dracula.nvim") })
+---@diagnostic disable-next-line: missing-fields
+require("dracula").setup({})
+
+-- Load the colorscheme here.
+vim.cmd.colorscheme("dracula")

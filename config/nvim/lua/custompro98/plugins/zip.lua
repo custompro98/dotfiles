@@ -1,5 +1,0 @@
-return {
-	{
-		"lbrayner/vim-rzip",
-	},
-}

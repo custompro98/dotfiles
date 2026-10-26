@@ -1,5 +1,5 @@
 -- ** CCC ** --
-local utils = require("custompro98_v2.plugins.utils")
+local utils = require("custompro98.plugins.utils")
 
 -- Color highlighting
 vim.pack.add({ utils.gh("uga-rosa/ccc.nvim") })

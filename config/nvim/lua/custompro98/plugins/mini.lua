@@ -1,5 +1,5 @@
 -- ** mini.nvim ** --
-local utils = require("custompro98_v2.plugins.utils")
+local utils = require("custompro98.plugins.utils")
 
 --  A collection of various small independent plugins/modules
 vim.pack.add({

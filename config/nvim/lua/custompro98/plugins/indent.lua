@@ -1,5 +1,5 @@
 -- ** indent ** --
-local utils = require("custompro98_v2.plugins.utils")
+local utils = require("custompro98.plugins.utils")
 
 vim.pack.add({ utils.gh("NMAC427/guess-indent.nvim") })
 require("guess-indent").setup({})

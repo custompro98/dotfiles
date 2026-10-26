@@ -1,29 +1,23 @@
 -- ** General ** --
 
--- spaces not tabs
-vim.opt.expandtab = true
-vim.opt.shiftwidth = 4
-vim.opt.tabstop = 4
-
--- line numbers
-vim.opt.number = true
-vim.opt.relativenumber = true
-
--- formatting hints
-vim.wo.colorcolumn = "100"
+-- Line numbers
+vim.o.number = true
+vim.o.relativenumber = true
 
 -- nowrap
 vim.wo.wrap = false
+vim.o.breakindent = true
 
 -- no mouse mode
-vim.opt.mouse = ""
+vim.o.mouse = "a"
+
+-- Don't show the mode, since it's already in the status line
+vim.o.showmode = false
 
 -- save undo history
 vim.o.undofile = true
 
--- local autsc = vim.api.nvim_create_augroup("custompro98-tsc", { clear = true })
--- vim.api.nvim_create_autocmd({ "FileType" }, {
--- 	group = autsc,
--- 	pattern = { "typescript", "typescriptreact" },
--- 	command = "compiler tsc | setlocal makeprg=npx\\ tsc\\ --noEmit",
--- })
+-- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
+-- instead raise a dialog asking if you wish to save the current file(s)
+-- See `:help 'confirm'`
+vim.o.confirm = true
