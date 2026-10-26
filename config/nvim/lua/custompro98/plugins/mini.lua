@@ -36,12 +36,30 @@ require("mini.ai").setup({
 
 -- Add/delete/replace surroundings (brackets, quotes, etc.)
 --
--- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
--- - sd'   - [S]urround [D]elete [']quotes
--- - sr)'  - [S]urround [R]eplace [)] [']
+-- Uses vim-surround style mappings, see `:help MiniSurround-vim-surround-config`
+--
+-- - ysiw) - [Y]ou [S]urround [I]nner [W]ord [)]Paren
+-- - ds'   - [D]elete [S]urrounding [']quotes
+-- - cs)'  - [C]hange [S]urrounding [)] to [']
+-- - dsn)  - [D]elete [S]urrounding [N]ext [)] (`l` for last)
 require("mini.surround").setup({
 	n_lines = 500,
+	mappings = {
+		add = "ys",
+		delete = "ds",
+		find = "",
+		find_left = "",
+		highlight = "",
+		replace = "cs",
+		update_n_lines = "",
+	},
+	search_method = "cover_or_next",
 })
+
+-- Surround the visual selection with `S`, and the whole line with `yss`
+vim.keymap.del("x", "ys")
+vim.keymap.set("x", "S", [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
+vim.keymap.set("n", "yss", "ys_", { remap = true })
 
 -- Commenting
 require("mini.comment").setup()
