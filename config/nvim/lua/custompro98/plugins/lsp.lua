@@ -266,6 +266,8 @@ require("mason").setup({})
 
 local ensure_installed = vim.tbl_keys(servers or {})
 vim.list_extend(ensure_installed, utils.all_tools(tooling_by_ft))
+-- Debug adapters used by dap.lua
+vim.list_extend(ensure_installed, { "debugpy", "js-debug-adapter" })
 
 require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 

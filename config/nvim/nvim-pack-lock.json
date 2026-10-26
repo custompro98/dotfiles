@@ -52,10 +52,6 @@
     },
     "herdr-nvim": {
       "rev": "e652ebf7b3d6713992e68a30aec588822e69fae5",
-      "src": "git@github.com:/ChmaraX/herdr-nvim"
-    },
-    "herdr-nvim": {
-      "rev": "e652ebf7b3d6713992e68a30aec588822e69fae5",
       "src": "https://github.com/ChmaraX/herdr-nvim"
     },
     "indent-blankline.nvim": {
@@ -82,6 +78,18 @@
       "rev": "7b9923abad60b903ece7c52940e1321d39eccc79",
       "src": "git@github.com:/windwp/nvim-autopairs"
     },
+    "nvim-dap": {
+      "rev": "cfa2d58f4537aca6ca83e2de1a0d9f1491121264",
+      "src": "https://github.com/mfussenegger/nvim-dap"
+    },
+    "nvim-dap-python": {
+      "rev": "1808458eba2b18f178f990e01376941a42c7f93b",
+      "src": "https://github.com/mfussenegger/nvim-dap-python"
+    },
+    "nvim-dap-ui": {
+      "rev": "cc9dd33aade7f20bae414d0cba163bc60d4d4b43",
+      "src": "https://github.com/rcarriga/nvim-dap-ui"
+    },
     "nvim-lint": {
       "rev": "99cbc3ca8a76845fca50e496be7212bebf907dd3",
       "src": "git@github.com:/mfussenegger/nvim-lint"
@@ -89,6 +97,10 @@
     "nvim-lspconfig": {
       "rev": "ed19590a3a9792901553c388d1aadafce012f80d",
       "src": "git@github.com:/neovim/nvim-lspconfig"
+    },
+    "nvim-nio": {
+      "rev": "edcc181a875301dd21840189aa2f2f9ad69fc172",
+      "src": "https://github.com/nvim-neotest/nvim-nio"
     },
     "nvim-treesitter": {
       "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
