@@ -42,6 +42,36 @@ local function disable_formatting(client)
 	client.server_capabilities.documentRangeFormattingProvider = false
 end
 
+---@class LocalTypescript
+---@field dir string path to node_modules/typescript
+---@field native boolean true for TypeScript >= 7 (Go port with its own LSP, no tsserver.js)
+
+-- Walk up from root_dir to the git root looking for a project-local TypeScript install (handles hoisted monorepo deps)
+---@param root_dir string?
+---@return LocalTypescript?
+local function find_local_typescript(root_dir)
+	if not root_dir then
+		return nil
+	end
+	local stop = vim.fs.root(root_dir, ".git") or root_dir
+	local dir = root_dir
+	while true do
+		local ts_dir = vim.fs.joinpath(dir, "node_modules", "typescript")
+		local ok, pkg = pcall(function()
+			return vim.json.decode(table.concat(vim.fn.readfile(vim.fs.joinpath(ts_dir, "package.json")), "\n"))
+		end)
+		if ok and type(pkg) == "table" and pkg.version then
+			local major = tonumber(pkg.version:match("^(%d+)"))
+			return { dir = ts_dir, native = major ~= nil and major >= 7 }
+		end
+		local parent = vim.fs.dirname(dir)
+		if dir == stop or parent == dir then
+			return nil
+		end
+		dir = parent
+	end
+end
+
 -- Enable the following language servers
 ---@type table<string, vim.lsp.Config>
 local servers = {
@@ -124,6 +154,15 @@ local servers = {
 	},
 	templ = {},
 	ts_ls = {
+		before_init = function(params, config)
+			-- Prefer the project's TypeScript (e.g. patched by `effect-language-service patch`) over the bundled one
+			local ts = find_local_typescript(config.root_dir)
+			if ts and not ts.native then
+				params.initializationOptions = vim.tbl_deep_extend("force", params.initializationOptions or {}, {
+					tsserver = { path = vim.fs.joinpath(ts.dir, "lib") },
+				})
+			end
+		end,
 		on_attach = function(client)
 			-- Disable ts_ls formatting if Prettier or Biome is installed/configured in the project
 			local root_dir = client.config.root_dir
@@ -141,7 +180,14 @@ local servers = {
 				disable_formatting(client)
 			end
 		end,
-		root_markers = { "package.json" },
+		root_dir = function(bufnr, on_dir)
+			-- Projects on native TypeScript (>= 7) are handled by tsgo below
+			local root = vim.fs.root(bufnr, "package.json")
+			local ts = find_local_typescript(root)
+			if root and not (ts and ts.native) then
+				on_dir(root)
+			end
+		end,
 	},
 	ty = {},
 }
@@ -228,6 +274,24 @@ for name, server in pairs(servers) do
 	vim.lsp.config(name, server)
 	vim.lsp.enable(name)
 end
+
+-- Native TypeScript (>= 7) ships its own LSP. Run the project's binary so patches like `effect-tsgo patch` apply.
+-- Not managed by Mason, and only attaches where ts_ls bows out.
+vim.lsp.config("tsgo", {
+	cmd = function(dispatchers, config)
+		local ts = find_local_typescript(config.root_dir)
+		local tsc = ts and vim.fs.joinpath(ts.dir, "bin", "tsc") or "tsgo"
+		return vim.lsp.rpc.start({ tsc, "--lsp", "--stdio" }, dispatchers)
+	end,
+	root_dir = function(bufnr, on_dir)
+		local root = vim.fs.root(bufnr, "package.json")
+		local ts = find_local_typescript(root)
+		if root and ts and ts.native then
+			on_dir(root)
+		end
+	end,
+})
+vim.lsp.enable("tsgo")
 
 -- gleam is not managed by Mason, configure and enable manually
 vim.lsp.config("gleam", {})
