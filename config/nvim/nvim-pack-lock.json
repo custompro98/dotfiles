@@ -54,6 +54,10 @@
       "rev": "e652ebf7b3d6713992e68a30aec588822e69fae5",
       "src": "git@github.com:/ChmaraX/herdr-nvim"
     },
+    "herdr-nvim": {
+      "rev": "e652ebf7b3d6713992e68a30aec588822e69fae5",
+      "src": "https://github.com/ChmaraX/herdr-nvim"
+    },
     "indent-blankline.nvim": {
       "rev": "d28a3f70721c79e3c5f6693057ae929f3d9c0a03",
       "src": "git@github.com:/lukas-reineke/indent-blankline.nvim"
