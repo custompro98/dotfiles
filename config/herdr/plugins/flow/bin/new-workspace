@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Popup: create a worktree workspace off the latest default branch, named after
+# a city unless you type a branch. The worktree.created hook does the rest.
+set -euo pipefail
+source "$(dirname "$0")/lib.sh"
+
+cwd="${HERDR_ACTIVE_PANE_CWD:-$PWD}"
+git -C "$cwd" rev-parse --git-dir >/dev/null 2>&1 || die_popup "not in a git repo: $cwd"
+
+cities=(
+  accra almaty amman athens austin baku bangkok beirut belgrade bergen bogota
+  boston bruges budapest cairo cusco dakar delhi denver dhaka dublin durban
+  geneva hanoi havana helsinki istanbul jakarta kyoto lagos lima lisbon
+  ljubljana madrid manila marrakesh medellin melbourne montreal mumbai nairobi
+  nagoya oaxaca osaka oslo palermo paris porto prague quito reykjavik riga rome
+  santiago seoul seville sofia stockholm sydney taipei tallinn tbilisi tokyo
+  toronto tunis valencia vienna vilnius warsaw zagreb zurich
+)
+
+repo="$(basename "$(flow_root_path "$cwd")")"
+printf '\033[1mnew workspace in %s\033[0m\n' "$repo"
+read -r -p "branch (blank for a city): " branch
+
+if [ -z "$branch" ]; then
+  for _ in $(seq 1 50); do
+    city="${cities[RANDOM % ${#cities[@]}]}"
+    candidate="${FLOW_BRANCH_PREFIX:-}$city"
+    git -C "$cwd" show-ref --verify --quiet "refs/heads/$candidate" || { branch="$candidate"; break; }
+  done
+  [ -n "$branch" ] || die_popup "ran out of unused city names"
+fi
+
+git -C "$cwd" fetch --quiet origin "$(flow_default_branch "$cwd")" 2>/dev/null || true
+base="$(flow_base_ref "$cwd")"
+
+printf 'creating \033[36m%s\033[0m from %s…\n' "$branch" "$base"
+out="$("$HERDR" worktree create --cwd "$cwd" --branch "$branch" --base "$base" --label "${branch##*/}" --focus 2>&1)" ||
+  die_popup "$out"
+jq -e '.result' >/dev/null 2>&1 <<<"$out" || die_popup "$out"

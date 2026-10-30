@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Popup: fuzzy-pick a repo and focus its workspace, creating one for the main
+# checkout if it isn't open yet. Search roots come from FLOW_REPO_DIRS
+# (colon-separated), defaulting to ~/apps and ~/.dotfiles.
+set -euo pipefail
+source "$(dirname "$0")/lib.sh"
+
+IFS=: read -r -a roots <<<"${FLOW_REPO_DIRS:-$HOME/apps:$HOME/.dotfiles}"
+
+pick="$(fd -H -t d '^\.git$' "${roots[@]}" --max-depth 4 --prune 2>/dev/null |
+  sed -e 's#/\.git/*$##' -e "s#^$HOME#~#" | sort |
+  fzf --prompt 'repo> ' --height 100% --reverse)" || exit 0
+repo="${pick/#\~/$HOME}"
+name="$(basename "$repo")"
+
+existing="$("$HERDR" workspace list |
+  jq -r --arg name "$name" '[.result.workspaces[] | select(.label == $name and (.worktree.is_linked_worktree | not))][0].workspace_id // empty')"
+
+if [ -n "$existing" ]; then
+  "$HERDR" workspace focus "$existing" >/dev/null
+else
+  out="$("$HERDR" workspace create --cwd "$repo" --label "$name" --focus 2>&1)" || die_popup "$out"
+fi

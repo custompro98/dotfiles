@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Popup: open a Plannotator code review of this workspace's changes. With an
+# agent in the workspace, review through its /plannotator-review command so
+# your comments go straight back to it; otherwise run the CLI standalone.
+set -euo pipefail
+source "$(dirname "$0")/lib.sh"
+
+ws="${HERDR_ACTIVE_WORKSPACE_ID:-}"
+cwd="${HERDR_ACTIVE_PANE_CWD:-$PWD}"
+cd "$cwd"
+git rev-parse --git-dir >/dev/null 2>&1 || die_popup "not in a git repo: $cwd"
+
+pane="$([ -n "$ws" ] && flow_agent_pane "$ws" || true)"
+if [ -n "$pane" ]; then
+  out="$("$HERDR" agent prompt "$pane" "/plannotator-review" 2>&1)" || die_popup "$out"
+  exit 0
+fi
+
+command -v plannotator >/dev/null || die_popup "plannotator not installed: curl -fsSL https://plannotator.ai/install.sh | bash"
+printf 'no agent here; opening plannotator review in the browser…\n'
+plannotator review || die_popup "plannotator review failed"

@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Run conductor.json's run script in a "run" tab, restarting it if it's already
+# up (Conductor's nonconcurrent run mode).
+set -euo pipefail
+source "$(dirname "$0")/lib.sh"
+
+ws="${HERDR_ACTIVE_WORKSPACE_ID:-${HERDR_WORKSPACE_ID:?no active workspace}}"
+cwd="$("$HERDR" workspace get "$ws" | jq -r '.result.workspace.worktree.checkout_path // empty')"
+cwd="${cwd:-${HERDR_ACTIVE_PANE_CWD:-$PWD}}"
+
+for tab in $("$HERDR" tab list --workspace "$ws" |
+  jq -r '.result.tabs[] | select(.label == "run" or (.label | endswith(" run"))) | .tab_id'); do
+  "$HERDR" tab close "$tab" >/dev/null
+done
+
+pane="$("$HERDR" tab create --workspace "$ws" --cwd "$cwd" --label run --focus |
+  jq -r '.result.root_pane.pane_id')"
+"$HERDR" pane run "$pane" "'$FLOW_BIN/script' run" >/dev/null

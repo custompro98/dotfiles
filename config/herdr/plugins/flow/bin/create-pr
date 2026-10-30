@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Ask this workspace's agent to commit, push, and open a PR, like Conductor's
+# "Create PR" button.
+set -euo pipefail
+source "$(dirname "$0")/lib.sh"
+
+ws="${HERDR_ACTIVE_WORKSPACE_ID:?no active workspace}"
+cwd="${HERDR_ACTIVE_PANE_CWD:-$PWD}"
+
+pane="$(flow_agent_pane "$ws")"
+[ -n "$pane" ] || die_popup "no agent running in this workspace"
+
+default="$(flow_default_branch "$cwd")"
+prompt="Create a pull request for this branch. Commit any uncommitted work with a clear message, push the branch to origin, then open a PR against $default with \`gh pr create\`, writing a concise title and description from the full diff against $default. If a PR already exists, push and update its description instead. Reply with the PR URL."
+
+out="$("$HERDR" agent prompt "$pane" "$prompt" 2>&1)" || die_popup "$out"
+"$HERDR" agent focus "$pane" >/dev/null 2>&1 || true

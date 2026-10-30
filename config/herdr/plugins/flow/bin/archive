@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Popup: run the archive script, then delete this workspace's worktree checkout
+# and close it. The branch is kept, like Conductor.
+set -euo pipefail
+source "$(dirname "$0")/lib.sh"
+
+ws="${HERDR_ACTIVE_WORKSPACE_ID:?no active workspace}"
+info="$("$HERDR" workspace get "$ws")"
+path="$(jq -r '.result.workspace.worktree | select(.is_linked_worktree) | .checkout_path // empty' <<<"$info")"
+[ -n "$path" ] || die_popup "this workspace isn't a linked worktree; nothing to archive"
+
+branch="$(git -C "$path" branch --show-current)"
+printf '\033[1marchive %s\033[0m (%s)\n' "$(jq -r '.result.workspace.label' <<<"$info")" "$path"
+git -C "$path" status --short
+read -r -p "archive? branch $branch is kept [y/N] " answer
+[ "$answer" = y ] || exit 0
+
+"$FLOW_BIN/script" archive "$path" || die_popup "archive script failed"
+
+if ! "$HERDR" worktree remove --workspace "$ws" 2>/dev/null | jq -e '.result' >/dev/null; then
+  read -r -p "checkout has changes; force remove? [y/N] " answer
+  [ "$answer" = y ] || exit 0
+  "$HERDR" worktree remove --workspace "$ws" --force | jq -e '.result' >/dev/null || die_popup "worktree remove failed"
+fi

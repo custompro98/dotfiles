@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# worktree.created hook: lay out opencode on top, a terminal below, and run the
+# setup script in the terminal.
+set -euo pipefail
+source "$(dirname "$0")/lib.sh"
+
+event="${HERDR_PLUGIN_EVENT_JSON:-}"
+[ -n "$event" ] || die "missing HERDR_PLUGIN_EVENT_JSON"
+
+ws="$(jq -r '[.. | objects | .workspace?.workspace_id? // empty][0] // empty' <<<"$event")"
+path="$(jq -r '[.. | objects | .worktree?.path? // empty][0] // empty' <<<"$event")"
+[ -n "$ws" ] && [ -n "$path" ] || die "could not read workspace/worktree from event: $event"
+
+agent_pane="$("$HERDR" pane list --workspace "$ws" | jq -r '.result.panes[0].pane_id')"
+
+term_pane="$("$HERDR" pane split "$agent_pane" --direction down --ratio 0.7 --cwd "$path" --no-focus |
+  jq -r '.result.pane.pane_id // .result.pane_id // empty')"
+
+"$HERDR" pane rename "$agent_pane" opencode >/dev/null
+if [ -n "$term_pane" ]; then
+  "$HERDR" pane rename "$term_pane" terminal >/dev/null
+  "$HERDR" pane run "$term_pane" "'$FLOW_BIN/script' setup" >/dev/null
+fi
+
+"$HERDR" pane run "$agent_pane" opencode >/dev/null

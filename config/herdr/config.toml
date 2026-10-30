@@ -1,0 +1,90 @@
+onboarding = false
+
+[theme]
+name = "dracula"
+auto_switch = false
+
+[ui]
+status_indicators = "symbols"
+
+[ui.toast]
+delivery = "herdr"
+
+[worktrees]
+directory = "~/.herdr/worktrees"
+
+[keys]
+prefix = "ctrl+g"
+
+previous_agent = "prefix+p"
+next_agent = "prefix+n"
+
+## flow (Conductor-style workspaces, see plugins/flow)
+
+[[keys.command]]
+key = "prefix+f"
+type = "popup"
+command = "~/.dotfiles/config/herdr/plugins/flow/bin/open-repo"
+width = "60%"
+height = "60%"
+description = "open repo workspace"
+
+[[keys.command]]
+key = "prefix+a"
+type = "popup"
+command = "~/.dotfiles/config/herdr/plugins/flow/bin/new-workspace"
+width = 60
+height = 8
+description = "new agent workspace (worktree + opencode)"
+
+[[keys.command]]
+key = "prefix+d"
+type = "popup"
+command = "~/.dotfiles/config/herdr/plugins/flow/bin/review"
+width = 60
+height = 8
+description = "review changes in plannotator"
+
+[[keys.command]]
+key = "prefix+u"
+type = "plugin_action"
+command = "custompro98.flow.run"
+description = "(re)start run script"
+
+[[keys.command]]
+key = "prefix+m"
+type = "popup"
+command = "~/.dotfiles/config/herdr/plugins/flow/bin/create-pr"
+width = 60
+height = 8
+description = "ask agent to create PR"
+
+[[keys.command]]
+key = "prefix+shift+a"
+type = "popup"
+command = "~/.dotfiles/config/herdr/plugins/flow/bin/archive"
+width = 80
+height = 20
+description = "archive workspace (remove worktree)"
+
+[[keys.command]]
+key = "prefix+t"
+type = "popup"
+command = "exec \"${SHELL:-sh}\""
+width = "80%"
+height = "80%"
+description = "scratch terminal"
+
+## herdr-nvim
+
+[[keys.command]]
+key = "prefix+e"
+type = "plugin_action"
+command = "chmarax.herdr-nvim.toggle"
+description = "nvim sidebar"
+
+[[keys.command]]
+key = "prefix+o"
+type = "plugin_action"
+command = "chmarax.herdr-nvim.pick-file"
+description = "open file from agent output"
