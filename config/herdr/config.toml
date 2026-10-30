@@ -47,9 +47,19 @@ description = "review changes in plannotator"
 
 [[keys.command]]
 key = "prefix+u"
-type = "plugin_action"
-command = "custompro98.flow.run"
-description = "(re)start run script"
+type = "popup"
+command = "~/.dotfiles/config/herdr/plugins/flow/bin/run --default"
+width = 60
+height = 8
+description = "(re)start default run action"
+
+[[keys.command]]
+key = "prefix+shift+u"
+type = "popup"
+command = "~/.dotfiles/config/herdr/plugins/flow/bin/run"
+width = "60%"
+height = "40%"
+description = "pick a run action to (re)start"
 
 [[keys.command]]
 key = "prefix+m"

@@ -40,32 +40,53 @@ flow_base_ref() {
   fi
 }
 
-# Script from conductor.json, preferring the worktree's copy over the root's.
-flow_script() {
-  local dir="$1" name="$2" file
-  for file in "$dir/conductor.json" "$(flow_root_path "$dir")/conductor.json"; do
-    if [ -f "$file" ]; then
-      jq -r --arg name "$name" '.scripts[$name] // empty' "$file"
-      return
-    fi
-  done
+# Merged .conductor/settings[.local].toml for a workspace, as JSON.
+flow_settings() {
+  PATH="$HOME/.bun/bin:$PATH" "$FLOW_BIN/settings.ts" "$1" "$(flow_root_path "$1")"
 }
 
-# Same variables Conductor exposes, so existing conductor.json scripts work as-is.
-flow_export_env() {
+# A string script from [scripts], e.g. setup or archive.
+flow_script() {
+  flow_settings "$1" | jq -r --arg name "$2" '.scripts[$name] // empty | strings'
+}
+
+# Locally available run actions as JSON lines of {id, command, cwd, default},
+# default first. A plain `run = "..."` string becomes a single "run" action.
+flow_run_actions() {
+  flow_settings "$1" | jq -c '
+    .scripts.run // empty
+    | if type == "string" then [{id: "run", command: ., default: true}]
+      else to_entries
+        | map(select(.value.available_in // "local" | if type == "array" then index("local") != null else . == "local" end)
+          | (.value.args // [] | map(@sh) | join(" ")) as $args
+          | {id: .key,
+             command: (.value.command + (if $args == "" then "" else " " + $args end)),
+             cwd: .value.options.cwd,
+             default: (.value.default // false)})
+      end
+    | sort_by(.default | not) | .[]'
+}
+
+# Conductor's CONDUCTOR_* variables plus [environment_variables] (top level and
+# [environment_variables.local]) as KEY=VALUE lines.
+flow_env_lines() {
   local dir="$1" hash
   hash="$(printf '%s' "$dir" | cksum | cut -d' ' -f1)"
-  export CONDUCTOR_WORKSPACE_PATH="$dir"
-  export CONDUCTOR_WORKSPACE_NAME="$(basename "$dir")"
-  export CONDUCTOR_ROOT_PATH="$(flow_root_path "$dir")"
-  export CONDUCTOR_DEFAULT_BRANCH="$(flow_default_branch "$dir")"
+  echo "CONDUCTOR_WORKSPACE_PATH=$dir"
+  echo "CONDUCTOR_WORKSPACE_NAME=$(basename "$dir")"
+  echo "CONDUCTOR_ROOT_PATH=$(flow_root_path "$dir")"
+  echo "CONDUCTOR_DEFAULT_BRANCH=$(flow_default_branch "$dir")"
   # 10 ports per workspace, stable for a given path.
-  export CONDUCTOR_PORT=$((55000 + hash % 1000 * 10))
+  echo "CONDUCTOR_PORT=$((55000 + hash % 1000 * 10))"
+  flow_settings "$dir" | jq -r '
+    .environment_variables // {}
+    | with_entries(select(.value | type == "string")) + (.local // {})
+    | to_entries[] | "\(.key)=\(.value)"'
 }
 
-# The flow_export_env variables as KEY=VALUE lines, for herdr --env flags.
-flow_env_lines() {
-  (flow_export_env "$1" && env | grep '^CONDUCTOR_')
+flow_export_env() {
+  local line
+  while IFS= read -r line; do export "$line"; done < <(flow_env_lines "$1")
 }
 
 # Fuzzy-pick a repo under FLOW_REPO_DIRS (colon-separated, default ~/apps and

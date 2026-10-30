@@ -1,18 +1,48 @@
 #!/usr/bin/env bash
-# Run conductor.json's run script in a "run" tab, restarting it if it's already
-# up (Conductor's nonconcurrent run mode).
+# Start a [scripts.run] action in its own tab, restarting it if it's already up.
+# With run_mode = "nonconcurrent", starting one stops every other run tab.
+#   run [--default] [--workspace ID]
+# Without --default, picks from the available actions when there's more than one.
 set -euo pipefail
 source "$(dirname "$0")/lib.sh"
 
-ws="${HERDR_ACTIVE_WORKSPACE_ID:-${HERDR_WORKSPACE_ID:?no active workspace}}"
+pick_default=false
+ws="${HERDR_ACTIVE_WORKSPACE_ID:-${HERDR_WORKSPACE_ID:-}}"
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --default) pick_default=true ;;
+    --workspace) ws="$2"; shift ;;
+  esac
+  shift
+done
+[ -n "$ws" ] || die_popup "no active workspace"
+
 cwd="$("$HERDR" workspace get "$ws" | jq -r '.result.workspace.worktree.checkout_path // empty')"
 cwd="${cwd:-${HERDR_ACTIVE_PANE_CWD:-$PWD}}"
 
+actions="$(flow_run_actions "$cwd")"
+[ -n "$actions" ] || die_popup "no [scripts.run] in .conductor/settings.toml"
+
+if $pick_default || [ "$(wc -l <<<"$actions")" -eq 1 ]; then
+  id="$(head -n 1 <<<"$actions" | jq -r .id)"
+else
+  id="$(jq -r '"\(.id)\t\(.command | split("\n")[0])"' <<<"$actions" |
+    fzf --prompt 'run> ' --delimiter '\t' --height 100% --reverse | cut -f1)" || exit 0
+fi
+
+label="run"
+[ "$id" = run ] || label="run:$id"
+
+if [ "$(flow_settings "$cwd" | jq -r '.scripts.run_mode // "concurrent"')" = nonconcurrent ]; then
+  match='test("(^| )run(:|$)")'
+else
+  match='. == $label or endswith(" " + $label)'
+fi
 for tab in $("$HERDR" tab list --workspace "$ws" |
-  jq -r '.result.tabs[] | select(.label == "run" or (.label | endswith(" run"))) | .tab_id'); do
+  jq -r --arg label "$label" ".result.tabs[] | select(.label | $match) | .tab_id"); do
   "$HERDR" tab close "$tab" >/dev/null
 done
 
-pane="$("$HERDR" tab create --workspace "$ws" --cwd "$cwd" --label run --focus |
+pane="$("$HERDR" tab create --workspace "$ws" --cwd "$cwd" --label "$label" --focus |
   jq -r '.result.root_pane.pane_id')"
-"$HERDR" pane run "$pane" "'$FLOW_BIN/script' run" >/dev/null
+"$HERDR" pane run "$pane" "'$FLOW_BIN/script' run '$id'" >/dev/null

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # worktree.created hook: lay out opencode on top, a terminal below, and run the
-# setup script in the terminal.
+# setup script in the terminal, then the default run action when
+# auto_run_after_setup is set.
 set -euo pipefail
 source "$(dirname "$0")/lib.sh"
 
@@ -19,7 +20,11 @@ term_pane="$("$HERDR" pane split "$agent_pane" --direction down --ratio 0.7 --cw
 "$HERDR" pane rename "$agent_pane" opencode >/dev/null
 if [ -n "$term_pane" ]; then
   "$HERDR" pane rename "$term_pane" terminal >/dev/null
-  "$HERDR" pane run "$term_pane" "'$FLOW_BIN/script' setup" >/dev/null
+  setup="'$FLOW_BIN/script' setup"
+  if [ "$(flow_settings "$path" | jq -r '.scripts.auto_run_after_setup // false')" = true ]; then
+    setup+=" && '$FLOW_BIN/run' --default --workspace $ws"
+  fi
+  "$HERDR" pane run "$term_pane" "$setup" >/dev/null
 fi
 
 "$HERDR" pane run "$agent_pane" opencode >/dev/null

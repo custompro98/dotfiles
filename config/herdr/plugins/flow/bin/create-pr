@@ -12,6 +12,8 @@ pane="$(flow_agent_pane "$ws")"
 
 default="$(flow_default_branch "$cwd")"
 prompt="Create a pull request for this branch. Commit any uncommitted work with a clear message, push the branch to origin, then open a PR against $default with \`gh pr create\`, writing a concise title and description from the full diff against $default. If a PR already exists, push and update its description instead. Reply with the PR URL."
+extra="$(flow_settings "$cwd" | jq -r '.prompts.create_pr // empty')"
+[ -z "$extra" ] || prompt+=$'\n\n'"$extra"
 
 out="$("$HERDR" agent prompt "$pane" "$prompt" 2>&1)" || die_popup "$out"
 "$HERDR" agent focus "$pane" >/dev/null 2>&1 || true

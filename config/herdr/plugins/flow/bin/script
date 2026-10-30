@@ -1,19 +1,35 @@
 #!/usr/bin/env bash
-# Run a conductor.json script (setup | run | archive) in the current directory.
+# Run a Conductor script from .conductor/settings[.local].toml:
+#   script setup|archive [dir]
+#   script run <action-id> [dir]
 set -euo pipefail
 source "$(dirname "$0")/lib.sh"
 
-name="${1:?usage: script <setup|run|archive>}"
-dir="${2:-$PWD}"
+name="${1:?usage: script <setup|archive> [dir] | script run <action> [dir]}"
+if [ "$name" = run ]; then
+  id="${2:?usage: script run <action> [dir]}"
+  dir="${3:-$PWD}"
+else
+  dir="${2:-$PWD}"
+fi
 
 cd "$dir"
 flow_export_env "$dir"
-cmd="$(flow_script "$dir" "$name")"
+
+if [ "$name" = run ]; then
+  action="$(flow_run_actions "$dir" | jq -c --arg id "$id" 'select(.id == $id)')"
+  [ -n "$action" ] || die "no run action '$id' in .conductor/settings.toml"
+  cmd="$(jq -r .command <<<"$action")"
+  cd "$(jq -r '.cwd // "."' <<<"$action")"
+  name="run:$id"
+else
+  cmd="$(flow_script "$dir" "$name")"
+fi
 
 if [ -z "$cmd" ]; then
-  printf '\033[2mno scripts.%s in conductor.json\033[0m\n' "$name"
+  printf '\033[2mno scripts.%s in .conductor/settings.toml\033[0m\n' "$name"
   exit 0
 fi
 
-printf '\033[36m▶ %s\033[0m %s\n' "$name" "$cmd"
+printf '\033[36m▶ %s\033[0m\n' "$name"
 exec bash -c "$cmd"

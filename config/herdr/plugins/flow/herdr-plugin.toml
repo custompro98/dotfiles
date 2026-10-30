@@ -2,7 +2,7 @@ id = "custompro98.flow"
 name = "Flow"
 version = "0.1.0"
 min_herdr_version = "0.9.0"
-description = "Conductor-style workspaces: worktree per task, opencode + terminal layout, conductor.json scripts."
+description = "Conductor-style workspaces: worktree per task, opencode + terminal layout, .conductor/settings.toml scripts."
 platforms = ["macos", "linux"]
 
 # Fires for every worktree herdr creates (keybinding, sidebar, or CLI), so all
@@ -10,9 +10,3 @@ platforms = ["macos", "linux"]
 [[events]]
 on = "worktree.created"
 command = ["bin/on-worktree-created"]
-
-[[actions]]
-id = "run"
-title = "Run conductor.json run script"
-contexts = ["workspace"]
-command = ["bin/run"]
