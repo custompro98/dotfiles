@@ -15,6 +15,9 @@
   "keybinds": {
     "session.half.page.up": "ctrl+u,ctrl+alt+u",
     "session.half.page.down": "ctrl+d,ctrl+alt+d",
+    "session.line.up": "ctrl+y,ctrl+alt+y",
+    "session.line.down": "ctrl+e,ctrl+alt+e",
+    "input.line.end": "end",
     "app.exit": "ctrl+c,<leader>q",
     "input.delete": "delete,shift+delete",
     "input.delete.to.line.start": "none"
