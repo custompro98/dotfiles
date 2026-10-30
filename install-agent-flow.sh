@@ -36,6 +36,9 @@ else
   brew upgrade opencode
 fi
 
+mkdir -p ~/.config/opencode
+ln -sFfn ~/.dotfiles/config/opencode/cli.json ~/.config/opencode/cli.json
+
 print_installed "opencode"
 
 print_checking "claude"
