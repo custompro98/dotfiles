@@ -25,8 +25,6 @@ set_brew_path
 ## AGENT HARNESSES - OpenCode, Claude
 
 print_checking "opencode"
-
-print_checking "opencode"
 if ! command -v opencode &> /dev/null
 then
   print_installing "opencode"
@@ -41,8 +39,6 @@ fi
 print_installed "opencode"
 
 print_checking "claude"
-
-print_checking "claude"
 if ! command -v claude &> /dev/null
 then
   print_installing "claude"
@@ -51,7 +47,7 @@ then
 else
   print_updating "claude"
 
-  brew upgrade claude
+  brew upgrade claude-code
 fi
 
 print_installed "claude"
