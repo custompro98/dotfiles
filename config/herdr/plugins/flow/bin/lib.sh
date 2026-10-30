@@ -106,7 +106,9 @@ flow_repo_workspace() {
   ws="$("$HERDR" workspace list | jq -r --arg root "$root" '
     [.result.workspaces[] | select(.worktree.checkout_path == $root and (.worktree.is_linked_worktree | not))][0].workspace_id // empty')"
   if [ -z "$ws" ]; then
-    out="$("$HERDR" workspace create --cwd "$root" --label "$(basename "$root")" "$focus" 2>&1)" || { echo "$out" >&2; return 1; }
+    # worktree open, unlike workspace create, attaches the .worktree metadata
+    # the lookup above matches on.
+    out="$("$HERDR" worktree open --cwd "$root" --path "$root" --label "$(basename "$root")" "$focus" 2>&1)" || { echo "$out" >&2; return 1; }
     ws="$(jq -r '.result.workspace.workspace_id' <<<"$out")"
   elif [ "$focus" = --focus ]; then
     "$HERDR" workspace focus "$ws" >/dev/null
