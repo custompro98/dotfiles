@@ -63,6 +63,36 @@ flow_export_env() {
   export CONDUCTOR_PORT=$((55000 + hash % 1000 * 10))
 }
 
+# The flow_export_env variables as KEY=VALUE lines, for herdr --env flags.
+flow_env_lines() {
+  (flow_export_env "$1" && env | grep '^CONDUCTOR_')
+}
+
+# Fuzzy-pick a repo under FLOW_REPO_DIRS (colon-separated, default ~/apps and
+# ~/.dotfiles) and print its path.
+flow_pick_repo() {
+  local roots pick
+  IFS=: read -r -a roots <<<"${FLOW_REPO_DIRS:-$HOME/apps:$HOME/.dotfiles}"
+  pick="$(fd -H -t d '^\.git$' "${roots[@]}" --max-depth 4 --prune 2>/dev/null |
+    sed -e 's#/\.git/*$##' -e "s#^$HOME#~#" | sort |
+    fzf --prompt "${1:-repo> }" --height 100% --reverse)" || return 1
+  echo "${pick/#\~/$HOME}"
+}
+
+# Workspace for a repo's main checkout, opening one if it isn't open yet.
+flow_repo_workspace() {
+  local root="$1" focus="${2:---no-focus}" ws out
+  ws="$("$HERDR" workspace list | jq -r --arg root "$root" '
+    [.result.workspaces[] | select(.worktree.checkout_path == $root and (.worktree.is_linked_worktree | not))][0].workspace_id // empty')"
+  if [ -z "$ws" ]; then
+    out="$("$HERDR" workspace create --cwd "$root" --label "$(basename "$root")" "$focus" 2>&1)" || { echo "$out" >&2; return 1; }
+    ws="$(jq -r '.result.workspace.workspace_id' <<<"$out")"
+  elif [ "$focus" = --focus ]; then
+    "$HERDR" workspace focus "$ws" >/dev/null
+  fi
+  echo "$ws"
+}
+
 # First agent pane in a workspace, e.g. the opencode pane.
 flow_agent_pane() {
   "$HERDR" agent list |
