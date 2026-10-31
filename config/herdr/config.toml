@@ -75,7 +75,7 @@ type = "popup"
 command = "~/.dotfiles/config/herdr/plugins/flow/bin/archive"
 width = 80
 height = 20
-description = "archive workspace (remove worktree)"
+description = "archive workspace (close; removes worktree)"
 
 [[keys.command]]
 key = "prefix+t"
