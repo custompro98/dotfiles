@@ -19,6 +19,18 @@ branch="$(git -C "$path" branch --show-current)"
 branch="${branch:-detached}"
 root="$(flow_root_path "$path")"
 
+# Commits on a detached HEAD (e.g. a paused rebase) would be unreachable once
+# the checkout is gone, so pin them to a branch first.
+if [ "$branch" = detached ] &&
+  [ -z "$(git -C "$path" for-each-ref --contains HEAD --count=1 refs/heads refs/remotes refs/tags)" ]; then
+  saved="flow-archive/$(basename "$path")"
+  if ! err="$(git -C "$path" branch "$saved" HEAD 2>&1)"; then
+    notify "flow: couldn't save detached commits in $path" "$err"
+    die "$err"
+  fi
+  notify "flow: saved detached commits from $(basename "$path")" "branch $saved"
+fi
+
 "$FLOW_BIN/script" archive "$path" ||
   notify "flow: archive script failed for $branch" "herdr plugin log list --plugin custompro98.flow"
 

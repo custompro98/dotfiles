@@ -69,4 +69,17 @@ test_detached_dirty() {
   assert "stash named detached" bash -c "git -C '$ROOT' stash list | grep -q 'flow archive detached'"
 }
 
+test_detached_commits_saved() {
+  local wt sha
+  wt="$(make_worktree feat)"
+  git -C "$wt" checkout -q --detach
+  echo two >"$wt/file.txt"
+  git -C "$wt" commit -q -am "on detached head"
+  sha="$(git -C "$wt" rev-parse HEAD)"
+  assert "exits 0" close "$(closed_event "$wt" true)"
+  assert "checkout removed" test ! -e "$wt"
+  assert "commit kept on a branch" test "$(git -C "$ROOT" rev-parse flow-archive/wt-feat)" = "$sha"
+  assert "notified about the saved commits" called "notification show.*flow-archive/wt-feat"
+}
+
 run_tests
