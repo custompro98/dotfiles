@@ -10,3 +10,8 @@ platforms = ["macos", "linux"]
 [[events]]
 on = "worktree.created"
 command = ["bin/on-worktree-created"]
+
+# Closing a worktree workspace is final: archive it like Conductor.
+[[events]]
+on = "workspace.closed"
+command = ["bin/on-workspace-closed"]
