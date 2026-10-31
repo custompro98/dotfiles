@@ -9,6 +9,9 @@ vim.opt.tabstop = 2
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
+-- Truecolor (not auto-detected in headless/--remote-ui nvim, e.g. herdr-nvim sidebar)
+vim.o.termguicolors = true
+
 -- Remove jitter
 vim.opt.signcolumn = "yes"
 
