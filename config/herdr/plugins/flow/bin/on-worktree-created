@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# worktree.created hook: lay out opencode on top, a terminal below, and run the
-# setup script in the terminal, then the default run action when
-# auto_run_after_setup is set.
+# worktree.created hook: copy Conductor's Files to copy, lay out opencode on
+# top, a terminal below, and run the setup script in the terminal, then the
+# default run action when auto_run_after_setup is set.
 set -euo pipefail
 source "$(dirname "$0")/lib.sh"
 
@@ -11,6 +11,9 @@ event="${HERDR_PLUGIN_EVENT_JSON:-}"
 ws="$(jq -r '[.. | objects | .workspace?.workspace_id? // empty][0] // empty' <<<"$event")"
 path="$(jq -r '[.. | objects | .worktree?.path? // empty][0] // empty' <<<"$event")"
 [ -n "$ws" ] && [ -n "$path" ] || die "could not read workspace/worktree from event: $event"
+
+# Before the setup script, which may rely on the copied files.
+flow_copy_files "$path" || echo "flow: some files failed to copy into $path" >&2
 
 agent_pane="$("$HERDR" pane list --workspace "$ws" | jq -r '.result.panes[0].pane_id')"
 

@@ -89,6 +89,35 @@ flow_export_env() {
   while IFS= read -r line; do export "$line"; done < <(flow_env_lines "$1")
 }
 
+# Conductor's Files to copy patterns: .worktreeinclude at the repo root, else
+# file_include_globs, else .env*.
+flow_include_patterns() {
+  local root
+  root="$(flow_root_path "$1")"
+  if [ -f "$root/.worktreeinclude" ]; then
+    cat "$root/.worktreeinclude"
+  else
+    flow_settings "$1" | jq -r 'if has("file_include_globs") then .file_include_globs else ".env*" end'
+  fi
+}
+
+# Copy gitignored files matching the include patterns (gitignore syntax) from
+# the main checkout into a new worktree at the same relative paths.
+flow_copy_files() {
+  local worktree="$1" root patterns file status=0
+  root="$(flow_root_path "$worktree")"
+  [ "$root" != "$worktree" ] || return 0
+  # A real file: git sizes --exclude-from with fstat, which misreads pipes.
+  patterns="$(mktemp)"
+  flow_include_patterns "$worktree" >"$patterns"
+  while IFS= read -r -d '' file; do
+    mkdir -p "$worktree/$(dirname "$file")" && cp -p "$root/$file" "$worktree/$file" || status=1
+  done < <(git -C "$root" ls-files -z --others --ignored --exclude-from="$patterns" |
+    git -C "$root" check-ignore -z --stdin)
+  rm -f "$patterns"
+  return "$status"
+}
+
 # Fuzzy-pick a repo under FLOW_REPO_DIRS (colon-separated, default ~/apps and
 # ~/.dotfiles) and print its path.
 flow_pick_repo() {
