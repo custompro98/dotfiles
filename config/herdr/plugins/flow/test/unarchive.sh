@@ -90,6 +90,22 @@ test_conflict_keeps_ref() {
   assert "told why" called "notification show flow: archive kept for wt-feat"
 }
 
+test_untracked_now_tracked_keeps_ref() {
+  local wt
+  wt="$(make_worktree feat)"
+  echo two >"$wt/file.txt"
+  echo mine >"$wt/notes.txt"
+  archive_wt "$wt"
+  git -C "$ROOT" worktree add -q "$TMP/mover" feat
+  echo theirs >"$TMP/mover/notes.txt"
+  git -C "$TMP/mover" add notes.txt
+  git -C "$TMP/mover" commit -q -m "track notes"
+  git -C "$ROOT" worktree remove --force "$TMP/mover"
+  unarchive wt-feat
+  assert "archive kept" test "$(refs)" = 1
+  assert "says how to recover before deleting" called "notification show flow: archive kept for wt-feat --body .*stash apply refs/flow/archive/wt-feat-[0-9]*^2"
+}
+
 test_rewritten_keeps_ref() {
   local wt
   wt="$(make_worktree feat)"

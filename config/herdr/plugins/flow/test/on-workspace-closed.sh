@@ -127,6 +127,35 @@ test_opencode_fails() {
   assert "no Flow-Session" test -z "$(trailer Flow-Session)"
 }
 
+test_concurrent_closes() {
+  local a b ra rb
+  a="$(make_worktree alpha)"
+  b="$(make_worktree beta)"
+  echo alpha-change >"$a/file.txt"
+  echo a >"$a/a.txt"
+  echo beta-change >"$b/file.txt"
+  echo b >"$b/b.txt"
+  archive_wt "$a" &
+  archive_wt "$b" &
+  wait
+  ra="$(git -C "$ROOT" for-each-ref --format='%(refname)' 'refs/flow/archive/wt-alpha-*')"
+  rb="$(git -C "$ROOT" for-each-ref --format='%(refname)' 'refs/flow/archive/wt-beta-*')"
+  assert "alpha keeps its own edit" test "$(git -C "$ROOT" show "$ra^2:file.txt")" = alpha-change
+  assert "beta keeps its own edit" test "$(git -C "$ROOT" show "$rb^2:file.txt")" = beta-change
+  assert "beta keeps its own untracked file" bash -c "git -C '$ROOT' show --name-only '$rb^2^3' | grep -qx b.txt"
+  assert "stash list left alone" test -z "$(git -C "$ROOT" stash list)"
+}
+
+test_existing_stash_untouched() {
+  local wt
+  wt="$(make_worktree feat)"
+  echo mine >"$ROOT/file.txt"
+  git -C "$ROOT" stash push -q -m "user stash"
+  assert "exits 0" close "$(closed_event "$wt" true)"
+  assert "clean checkout archives no changes" bash -c "! git -C '$ROOT' rev-parse -q --verify '$(ref)^2'"
+  assert "user's stash still there" bash -c "git -C '$ROOT' stash list | grep -q 'user stash'"
+}
+
 test_ref_write_fails() {
   local wt
   wt="$(make_worktree feat)"

@@ -156,16 +156,43 @@ flow_session_for() {
 # ref: a commit with the archived HEAD as parent 1, a `git stash -u` commit of
 # uncommitted work as parent 2 (when dirty), and Flow-* trailers. Leaves the
 # checkout in place; on failure after stashing, the work stays in the stash.
+# refs/stash is shared by every worktree, so the stash section holds a per-repo
+# lock: closing several workspaces at once fires their hooks concurrently.
 flow_archive_save() {
-  local path="$1" label="$2" name head branch session stash="" msg commit ref
+  local path="$1" lock rc
+  lock="$(git -C "$path" rev-parse --path-format=absolute --git-common-dir)/flow-archive.lock" || return 1
+  flow_lock "$lock" || { echo "couldn't take $lock (remove it if no archive is running)" >&2; return 1; }
+  _flow_archive_save_locked "$@"
+  rc=$?
+  rmdir "$lock" 2>/dev/null
+  return "$rc"
+}
+
+# mkdir-based lock, waiting up to ~30s; a lock older than 2 minutes is stale.
+flow_lock() {
+  local i=0
+  until mkdir "$1" 2>/dev/null; do
+    [ -z "$(find "$1" -maxdepth 0 -mmin +2 2>/dev/null)" ] || rmdir "$1" 2>/dev/null || true
+    i=$((i + 1))
+    [ "$i" -lt 300 ] || return 1
+    sleep 0.1
+  done
+}
+
+_flow_archive_save_locked() {
+  local path="$1" label="$2" name head branch session before stash="" msg commit ref
   name="$(basename "$path")"
   head="$(git -C "$path" rev-parse HEAD)" || return 1
   branch="$(git -C "$path" branch --show-current)"
   session="$(flow_session_for "$path" "$path")"
 
   if [ -n "$(git -C "$path" status --porcelain)" ]; then
+    before="$(git -C "$path" rev-parse -q --verify refs/stash || true)"
     git -C "$path" stash push -q -u -m "flow archive $name" || { echo "couldn't stash changes in $path" >&2; return 1; }
-    stash="$(git -C "$path" rev-parse refs/stash)"
+    stash="$(git -C "$path" rev-parse -q --verify refs/stash || true)"
+    # Nothing stashed (e.g. only submodule changes): no parent 2, and never
+    # adopt a stash entry that isn't ours.
+    [ "$stash" != "$before" ] || stash=""
   fi
 
   msg="flow archive $name"$'\n\n'"Flow-Name: $name"$'\n'"Flow-Path: $path"$'\n'"Flow-Label: $label"
@@ -236,7 +263,7 @@ flow_archive_checkout() {
       fi
     fi
     if ! $applied || [ -n "$(git -C "$path" diff --name-only --diff-filter=U)" ]; then
-      reasons+=("changes didn't apply cleanly; resolve them in $path, then run: git update-ref -d $ref")
+      reasons+=("some changes didn't apply in $path (conflicts or untracked files left out); the archive is kept. Recover with: git -C $path stash apply $ref^2 (untracked files: git show $ref^2^3:<file>). Once everything is back: git update-ref -d $ref")
     fi
   fi
 
