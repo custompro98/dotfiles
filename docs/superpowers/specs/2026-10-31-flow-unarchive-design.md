@@ -102,8 +102,12 @@ ref per workspace, written before the checkout is removed:
   fails (don't block the archive on opencode).
 - Order: archive script → write ref → `git worktree remove --force`. If
   writing the ref fails, notify and keep the checkout (same as today's stash
-  failure). Notify on success with the workspace name, replacing today's
-  "stashed changes" notification.
+  failure). Notify on success with the workspace name and "restore with
+  prefix+shift+o", replacing today's "stashed changes" notification.
+- **How it's triggered:** any close of a linked-worktree workspace, normally
+  herdr's native `close_workspace` (`prefix+shift+d`). The `bin/archive` popup
+  and its `prefix+shift+a` binding were removed; with restore, close isn't
+  final, so herdr's own close confirmation is enough.
 
 ### Restore (`bin/unarchive`, keybinding `prefix+shift+o`)
 
@@ -166,5 +170,4 @@ branch checked out elsewhere refuses. Stub `opencode` the same way as herdr.
   holds everything above and `git for-each-ref` can list it cheaply.
 - Whether staged vs unstaged is preserved on restore (nice to have).
 - Exact fzf row formatting and time display.
-- Updating `bin/archive`'s prompt text ("uncommitted changes are stashed") and
-  the plugin README/comments to describe restore.
+- Updating the plugin README/comments to describe restore.
