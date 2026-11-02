@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+# Popup: restore an archived worktree workspace of the current repo, like
+# Conductor's History pane. Recreates the checkout at its old path with its
+# uncommitted work, opens it in herdr, and resumes its opencode session.
+#   unarchive [name]   (name: the checkout's basename; newest archive wins)
+set -euo pipefail
+source "$(dirname "$0")/lib.sh"
+
+cwd="${HERDR_ACTIVE_PANE_CWD:-$PWD}"
+if git -C "$cwd" rev-parse --git-dir >/dev/null 2>&1; then
+  root="$(flow_root_path "$cwd")"
+else
+  root="$(flow_pick_repo 'restore in> ')" || exit 0
+fi
+
+archives="$(flow_archive_list "$root")"
+[ -n "$archives" ] || die_popup "no archived workspaces in $(basename "$root")"
+
+if [ $# -gt 0 ]; then
+  line="$(awk -F'\t' -v n="$1" '$2 == n { print; exit }' <<<"$archives")"
+  [ -n "$line" ] || die_popup "no archive named $1"
+else
+  pick="$(jq -R -r --argjson sessions "$(flow_sessions_json "$root")" '
+      split("\t") as $f
+      | ($sessions | map(select(.id == $f[5]))[0].title // "") as $title
+      | [$f[0], $f[1], $title, $f[2], ($f[6] | tonumber | localtime | strftime("%b %d %H:%M"))]
+      | @tsv' <<<"$archives" |
+    fzf --prompt 'restore> ' --delimiter '\t' --with-nth 2.. --height 100% --reverse)" || exit 0
+  line="$(awk -F'\t' -v r="$(cut -f1 <<<"$pick")" '$1 == r { print; exit }' <<<"$archives")"
+fi
+
+ref="$(cut -f1 <<<"$line")"
+name="$(cut -f2 <<<"$line")"
+path="$(cut -f4 <<<"$line")"
+label="$(cut -f5 <<<"$line")"
+session="$(cut -f6 <<<"$line")"
+
+printf 'restoring \033[36m%s\033[0m to %s…\n' "$name" "$path"
+reason="$(flow_archive_checkout "$root" "$ref")" || die_popup "couldn't restore $name"
+
+# Before the setup script, which may rely on the copied files.
+flow_copy_files "$path" || echo "flow: some files failed to copy into $path" >&2
+
+out="$("$HERDR" worktree open --cwd "$root" --path "$path" --label "${label:-$name}" --focus 2>&1)" || die_popup "$out"
+ws="$(jq -r '.result.workspace.workspace_id // empty' <<<"$out" 2>/dev/null)"
+[ -n "$ws" ] || die_popup "$out"
+
+flow_layout "$ws" "$path" "${session:-$(flow_session_for "$root" "$path")}"
+
+if [ -z "$reason" ]; then
+  git -C "$root" update-ref -d "$ref"
+else
+  "$HERDR" notification show "flow: archive kept for $name" --body "$reason" >/dev/null || true
+fi

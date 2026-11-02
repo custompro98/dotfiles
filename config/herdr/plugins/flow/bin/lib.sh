@@ -189,6 +189,64 @@ flow_archive_save() {
   echo "$ref"
 }
 
+# A repo's archives, newest first, one TSV line each:
+# ref, name, branch, path, label, session, archived-at (unix). Empty fields
+# stay as empty columns, so split with cut/awk -F'\t', not `read`.
+flow_archive_list() {
+  local t='%(trailers:key=Flow-KEY,valueonly,separator=)' fmt
+  fmt="%(refname)"
+  for key in Name Branch Path Label Session; do fmt+="%09${t/KEY/$key}"; done
+  git -C "$1" for-each-ref --sort=-creatordate --format="$fmt%09%(creatordate:unix)" refs/flow/archive/
+}
+
+# One Flow-* trailer of an archive ref: flow_archive_trailer <root> <ref> <key>.
+flow_archive_trailer() {
+  git -C "$1" log -1 --format="%(trailers:key=$3,valueonly,separator=)" "$2"
+}
+
+# Recreate an archived worktree at its recorded path and re-apply its
+# uncommitted work. Refuses (non-zero, message on stderr, nothing created) when
+# the path exists or the branch is checked out elsewhere. Otherwise prints why
+# the archive ref must be kept (conflicts, rewritten branch), or nothing.
+flow_archive_checkout() {
+  local root="$1" ref="$2" path branch head reasons=() applied=true
+  path="$(flow_archive_trailer "$root" "$ref" Flow-Path)"
+  branch="$(flow_archive_trailer "$root" "$ref" Flow-Branch)"
+  head="$(git -C "$root" rev-parse "$ref^1")"
+
+  [ ! -e "$path" ] || { echo "$path already exists" >&2; return 1; }
+  if [ -n "$branch" ] && git -C "$root" show-ref --verify -q "refs/heads/$branch"; then
+    if git -C "$root" worktree list --porcelain | grep -qx "branch refs/heads/$branch"; then
+      echo "$branch is checked out in another worktree" >&2
+      return 1
+    fi
+    git -C "$root" worktree add -q "$path" "$branch" || return 1
+  elif [ -n "$branch" ]; then
+    git -C "$root" worktree add -q -b "$branch" "$path" "$head" || return 1
+  else
+    git -C "$root" worktree add -q --detach "$path" "$head" || return 1
+  fi
+
+  if git -C "$root" rev-parse -q --verify "$ref^2" >/dev/null; then
+    if ! git -C "$path" stash apply -q --index "$ref^2" >/dev/null 2>&1; then
+      if [ -z "$(git -C "$path" diff --name-only --diff-filter=U)" ]; then
+        git -C "$path" stash apply -q "$ref^2" >/dev/null 2>&1 || applied=false
+      else
+        applied=false
+      fi
+    fi
+    if ! $applied || [ -n "$(git -C "$path" diff --name-only --diff-filter=U)" ]; then
+      reasons+=("changes didn't apply cleanly; resolve them in $path, then run: git update-ref -d $ref")
+    fi
+  fi
+
+  if [ -n "$branch" ] && ! git -C "$root" merge-base --is-ancestor "$head" "refs/heads/$branch"; then
+    reasons+=("$branch no longer contains the archived commits; they're kept in $ref")
+  fi
+
+  [ ${#reasons[@]} -eq 0 ] || (IFS=$'\n'; echo "${reasons[*]}")
+}
+
 # Lay out a fresh worktree workspace: opencode on top, a terminal below running
 # the setup script (then the default run action when auto_run_after_setup is
 # set). With a session id, opencode resumes that session.

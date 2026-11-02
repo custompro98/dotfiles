@@ -86,6 +86,14 @@ height = 8
 description = "ask agent to create PR"
 
 [[keys.command]]
+key = "prefix+shift+o"
+type = "popup"
+command = "~/.dotfiles/config/herdr/plugins/flow/bin/unarchive"
+width = "70%"
+height = "40%"
+description = "restore archived workspace"
+
+[[keys.command]]
 key = "prefix+t"
 type = "popup"
 command = "exec \"${SHELL:-sh}\""
