@@ -7,6 +7,14 @@ auto_switch = false
 [ui]
 status_indicators = "symbols"
 
+[ui.sidebar.spaces]
+rows = [
+  ["state_icon", "workspace"],
+  ["branch", "git_status"],
+  ["$pr", "$pr_checks", "$pr_review"],
+  ["$pr_threads"],
+]
+
 [ui.toast]
 delivery = "herdr"
 
@@ -98,3 +106,9 @@ key = "prefix+o"
 type = "plugin_action"
 command = "chmarax.herdr-nvim.pick-file"
 description = "open file from agent output"
+
+[[keys.command]]
+key = "prefix+shift+g"
+type = "plugin_action"
+command = "jmarbutt.spaces-pr-status.open"
+description = "open this space's PR"
