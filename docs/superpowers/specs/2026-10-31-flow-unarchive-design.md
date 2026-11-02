@@ -47,13 +47,10 @@ so archived checkouts stay deleted.
   `directory`. `opencode -s <id>` resumes a specific session.
 - City-named paths aren't reused while their branch exists, and archiving keeps
   the branch, so a restored workspace can reuse its original path.
-- herdr emits `worktree.opened` separately from `worktree.created`, so opening
-  an existing worktree with `herdr worktree open` shouldn't trigger flow's
-  `on-worktree-created` hook. Verify this early, in a named test session
-  (`herdr --session …`), not the live one. If it does fire, the hook owns
-  the layout for restores too: it detects a restore by finding an archive ref
-  for the path and passes `-- -s <id>` to its `agent start`, and
-  `bin/unarchive` skips its own layout. *(Builder's call, settled in review.)*
+- `herdr worktree open` on an existing worktree emits only `worktree.opened`,
+  not `worktree.created` (verified 2026-11-02 on herdr 0.9.5 with a probe
+  plugin listening to both; flow's `on-worktree-created` didn't run). So
+  `bin/unarchive` owns the restore layout.
 - Refs under `refs/flow/` live in the repo's common git dir, so they're visible
   from the main checkout and every worktree, and keep their commits reachable
   even if the branch is deleted.
