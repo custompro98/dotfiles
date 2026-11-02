@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # workspace.closed hook: archive a closed worktree workspace like Conductor.
-# Run the archive script, stash uncommitted work, and delete the checkout. The
+# Run the archive script, save HEAD and uncommitted work under
+# refs/flow/archive/ (bin/unarchive restores it), and delete the checkout. The
 # branch is kept. Repo workspaces (main checkouts) are left alone.
 set -euo pipefail
 source "$(dirname "$0")/lib.sh"
@@ -15,35 +16,23 @@ notify() {
   "$HERDR" notification show "$1" --body "$2" >/dev/null || true
 }
 
+name="$(basename "$path")"
+label="$(jq -r '[.. | objects | .workspace? | objects | .label // empty][0] // empty' <<<"$event")"
 branch="$(git -C "$path" branch --show-current)"
-branch="${branch:-detached}"
 root="$(flow_root_path "$path")"
 
-# Commits on a detached HEAD (e.g. a paused rebase) would be unreachable once
-# the checkout is gone, so pin them to a branch first.
-if [ "$branch" = detached ] &&
-  [ -z "$(git -C "$path" for-each-ref --contains HEAD --count=1 refs/heads refs/remotes refs/tags)" ]; then
-  saved="flow-archive/$(basename "$path")"
-  if ! err="$(git -C "$path" branch "$saved" HEAD 2>&1)"; then
-    notify "flow: couldn't save detached commits in $path" "$err"
-    die "$err"
-  fi
-  notify "flow: saved detached commits from $(basename "$path")" "branch $saved"
-fi
-
 "$FLOW_BIN/script" archive "$path" ||
-  notify "flow: archive script failed for $branch" "herdr plugin log list --plugin custompro98.flow"
+  notify "flow: archive script failed for ${branch:-$name}" "herdr plugin log list --plugin custompro98.flow"
 
-if [ -n "$(git -C "$path" status --porcelain)" ]; then
-  # Keep the checkout rather than lose work that couldn't be stashed.
-  if ! err="$(git -C "$path" stash push -q -u -m "flow archive $branch" 2>&1)"; then
-    notify "flow: couldn't stash changes in $path" "$err"
-    die "$err"
-  fi
-  notify "flow: stashed changes from $branch" "git stash list in $(basename "$root"): flow archive $branch"
+# Keep the checkout rather than lose work that couldn't be saved.
+if ! err="$(flow_archive_save "$path" "${label:-$name}" 2>&1 >/dev/null)"; then
+  notify "flow: couldn't archive $name" "$err"
+  die "$err"
 fi
 
 if ! err="$(git -C "$root" worktree remove --force "$path" 2>&1)"; then
   notify "flow: couldn't remove $path" "$err"
   die "$err"
 fi
+
+notify "flow: archived $name" "restore with prefix+shift+o"

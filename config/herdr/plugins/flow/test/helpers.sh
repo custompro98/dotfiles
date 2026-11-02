@@ -80,6 +80,11 @@ closed_event() {
           checkout_path: $path, is_linked_worktree: $linked}}}}'
 }
 
+# Archive a worktree the way closing its workspace does.
+archive_wt() {
+  HERDR_PLUGIN_EVENT_JSON="$(closed_event "$1" true)" "$FLOW/bin/on-workspace-closed"
+}
+
 assert() {
   local desc="$1"
   shift

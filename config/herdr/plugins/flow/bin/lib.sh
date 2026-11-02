@@ -138,6 +138,57 @@ flow_agent_name() {
   printf 'opencode-%s\n' "${ws:0:23}"
 }
 
+# The repo's opencode sessions (all worktrees share one project) as a JSON
+# array, run from <dir>; [] if opencode isn't available or fails.
+flow_sessions_json() {
+  local out
+  out="$(cd "$1" && "$OPENCODE" session list --format json -n 1000 2>/dev/null)" &&
+    jq -e 'type == "array"' >/dev/null 2>&1 <<<"$out" && printf '%s\n' "$out" || echo '[]'
+}
+
+# Newest opencode session whose directory is exactly <path>, or nothing.
+flow_session_for() {
+  flow_sessions_json "$1" |
+    jq -r --arg d "$2" '[.[] | select(.directory == $d)] | max_by(.updated) // {} | .id // empty'
+}
+
+# Save a worktree checkout as refs/flow/archive/<name>-<unix-time> and echo the
+# ref: a commit with the archived HEAD as parent 1, a `git stash -u` commit of
+# uncommitted work as parent 2 (when dirty), and Flow-* trailers. Leaves the
+# checkout in place; on failure after stashing, the work stays in the stash.
+flow_archive_save() {
+  local path="$1" label="$2" name head branch session stash="" msg commit ref
+  name="$(basename "$path")"
+  head="$(git -C "$path" rev-parse HEAD)" || return 1
+  branch="$(git -C "$path" branch --show-current)"
+  session="$(flow_session_for "$path" "$path")"
+
+  if [ -n "$(git -C "$path" status --porcelain)" ]; then
+    git -C "$path" stash push -q -u -m "flow archive $name" || { echo "couldn't stash changes in $path" >&2; return 1; }
+    stash="$(git -C "$path" rev-parse refs/stash)"
+  fi
+
+  msg="flow archive $name"$'\n\n'"Flow-Name: $name"$'\n'"Flow-Path: $path"$'\n'"Flow-Label: $label"
+  [ -z "$branch" ] || msg+=$'\n'"Flow-Branch: $branch"
+  [ -z "$session" ] || msg+=$'\n'"Flow-Session: $session"
+
+  ref="refs/flow/archive/$name-$(date +%s)"
+  if ! commit="$(git -C "$path" commit-tree "$head^{tree}" -p "$head" ${stash:+-p "$stash"} -m "$msg")" ||
+    ! git -C "$path" update-ref "$ref" "$commit" "" 2>&1 >&2; then
+    if [ -n "$stash" ]; then
+      echo "couldn't write $ref; uncommitted work is in git stash: flow archive $name" >&2
+    else
+      echo "couldn't write $ref" >&2
+    fi
+    return 1
+  fi
+
+  if [ -n "$stash" ] && [ "$(git -C "$path" rev-parse -q --verify 'stash@{0}')" = "$stash" ]; then
+    git -C "$path" stash drop -q
+  fi
+  echo "$ref"
+}
+
 # Lay out a fresh worktree workspace: opencode on top, a terminal below running
 # the setup script (then the default run action when auto_run_after_setup is
 # set). With a session id, opencode resumes that session.
