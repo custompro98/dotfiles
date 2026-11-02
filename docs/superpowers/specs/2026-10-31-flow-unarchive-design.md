@@ -52,7 +52,7 @@ so archived checkouts stay deleted.
   `on-worktree-created` hook. Verify this early, in a named test session
   (`herdr --session …`), not the live one. If it does fire, the hook owns
   the layout for restores too: it detects a restore by finding an archive ref
-  for the path and runs `opencode -s <id>` instead of `opencode`, and
+  for the path and passes `-- -s <id>` to its `agent start`, and
   `bin/unarchive` skips its own layout. *(Builder's call, settled in review.)*
 - Refs under `refs/flow/` live in the repo's common git dir, so they're visible
   from the main checkout and every worktree, and keep their commits reachable
@@ -131,15 +131,18 @@ ref per workspace, written before the checkout is removed:
   2. Re-apply the uncommitted changes. If the branch moved since archiving and
      they don't apply cleanly, leave the conflicts in the worktree, keep the
      archive ref, and say so in the popup.
-  3. `flow_copy_files`, then open it in herdr from the repo's parent workspace
-     (`flow_repo_workspace`) with `herdr worktree open --path … --label …
-     --focus`.
+  3. `flow_copy_files`, then open it in herdr with `herdr worktree open --cwd
+     <root> --path … --label … --focus` (`--cwd` groups it under the repo's
+     workspace, as `new-workspace` and `open-repo` now do).
   4. Same layout as a new workspace: opencode pane on top, terminal below
      (70/30), setup script in the terminal (then default run action if
      `auto_run_after_setup`).
-  5. Top pane: `opencode -s <session-id>`; plain `opencode` if there's no
-     recorded session. If the recorded id is empty, look up the newest session
-     for the path at restore time before falling back.
+  5. Top pane: start opencode the way `on-worktree-created` does, `herdr agent
+     start "$(flow_agent_name "$ws")" --kind opencode --pane …`, passing
+     `-- -s <session-id>` so the conversation resumes (and `create-pr` /
+     `review` can still find the agent by name). No session args if there's
+     no session: if the recorded id is empty, look up the newest session for
+     the path at restore time first.
   6. Delete the archive ref, unless step 2 left conflicts, or the branch's
      current tip doesn't contain the archived `HEAD` (rebased, reset or
      force-updated while archived). In that case the ref is the only thing
@@ -150,9 +153,9 @@ ref per workspace, written before the checkout is removed:
 
 ### Shared code
 
-The new-workspace layout in `on-worktree-created` (split, rename panes, setup,
-run, opencode) should be shared with restore rather than copied, with the
-opencode command as the difference.
+The new-workspace layout in `on-worktree-created` (split, rename the terminal
+pane, setup, run, `agent start`) should be shared with restore rather than
+copied, with the opencode session args as the difference.
 
 ### Tests
 
