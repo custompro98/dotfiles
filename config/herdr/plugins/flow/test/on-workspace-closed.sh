@@ -7,9 +7,6 @@ close() {
   HERDR_PLUGIN_EVENT_JSON="$1" "$FLOW/bin/on-workspace-closed"
 }
 
-called() { grep -q -- "$1" "$HERDR_CALLS"; }
-not_called() { ! grep -q -- "$1" "$HERDR_CALLS"; }
-
 test_clean_checkout() {
   local wt
   wt="$(make_worktree feat)"

@@ -27,8 +27,9 @@ make_worktree() {
   echo "$TMP/wt-$1"
 }
 
-# Fake herdr that records each call's argv as a line in $HERDR_CALLS and
-# answers `workspace get` with $STUB_WORKSPACE_JSON.
+# Fake herdr that records each call's argv as a line in $HERDR_CALLS. Answers
+# `workspace get` with $STUB_WORKSPACE_JSON and gives canned ids (workspace w9,
+# panes w9:p1/w9:p2) to `worktree open`, `pane list` and `pane split`.
 stub_herdr() {
   export HERDR_CALLS="$TMP/herdr-calls"
   export HERDR_BIN_PATH="$TMP/herdr"
@@ -36,13 +37,39 @@ stub_herdr() {
   cat >"$HERDR_BIN_PATH" <<'EOF'
 #!/usr/bin/env bash
 echo "$*" >>"$HERDR_CALLS"
-if [ "$1 $2" = "workspace get" ]; then
-  printf '%s\n' "$STUB_WORKSPACE_JSON"
-else
-  echo '{"result":{}}'
-fi
+case "$1 $2" in
+  "workspace get") printf '%s\n' "$STUB_WORKSPACE_JSON" ;;
+  "worktree open") echo '{"result":{"workspace":{"workspace_id":"w9"}}}' ;;
+  "pane list") echo '{"result":{"panes":[{"pane_id":"w9:p1"}]}}' ;;
+  "pane split") echo '{"result":{"pane":{"pane_id":"w9:p2"}}}' ;;
+  *) echo '{"result":{}}' ;;
+esac
 EOF
   chmod +x "$HERDR_BIN_PATH"
+}
+
+# Fake opencode that records "$PWD $*" per call in $OPENCODE_CALLS, prints
+# ${STUB_SESSIONS_JSON:-[]} and exits ${STUB_OPENCODE_EXIT:-0}.
+stub_opencode() {
+  export OPENCODE_CALLS="$TMP/opencode-calls"
+  export FLOW_OPENCODE_BIN="$TMP/opencode"
+  unset STUB_SESSIONS_JSON STUB_OPENCODE_EXIT
+  : >"$OPENCODE_CALLS"
+  cat >"$FLOW_OPENCODE_BIN" <<'EOF'
+#!/usr/bin/env bash
+echo "$PWD $*" >>"$OPENCODE_CALLS"
+printf '%s\n' "${STUB_SESSIONS_JSON:-[]}"
+exit "${STUB_OPENCODE_EXIT:-0}"
+EOF
+  chmod +x "$FLOW_OPENCODE_BIN"
+}
+
+called() { grep -q -- "$1" "$HERDR_CALLS"; }
+not_called() { ! grep -q -- "$1" "$HERDR_CALLS"; }
+
+created_event() {
+  jq -nc --arg ws "$1" --arg path "$2" '
+    {event: "worktree.created", data: {workspace: {workspace_id: $ws}, worktree: {path: $path}}}'
 }
 
 closed_event() {
@@ -64,13 +91,14 @@ assert() {
   fi
 }
 
-# Run every test_* function, each against a fresh repo and herdr stub.
+# Run every test_* function, each against a fresh repo and herdr/opencode stubs.
 run_tests() {
   local t
   for t in $(declare -F | awk '$3 ~ /^test_/ { print $3 }'); do
     echo "# $t"
     make_repo
     stub_herdr
+    stub_opencode
     "$t"
     rm -rf "$TMP"
   done

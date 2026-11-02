@@ -1,6 +1,7 @@
 # Shared helpers for the flow plugin. Sourced, not executed.
 
 HERDR="${HERDR_BIN_PATH:-herdr}"
+OPENCODE="${FLOW_OPENCODE_BIN:-opencode}"
 FLOW_BIN="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 die() {
@@ -135,4 +136,29 @@ flow_agent_name() {
   local ws
   ws="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]' | tr -c 'a-z0-9_-' '-')"
   printf 'opencode-%s\n' "${ws:0:23}"
+}
+
+# Lay out a fresh worktree workspace: opencode on top, a terminal below running
+# the setup script (then the default run action when auto_run_after_setup is
+# set). With a session id, opencode resumes that session.
+flow_layout() {
+  local ws="$1" path="$2" session="${3:-}" agent_pane term_pane setup
+  agent_pane="$("$HERDR" pane list --workspace "$ws" | jq -r '.result.panes[0].pane_id')"
+
+  term_pane="$("$HERDR" pane split "$agent_pane" --direction down --ratio 0.7 --cwd "$path" --no-focus |
+    jq -r '.result.pane.pane_id // .result.pane_id // empty')"
+
+  if [ -n "$term_pane" ]; then
+    "$HERDR" pane rename "$term_pane" terminal >/dev/null
+    setup="'$FLOW_BIN/script' setup"
+    if [ "$(flow_settings "$path" | jq -r '.scripts.auto_run_after_setup // false')" = true ]; then
+      setup+=" && '$FLOW_BIN/run' --default --workspace $ws"
+    fi
+    "$HERDR" pane run "$term_pane" "$setup" >/dev/null
+  fi
+
+  # Named so create-pr and review can target it; returns once opencode is ready.
+  local start=("$HERDR" agent start "$(flow_agent_name "$ws")" --kind opencode --pane "$agent_pane")
+  [ -z "$session" ] || start+=(-- --session "$session")
+  "${start[@]}" >/dev/null
 }
