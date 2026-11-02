@@ -129,24 +129,10 @@ flow_pick_repo() {
   echo "${pick/#\~/$HOME}"
 }
 
-# Workspace for a repo's main checkout, opening one if it isn't open yet.
-flow_repo_workspace() {
-  local root="$1" focus="${2:---no-focus}" ws out
-  ws="$("$HERDR" workspace list | jq -r --arg root "$root" '
-    [.result.workspaces[] | select(.worktree.checkout_path == $root and (.worktree.is_linked_worktree | not))][0].workspace_id // empty')"
-  if [ -z "$ws" ]; then
-    # worktree open, unlike workspace create, attaches the .worktree metadata
-    # the lookup above matches on.
-    out="$("$HERDR" worktree open --cwd "$root" --path "$root" --label "$(basename "$root")" "$focus" 2>&1)" || { echo "$out" >&2; return 1; }
-    ws="$(jq -r '.result.workspace.workspace_id' <<<"$out")"
-  elif [ "$focus" = --focus ]; then
-    "$HERDR" workspace focus "$ws" >/dev/null
-  fi
-  echo "$ws"
-}
-
-# First agent pane in a workspace, e.g. the opencode pane.
-flow_agent_pane() {
-  "$HERDR" agent list |
-    jq -r --arg ws "$1" '[.result.agents[]? | select(.workspace_id == $ws)][0].pane_id // empty'
+# Herdr agent name for a workspace's opencode, set by `agent start` in
+# on-worktree-created. Names must match [a-z][a-z0-9_-]{0,31}.
+flow_agent_name() {
+  local ws
+  ws="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]' | tr -c 'a-z0-9_-' '-')"
+  printf 'opencode-%s\n' "${ws:0:23}"
 }

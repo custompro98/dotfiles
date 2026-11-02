@@ -10,9 +10,9 @@ cwd="${HERDR_ACTIVE_PANE_CWD:-$PWD}"
 cd "$cwd"
 git rev-parse --git-dir >/dev/null 2>&1 || die_popup "not in a git repo: $cwd"
 
-pane="$([ -n "$ws" ] && flow_agent_pane "$ws" || true)"
-if [ -n "$pane" ]; then
-  out="$("$HERDR" agent prompt "$pane" "/plannotator-review" 2>&1)" || die_popup "$out"
+agent="$(flow_agent_name "$ws")"
+if [ -n "$ws" ] && "$HERDR" agent get "$agent" >/dev/null 2>&1; then
+  out="$("$HERDR" agent prompt "$agent" "/plannotator-review" 2>&1)" || die_popup "$out"
   exit 0
 fi
 

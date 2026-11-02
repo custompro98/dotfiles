@@ -6,9 +6,17 @@ auto_switch = false
 
 [ui]
 status_indicators = "symbols"
+# Label agent panes with their agent (e.g. opencode) unless a pane is renamed.
+show_agent_labels_on_pane_borders = true
 
 [ui.toast]
 delivery = "herdr"
+
+[ui.sidebar.agents]
+rows = [
+  ["state_icon", "machine", "workspace", "tab"],
+  ["terminal_title_stripped"],
+]
 
 [worktrees]
 directory = "~/.herdr/worktrees"
@@ -68,14 +76,6 @@ command = "~/.dotfiles/config/herdr/plugins/flow/bin/create-pr"
 width = 60
 height = 8
 description = "ask agent to create PR"
-
-[[keys.command]]
-key = "prefix+shift+a"
-type = "popup"
-command = "~/.dotfiles/config/herdr/plugins/flow/bin/archive"
-width = 80
-height = 20
-description = "archive workspace (close; removes worktree)"
 
 [[keys.command]]
 key = "prefix+t"

@@ -5,4 +5,6 @@ set -euo pipefail
 source "$(dirname "$0")/lib.sh"
 
 repo="$(flow_pick_repo)" || exit 0
-flow_repo_workspace "$repo" --focus >/dev/null || die_popup "couldn't open $repo"
+# Focuses the repo's workspace when it's already open, else opens one.
+out="$("$HERDR" worktree open --cwd "$repo" --path "$repo" --focus 2>&1)" ||
+  die_popup "$out"

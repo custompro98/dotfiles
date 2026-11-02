@@ -39,10 +39,8 @@ fi
 git -C "$cwd" fetch --quiet origin "$(flow_default_branch "$cwd")" 2>/dev/null || true
 base="$(flow_base_ref "$cwd")"
 
-# herdr only creates worktrees from the repo's parent workspace.
-parent="$(flow_repo_workspace "$cwd" 2>&1)" || die_popup "$parent"
-
 printf 'creating \033[36m%s\033[0m from %s…\n' "$branch" "$base"
-out="$("$HERDR" worktree create --workspace "$parent" --branch "$branch" --base "$base" --label "${branch##*/}" --focus 2>&1)" ||
+# --cwd groups it under the repo's workspace, opening that first if needed.
+out="$("$HERDR" worktree create --cwd "$cwd" --branch "$branch" --base "$base" --label "${branch##*/}" --focus 2>&1)" ||
   die_popup "$out"
 jq -e '.result' >/dev/null 2>&1 <<<"$out" || die_popup "$out"
