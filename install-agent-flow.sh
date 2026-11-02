@@ -98,6 +98,7 @@ herdr integration install opencode
 
 herdr plugin install kryptamine/herdr-auto-title
 herdr plugin install ChmaraX/herdr-nvim
+herdr plugin install jmarbutt/herdr-spaces-pr-status
 herdr plugin link ~/.dotfiles/config/herdr/plugins/flow
 
 ### Config
