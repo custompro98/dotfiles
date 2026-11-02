@@ -13,3 +13,5 @@ require("gitsigns").setup({
 	},
 })
 vim.keymap.set("n", "<Leader>gb", "<cmd>Gitsigns blame<CR>", { desc = "[G]it [B]lame" })
+vim.keymap.set("n", "<Leader>gn", "<cmd>Gitsigns next_hunk<CR>", { desc = "[G]it [N]ext hunk" })
+vim.keymap.set("n", "<Leader>gp", "<cmd>Gitsigns prev_hunk<CR>", { desc = "[G]it [P]revious hunk" })
