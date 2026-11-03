@@ -36,6 +36,8 @@ prefix = "ctrl+g"
 
 previous_agent = "prefix+p"
 next_agent = "prefix+n"
+# Replaced by flow's close, which refuses while a worktree has pending changes.
+close_workspace = ""
 
 # Mirrors tmux's prefix+( / prefix+) for previous/next session.
 previous_workspace = "prefix+("
@@ -92,12 +94,20 @@ height = 8
 description = "ask agent to create PR"
 
 [[keys.command]]
-key = "prefix+shift+o"
+key = "prefix+shift+d"
 type = "popup"
-command = "~/.dotfiles/config/herdr/plugins/flow/bin/unarchive"
+command = "~/.dotfiles/config/herdr/plugins/flow/bin/close"
 width = "70%"
 height = "40%"
-description = "restore archived workspace"
+description = "close workspace (refuses with pending changes)"
+
+[[keys.command]]
+key = "prefix+shift+o"
+type = "popup"
+command = "~/.dotfiles/config/herdr/plugins/flow/bin/reopen"
+width = "70%"
+height = "40%"
+description = "reopen a closed branch as a workspace"
 
 [[keys.command]]
 key = "prefix+t"

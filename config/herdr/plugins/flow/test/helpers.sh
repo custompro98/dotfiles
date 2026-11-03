@@ -4,16 +4,18 @@ FLOW="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 FAILURES=0
 
 # A temp git repo with one commit and an archive script that appends the
-# workspace name to $ROOT/archived.log. Sets TMP and ROOT.
+# workspace name to $ROOT/archived.log. Sets TMP and ROOT, and points
+# FLOW_WORKTREES_DIR at $TMP/worktrees.
 make_repo() {
   TMP="$(cd "$(mktemp -d)" && pwd -P)"
   ROOT="$TMP/repo"
+  export FLOW_WORKTREES_DIR="$TMP/worktrees"
   mkdir -p "$ROOT/.conductor"
   git -C "$ROOT" init -q -b main
   git -C "$ROOT" config user.email test@example.com
   git -C "$ROOT" config user.name test
   echo one >"$ROOT/file.txt"
-  echo archived.log >"$ROOT/.gitignore"
+  printf 'archived.log\n.conductor/settings.local.toml\n' >"$ROOT/.gitignore"
   cat >"$ROOT/.conductor/settings.toml" <<'EOF'
 [scripts]
 archive = 'echo "$CONDUCTOR_WORKSPACE_NAME" >> "$CONDUCTOR_ROOT_PATH/archived.log"'
@@ -22,23 +24,28 @@ EOF
   git -C "$ROOT" commit -q -m init
 }
 
+# A worktree on a new branch <name>, where herdr would put it. Prints its path.
 make_worktree() {
-  git -C "$ROOT" worktree add -q -b "$1" "$TMP/wt-$1"
-  echo "$TMP/wt-$1"
+  local path="$FLOW_WORKTREES_DIR/repo/${1//\//-}"
+  git -C "$ROOT" worktree add -q -b "$1" "$path"
+  echo "$path"
 }
 
 # Fake herdr that records each call's argv as a line in $HERDR_CALLS. Answers
-# `workspace get` with $STUB_WORKSPACE_JSON and gives canned ids (workspace w9,
+# `workspace get` with $STUB_WORKSPACE_JSON, `worktree list` with
+# $STUB_WORKTREE_LIST_JSON (default: none), and gives canned ids (workspace w9,
 # panes w9:p1/w9:p2) to `worktree open`, `pane list` and `pane split`.
 stub_herdr() {
   export HERDR_CALLS="$TMP/herdr-calls"
   export HERDR_BIN_PATH="$TMP/herdr"
+  unset STUB_WORKSPACE_JSON STUB_WORKTREE_LIST_JSON
   : >"$HERDR_CALLS"
   cat >"$HERDR_BIN_PATH" <<'EOF'
 #!/usr/bin/env bash
 echo "$*" >>"$HERDR_CALLS"
 case "$1 $2" in
   "workspace get") printf '%s\n' "$STUB_WORKSPACE_JSON" ;;
+  "worktree list") none='{"result":{"worktrees":[]}}'; printf '%s\n' "${STUB_WORKTREE_LIST_JSON:-$none}" ;;
   "worktree open") echo '{"result":{"workspace":{"workspace_id":"w9"}}}' ;;
   "pane list") echo '{"result":{"panes":[{"pane_id":"w9:p1"}]}}' ;;
   "pane split") echo '{"result":{"pane":{"pane_id":"w9:p2"}}}' ;;
@@ -64,6 +71,9 @@ EOF
   chmod +x "$FLOW_OPENCODE_BIN"
 }
 
+# Succeeds when the command fails, for assert.
+fails() { ! "$@"; }
+
 called() { grep -q -- "$1" "$HERDR_CALLS"; }
 not_called() { ! grep -q -- "$1" "$HERDR_CALLS"; }
 
@@ -80,8 +90,8 @@ closed_event() {
           checkout_path: $path, is_linked_worktree: $linked}}}}'
 }
 
-# Archive a worktree the way closing its workspace does.
-archive_wt() {
+# Close a worktree's workspace the way herdr's workspace.closed hook sees it.
+close_wt() {
   HERDR_PLUGIN_EVENT_JSON="$(closed_event "$1" true)" "$FLOW/bin/on-workspace-closed"
 }
 

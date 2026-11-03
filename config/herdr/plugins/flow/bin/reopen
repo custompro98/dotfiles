@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+# Popup (prefix+shift+o): reopen a branch of the current repo as a worktree
+# workspace. Closing deletes clean checkouts, so this re-creates one at the
+# path herdr would use (flow_worktree_path), copies the Files to copy, and
+# resumes the newest opencode session from that path. Also lists worktrees that
+# exist but aren't open, e.g. ones kept on close for pending changes.
+#   reopen [branch]
+set -euo pipefail
+source "$(dirname "$0")/lib.sh"
+
+cwd="${HERDR_ACTIVE_PANE_CWD:-$PWD}"
+if git -C "$cwd" rev-parse --git-dir >/dev/null 2>&1; then
+  root="$(flow_root_path "$cwd")"
+else
+  root="$(flow_pick_repo 'reopen in> ')" || exit 0
+fi
+
+# Forget checkouts deleted behind git's back so their branches can be reopened.
+git -C "$root" worktree prune
+dir="$(flow_worktrees_dir)/$(basename "$root")"
+wts="$("$HERDR" worktree list --cwd "$root" 2>&1)" || die_popup "$wts"
+
+# Candidates as TSV: branch (empty when detached), path, kept|closed, unix time.
+# Kept checkouts first, then branches not checked out anywhere, newest first.
+rows="$(
+  jq -r --arg dir "$dir/" '.result.worktrees[]
+    | select(.is_linked_worktree and (.is_prunable | not) and .open_workspace_id == null and (.path | startswith($dir)))
+    | [.path, (if .is_detached then "" else .branch // "" end)] | @tsv' <<<"$wts" |
+    while IFS=$'\t' read -r p b; do
+      printf '%s\t%s\tkept\t%s\n' "$b" "$p" "$(git -C "$p" log -1 --format=%ct)"
+    done
+  git -C "$root" for-each-ref --sort=-committerdate \
+    --format='%(refname:lstrip=2)%09%(worktreepath)%09%(committerdate:unix)' refs/heads/ |
+    awk -F'\t' -v OFS='\t' -v def="$(flow_default_branch "$root")" -v dir="$dir" '
+      $2 == "" && $1 != def { p = $1; gsub("/", "-", p); print $1, dir "/" p, "closed", $3 }'
+)"
+[ -n "$rows" ] || die_popup "nothing to reopen in $(basename "$root")"
+
+if [ $# -gt 0 ]; then
+  line="$(awk -F'\t' -v b="$1" '$1 == b { print; exit }' <<<"$rows")"
+  [ -n "$line" ] || die_popup "no closed branch or kept checkout named $1"
+else
+  pick="$(jq -R -r --argjson sessions "$(flow_sessions_json "$root")" '
+      split("\t") as $f
+      | ([$sessions[] | select(.directory == $f[1])] | max_by(.updated) // {} | .title // "") as $title
+      | [$f[1], (if $f[0] == "" then "(detached)" else $f[0] end), (if $f[2] == "kept" then "kept" else "" end),
+         $title, ($f[3] | tonumber | localtime | strftime("%b %d %H:%M"))]
+      | @tsv' <<<"$rows" |
+    fzf --prompt 'reopen> ' --delimiter '\t' --with-nth 2.. --height 100% --reverse)" || exit 0
+  line="$(awk -F'\t' -v p="$(cut -f1 <<<"$pick")" '$2 == p { print; exit }' <<<"$rows")"
+fi
+
+branch="$(cut -f1 <<<"$line")"
+path="$(cut -f2 <<<"$line")"
+
+if [ "$(cut -f3 <<<"$line")" = closed ]; then
+  printf 'reopening \033[36m%s\033[0m at %s…\n' "$branch" "$path"
+  out="$(git -C "$root" worktree add -q "$path" "$branch" 2>&1)" || die_popup "$out"
+  # Before the setup script, which may rely on the copied files.
+  flow_copy_files "$path" || echo "flow: some files failed to copy into $path" >&2
+fi
+
+label="${branch##*/}"
+out="$("$HERDR" worktree open --cwd "$root" --path "$path" --label "${label:-$(basename "$path")}" --focus 2>&1)" ||
+  die_popup "$out"
+ws="$(jq -r '.result.workspace.workspace_id // empty' <<<"$out" 2>/dev/null)"
+[ -n "$ws" ] || die_popup "$out"
+
+flow_layout "$ws" "$path" "$(flow_session_for "$root" "$path")"

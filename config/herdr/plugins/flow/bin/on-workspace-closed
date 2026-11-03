@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
-# workspace.closed hook: archive a closed worktree workspace like Conductor.
-# Run the archive script, save HEAD and uncommitted work under
-# refs/flow/archive/ (bin/unarchive restores it), and delete the checkout. The
-# branch is kept. Repo workspaces (main checkouts) are left alone.
+# workspace.closed hook: worktree checkouts are disposable. Run the archive
+# script, then delete the checkout; the branch is kept and bin/reopen
+# (prefix+shift+o) re-creates it. bin/close refuses to close a checkout with
+# pending changes, but herdr can close workspaces other ways, so a checkout
+# that still has some is kept (and listed by reopen). Repo workspaces (main
+# checkouts) are left alone.
 set -euo pipefail
 source "$(dirname "$0")/lib.sh"
 
@@ -17,22 +19,20 @@ notify() {
 }
 
 name="$(basename "$path")"
-label="$(jq -r '[.. | objects | .workspace? | objects | .label // empty][0] // empty' <<<"$event")"
 branch="$(git -C "$path" branch --show-current)"
 root="$(flow_root_path "$path")"
+# Before the archive script, which may leave files behind.
+pending="$(flow_pending_changes "$path")"
 
 "$FLOW_BIN/script" archive "$path" ||
   notify "flow: archive script failed for ${branch:-$name}" "herdr plugin log list --plugin custompro98.flow"
 
-# Keep the checkout rather than lose work that couldn't be saved.
-if ! err="$(flow_archive_save "$path" "${label:-$name}" 2>&1 >/dev/null)"; then
-  notify "flow: couldn't archive $name" "$err"
-  die "$err"
+if [ -n "$pending" ]; then
+  notify "flow: kept ${branch:-$name}" "it has pending changes in $path; reopen it with prefix+shift+o"
+  exit 0
 fi
 
 if ! err="$(git -C "$root" worktree remove --force "$path" 2>&1)"; then
   notify "flow: couldn't remove $path" "$err"
   die "$err"
 fi
-
-notify "flow: archived $name" "restore with prefix+shift+o"

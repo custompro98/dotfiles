@@ -152,126 +152,34 @@ flow_session_for() {
     jq -r --arg d "$2" '[.[] | select(.directory == $d)] | max_by(.updated) // {} | .id // empty'
 }
 
-# Save a worktree checkout as refs/flow/archive/<name>-<unix-time> and echo the
-# ref: a commit with the archived HEAD as parent 1, a `git stash -u` commit of
-# uncommitted work as parent 2 (when dirty), and Flow-* trailers. Leaves the
-# checkout in place; on failure after stashing, the work stays in the stash.
-# refs/stash is shared by every worktree, so the stash section holds a per-repo
-# lock: closing several workspaces at once fires their hooks concurrently.
-flow_archive_save() {
-  local path="$1" lock rc
-  lock="$(git -C "$path" rev-parse --path-format=absolute --git-common-dir)/flow-archive.lock" || return 1
-  flow_lock "$lock" || { echo "couldn't take $lock (remove it if no archive is running)" >&2; return 1; }
-  _flow_archive_save_locked "$@"
-  rc=$?
-  rmdir "$lock" 2>/dev/null
-  return "$rc"
+# Where herdr puts a branch's worktree: <worktrees.directory>/<repo>/<branch
+# with / as ->. Reopening there finds the branch's opencode sessions again.
+flow_worktrees_dir() {
+  echo "${FLOW_WORKTREES_DIR:-$HOME/.herdr/worktrees}"
 }
 
-# mkdir-based lock, waiting up to ~30s; a lock older than 2 minutes is stale.
-flow_lock() {
-  local i=0
-  until mkdir "$1" 2>/dev/null; do
-    [ -z "$(find "$1" -maxdepth 0 -mmin +2 2>/dev/null)" ] || rmdir "$1" 2>/dev/null || true
-    i=$((i + 1))
-    [ "$i" -lt 300 ] || return 1
-    sleep 0.1
+flow_worktree_path() {
+  printf '%s/%s/%s\n' "$(flow_worktrees_dir)" "$(basename "$1")" "${2//\//-}"
+}
+
+# What deleting the checkout at <path> would lose, one line each; nothing when
+# it's safe: uncommitted or untracked (not ignored) files, an operation in
+# progress, or a detached HEAD that no branch contains. Commits on a branch are
+# safe: the branch outlives the checkout.
+flow_pending_changes() {
+  local path="$1" out op
+  out="$(git -C "$path" status --short 2>&1)" || { echo "git status failed: $out"; return 0; }
+  [ -z "$out" ] || printf '%s\n' "$out"
+  for op in MERGE_HEAD:merge rebase-merge:rebase rebase-apply:rebase CHERRY_PICK_HEAD:cherry-pick REVERT_HEAD:revert; do
+    if [ -e "$(git -C "$path" rev-parse --path-format=absolute --git-path "${op%%:*}")" ]; then
+      echo "a ${op#*:} is in progress"
+      break
+    fi
   done
-}
-
-_flow_archive_save_locked() {
-  local path="$1" label="$2" name head branch session before stash="" msg commit ref
-  name="$(basename "$path")"
-  head="$(git -C "$path" rev-parse HEAD)" || return 1
-  branch="$(git -C "$path" branch --show-current)"
-  session="$(flow_session_for "$path" "$path")"
-
-  if [ -n "$(git -C "$path" status --porcelain)" ]; then
-    before="$(git -C "$path" rev-parse -q --verify refs/stash || true)"
-    git -C "$path" stash push -q -u -m "flow archive $name" || { echo "couldn't stash changes in $path" >&2; return 1; }
-    stash="$(git -C "$path" rev-parse -q --verify refs/stash || true)"
-    # Nothing stashed (e.g. only submodule changes): no parent 2, and never
-    # adopt a stash entry that isn't ours.
-    [ "$stash" != "$before" ] || stash=""
+  if ! git -C "$path" symbolic-ref -q HEAD >/dev/null &&
+    [ -z "$(git -C "$path" for-each-ref --contains HEAD --count=1 refs/heads refs/remotes)" ]; then
+    echo "detached HEAD $(git -C "$path" rev-parse --short HEAD) isn't on any branch"
   fi
-
-  msg="flow archive $name"$'\n\n'"Flow-Name: $name"$'\n'"Flow-Path: $path"$'\n'"Flow-Label: $label"
-  [ -z "$branch" ] || msg+=$'\n'"Flow-Branch: $branch"
-  [ -z "$session" ] || msg+=$'\n'"Flow-Session: $session"
-
-  ref="refs/flow/archive/$name-$(date +%s)"
-  if ! commit="$(git -C "$path" commit-tree "$head^{tree}" -p "$head" ${stash:+-p "$stash"} -m "$msg")" ||
-    ! git -C "$path" update-ref "$ref" "$commit" "" 2>&1 >&2; then
-    if [ -n "$stash" ]; then
-      echo "couldn't write $ref; uncommitted work is in git stash: flow archive $name" >&2
-    else
-      echo "couldn't write $ref" >&2
-    fi
-    return 1
-  fi
-
-  if [ -n "$stash" ] && [ "$(git -C "$path" rev-parse -q --verify 'stash@{0}')" = "$stash" ]; then
-    git -C "$path" stash drop -q
-  fi
-  echo "$ref"
-}
-
-# A repo's archives, newest first, one TSV line each:
-# ref, name, branch, path, label, session, archived-at (unix). Empty fields
-# stay as empty columns, so split with cut/awk -F'\t', not `read`.
-flow_archive_list() {
-  local t='%(trailers:key=Flow-KEY,valueonly,separator=)' fmt
-  fmt="%(refname)"
-  for key in Name Branch Path Label Session; do fmt+="%09${t/KEY/$key}"; done
-  git -C "$1" for-each-ref --sort=-creatordate --format="$fmt%09%(creatordate:unix)" refs/flow/archive/
-}
-
-# One Flow-* trailer of an archive ref: flow_archive_trailer <root> <ref> <key>.
-flow_archive_trailer() {
-  git -C "$1" log -1 --format="%(trailers:key=$3,valueonly,separator=)" "$2"
-}
-
-# Recreate an archived worktree at its recorded path and re-apply its
-# uncommitted work. Refuses (non-zero, message on stderr, nothing created) when
-# the path exists or the branch is checked out elsewhere. Otherwise prints why
-# the archive ref must be kept (conflicts, rewritten branch), or nothing.
-flow_archive_checkout() {
-  local root="$1" ref="$2" path branch head reasons=() applied=true
-  path="$(flow_archive_trailer "$root" "$ref" Flow-Path)"
-  branch="$(flow_archive_trailer "$root" "$ref" Flow-Branch)"
-  head="$(git -C "$root" rev-parse "$ref^1")"
-
-  [ ! -e "$path" ] || { echo "$path already exists" >&2; return 1; }
-  if [ -n "$branch" ] && git -C "$root" show-ref --verify -q "refs/heads/$branch"; then
-    if git -C "$root" worktree list --porcelain | grep -qx "branch refs/heads/$branch"; then
-      echo "$branch is checked out in another worktree" >&2
-      return 1
-    fi
-    git -C "$root" worktree add -q "$path" "$branch" || return 1
-  elif [ -n "$branch" ]; then
-    git -C "$root" worktree add -q -b "$branch" "$path" "$head" || return 1
-  else
-    git -C "$root" worktree add -q --detach "$path" "$head" || return 1
-  fi
-
-  if git -C "$root" rev-parse -q --verify "$ref^2" >/dev/null; then
-    if ! git -C "$path" stash apply -q --index "$ref^2" >/dev/null 2>&1; then
-      if [ -z "$(git -C "$path" diff --name-only --diff-filter=U)" ]; then
-        git -C "$path" stash apply -q "$ref^2" >/dev/null 2>&1 || applied=false
-      else
-        applied=false
-      fi
-    fi
-    if ! $applied || [ -n "$(git -C "$path" diff --name-only --diff-filter=U)" ]; then
-      reasons+=("some changes didn't apply in $path (conflicts or untracked files left out); the archive is kept. Recover with: git -C $path stash apply $ref^2 (untracked files: git show $ref^2^3:<file>). Once everything is back: git update-ref -d $ref")
-    fi
-  fi
-
-  if [ -n "$branch" ] && ! git -C "$root" merge-base --is-ancestor "$head" "refs/heads/$branch"; then
-    reasons+=("$branch no longer contains the archived commits; they're kept in $ref")
-  fi
-
-  [ ${#reasons[@]} -eq 0 ] || (IFS=$'\n'; echo "${reasons[*]}")
 }
 
 # Lay out a fresh worktree workspace: opencode on top, a terminal below running
