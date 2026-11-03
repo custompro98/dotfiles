@@ -118,7 +118,21 @@ command = "chmarax.herdr-nvim.pick-file"
 description = "open file from agent output"
 
 [[keys.command]]
-key = "prefix+shift+g"
+key = "cmd+shift+g"
 type = "plugin_action"
 command = "jmarbutt.spaces-pr-status.open"
 description = "open this space's PR"
+
+## herdr-gitview
+
+[[keys.command]]
+key = "prefix+shift+g"
+type = "plugin_action"
+command = "chmarax.gitview.toggle-tab"
+description = "git view tab"
+
+[[keys.command]]
+key = "prefix+g"
+type = "plugin_action"
+command = "chmarax.gitview.toggle"
+description = "git view sidebar"
