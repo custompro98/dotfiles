@@ -37,6 +37,10 @@ prefix = "ctrl+g"
 previous_agent = "prefix+p"
 next_agent = "prefix+n"
 
+# Mirrors tmux's prefix+( / prefix+) for previous/next session.
+previous_workspace = "prefix+("
+next_workspace = "prefix+)"
+
 ## flow (Conductor-style workspaces, see plugins/flow)
 
 [[keys.command]]
