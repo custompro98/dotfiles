@@ -36,6 +36,7 @@ else
   brew upgrade opencode
 fi
 
+
 mkdir -p ~/.config/opencode
 ln -sFfn ~/.dotfiles/config/opencode/cli.json ~/.config/opencode/cli.json
 
@@ -54,6 +55,18 @@ else
 fi
 
 print_installed "claude"
+
+print_checking "pi"
+if ! command -v pi &> /dev/null
+then
+  print_installing "pi"
+
+  curl -fsSL https://pi.dev/install.sh | sh
+else
+  print_updating "pi"
+
+  pi update
+fi
 
 ## REVIEW TOOLING - plannotator
 
@@ -98,7 +111,9 @@ herdr integration install opencode
 
 herdr plugin install kryptamine/herdr-auto-title
 herdr plugin install ChmaraX/herdr-nvim
+herdr plugin install ChmaraX/herdr-gitview
 herdr plugin install jmarbutt/herdr-spaces-pr-status
+herdr plugin install jewei/herdr-caffeinated
 herdr plugin link ~/.dotfiles/config/herdr/plugins/flow
 
 ### Config
