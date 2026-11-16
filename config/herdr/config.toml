@@ -62,14 +62,6 @@ height = 8
 description = "new agent workspace (worktree + opencode)"
 
 [[keys.command]]
-key = "prefix+d"
-type = "popup"
-command = "~/.dotfiles/config/herdr/plugins/flow/bin/review"
-width = 60
-height = 8
-description = "review changes in plannotator"
-
-[[keys.command]]
 key = "prefix+u"
 type = "popup"
 command = "~/.dotfiles/config/herdr/plugins/flow/bin/run --default"
@@ -137,16 +129,10 @@ type = "plugin_action"
 command = "jmarbutt.spaces-pr-status.open"
 description = "open this space's PR"
 
-## herdr-gitview
-
-[[keys.command]]
-key = "prefix+shift+g"
-type = "plugin_action"
-command = "chmarax.gitview.toggle-tab"
-description = "git view tab"
+## herdr-reviewr
 
 [[keys.command]]
 key = "prefix+g"
 type = "plugin_action"
-command = "chmarax.gitview.toggle"
-description = "git view sidebar"
+command = "persiyanov.reviewr.toggle"
+description = "reviewr pane"

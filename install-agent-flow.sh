@@ -68,26 +68,6 @@ else
   pi update
 fi
 
-## REVIEW TOOLING - plannotator
-
-print_checking "plannotator"
-if ! command -v plannotator &> /dev/null
-then
-  print_installing "plannotator"
-else
-  print_updating "plannotator"
-fi
-
-# Binary only; the opencode plugin below provides /plannotator-review.
-curl -fsSL https://plannotator.ai/install.sh | bash -s -- --minimal
-
-if ! opencode plugin list | grep -q plannotator
-then
-  opencode plugin add @plannotator/opencode@latest
-fi
-
-print_installed "plannotator"
-
 ## AGENT MANAGEMENT - herdr
 
 print_checking "herdr"
@@ -109,17 +89,20 @@ herdr integration install opencode
 
 ### Plugins
 
-herdr plugin install kryptamine/herdr-auto-title
-herdr plugin install ChmaraX/herdr-nvim
-herdr plugin install ChmaraX/herdr-gitview
-herdr plugin install jmarbutt/herdr-spaces-pr-status
-herdr plugin install jewei/herdr-caffeinated
+herdr plugin install kryptamine/herdr-auto-title --yes
+herdr plugin install ChmaraX/herdr-nvim --yes
+herdr plugin install persiyanov/herdr-reviewr --yes
+herdr plugin install jmarbutt/herdr-spaces-pr-status --yes
+herdr plugin install jewei/herdr-caffeinated --yes
 herdr plugin link ~/.dotfiles/config/herdr/plugins/flow
 
 ### Config
 
 mkdir -p ~/.config/herdr
 ln -sFfn ~/.dotfiles/config/herdr/config.toml ~/.config/herdr/config.toml
+
+mkdir -p ~/.config/herdr/plugins/config/persiyanov.reviewr
+ln -sFfn ~/.dotfiles/config/herdr/plugin-config/persiyanov.reviewr/config.toml ~/.config/herdr/plugins/config/persiyanov.reviewr/config.toml
 
 ### Skills
 
