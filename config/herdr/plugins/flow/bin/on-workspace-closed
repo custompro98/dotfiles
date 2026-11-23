@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
-# workspace.closed hook: worktree checkouts are disposable. Run the archive
-# script, then delete the checkout; the branch is kept and bin/reopen
-# (prefix+shift+o) re-creates it. bin/close refuses to close a checkout with
-# pending changes, but herdr can close workspaces other ways, so a checkout
-# that still has some is kept (and listed by reopen). Repo workspaces (main
-# checkouts) are left alone.
+# workspace.closed hook: worktree checkouts are disposable. Run the repo's
+# teardown script ([scripts] archive, e.g. `compose down -v`), then delete the
+# checkout with everything in it: uncommitted, untracked and ignored files
+# (node_modules, build output). Nothing is archived; the branch is kept and
+# bin/reopen (prefix+shift+o) re-creates a checkout of it. bin/close refuses
+# to close a checkout with pending changes, but closing any other way discards
+# them. Repo workspaces (main checkouts) are left alone.
 set -euo pipefail
 source "$(dirname "$0")/lib.sh"
 
@@ -19,20 +20,21 @@ notify() {
 }
 
 name="$(basename "$path")"
-branch="$(git -C "$path" branch --show-current)"
+branch="$(git -C "$path" branch --show-current 2>/dev/null || true)"
 root="$(flow_root_path "$path")"
-# Before the archive script, which may leave files behind.
-pending="$(flow_pending_changes "$path")"
 
 "$FLOW_BIN/script" archive "$path" ||
-  notify "flow: archive script failed for ${branch:-$name}" "herdr plugin log list --plugin custompro98.flow"
+  notify "flow: teardown script failed for ${branch:-$name}" "herdr plugin log list --plugin custompro98.flow"
 
-if [ -n "$pending" ]; then
-  notify "flow: kept ${branch:-$name}" "it has pending changes in $path; reopen it with prefix+shift+o"
-  exit 0
+# --force twice also removes locked worktrees. If git still refuses (e.g. the
+# checkout has submodules), delete the directory and prune its metadata.
+if ! err="$(git -C "$root" worktree remove --force --force "$path" 2>&1)"; then
+  if ! rm -rf "$path" || ! git -C "$root" worktree prune; then
+    notify "flow: couldn't remove $path" "$err"
+    die "$err"
+  fi
 fi
 
-if ! err="$(git -C "$root" worktree remove --force "$path" 2>&1)"; then
-  notify "flow: couldn't remove $path" "$err"
-  die "$err"
-fi
+# Drop the per-repo worktrees directory once its last checkout is gone.
+parent="$(dirname "$path")"
+[ "$(dirname "$parent")" != "$(flow_worktrees_dir)" ] || rmdir "$parent" 2>/dev/null || true

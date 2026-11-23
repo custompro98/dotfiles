@@ -3,7 +3,7 @@
 # workspace. Closing deletes clean checkouts, so this re-creates one at the
 # path herdr would use (flow_worktree_path), copies the Files to copy, and
 # resumes the newest opencode session from that path. Also lists worktrees that
-# exist but aren't open, e.g. ones kept on close for pending changes.
+# exist but aren't open in any workspace (e.g. created outside herdr).
 #   reopen [branch]
 set -euo pipefail
 source "$(dirname "$0")/lib.sh"

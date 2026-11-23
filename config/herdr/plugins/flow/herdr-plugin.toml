@@ -2,7 +2,7 @@ id = "custompro98.flow"
 name = "Flow"
 version = "0.2.0"
 min_herdr_version = "0.9.0"
-description = "Conductor-style workspaces: disposable worktree per task, opencode + terminal layout, .conductor/settings.toml scripts, close refuses pending changes, reopen re-creates (prefix+shift+o)."
+description = "Conductor-style workspaces: disposable worktree per task, opencode + terminal layout, .conductor/settings.toml scripts, close deletes the checkout (refuses pending changes), reopen re-creates (prefix+shift+o)."
 platforms = ["macos", "linux"]
 
 # Fires for every worktree herdr creates (keybinding, sidebar, or CLI), so all
@@ -11,10 +11,11 @@ platforms = ["macos", "linux"]
 on = "worktree.created"
 command = ["bin/on-worktree-created"]
 
-# Closing a worktree workspace runs the archive script and deletes the
-# checkout; the branch stays and bin/reopen (prefix+shift+o) re-creates it.
-# bin/close (prefix+shift+d) refuses while there are pending changes; when a
-# workspace is closed some other way, a checkout with pending changes is kept.
+# Closing a worktree workspace runs the repo's teardown script ([scripts]
+# archive, e.g. stopping containers), then deletes the checkout and everything
+# in it. Nothing is archived; the branch stays and bin/reopen (prefix+shift+o)
+# re-creates a checkout. bin/close (prefix+shift+d) refuses while there are
+# pending changes; closing a workspace some other way discards them.
 [[events]]
 on = "workspace.closed"
 command = ["bin/on-workspace-closed"]

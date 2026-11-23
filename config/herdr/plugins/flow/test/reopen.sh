@@ -47,11 +47,11 @@ test_files_copied() {
   assert ".env copied" test "$(cat "$wt/.env")" = SECRET=1
 }
 
-test_reopen_kept_checkout() {
+# A checkout that exists but isn't open in herdr (e.g. made outside herdr).
+test_reopen_unopened_checkout() {
   local wt
   wt="$(make_worktree feat)"
   echo two >"$wt/file.txt"
-  close_wt "$wt"
   export STUB_WORKTREE_LIST_JSON="$(kept_worktree_json "$wt" feat)"
   assert "exits 0" reopen feat
   assert "pending changes still there" test "$(cat "$wt/file.txt")" = two
