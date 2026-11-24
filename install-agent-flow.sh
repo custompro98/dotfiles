@@ -104,6 +104,9 @@ ln -sFfn ~/.dotfiles/config/herdr/config.toml ~/.config/herdr/config.toml
 mkdir -p ~/.config/herdr/plugins/config/persiyanov.reviewr
 ln -sFfn ~/.dotfiles/config/herdr/plugin-config/persiyanov.reviewr/config.toml ~/.config/herdr/plugins/config/persiyanov.reviewr/config.toml
 
+mkdir -p ~/.config/herdr/plugins/config/jmarbutt.spaces-pr-status
+ln -sFfn ~/.dotfiles/config/herdr/plugin-config/jmarbutt.spaces-pr-status/config.json ~/.config/herdr/plugins/config/jmarbutt.spaces-pr-status/config.json
+
 ### Skills
 
 npx skills add herdrdev/herdr --skill herdr -g
